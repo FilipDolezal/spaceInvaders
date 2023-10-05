@@ -6,6 +6,10 @@ import java.util.Scanner;
 import tp1.control.Controller;
 import tp1.logic.Game;
 import tp1.logic.Level;
+import tp1.logic.Position;
+import tp1.logic.gameobjects.RegularAlien;
+import tp1.logic.gameobjects.UCMShip;
+import tp1.view.GamePrinter;
 import tp1.view.Messages;
 import static tp1.view.Messages.error;
 
@@ -52,6 +56,9 @@ public class Main {
 					System.out.println(String.format(Messages.CONFIGURED_SEED, seed));
 		
 					Game game = new Game(level, seed);
+					game.UCMship = new UCMShip();
+					game.regularAliens = new RegularAlien[1];
+					game.regularAliens[0] = new RegularAlien(new Position(4, 5));
 					Scanner scanner = new Scanner(System.in);
 					Controller controller = new Controller(game, scanner);
 					controller.run();

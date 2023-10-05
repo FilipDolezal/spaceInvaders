@@ -1,5 +1,9 @@
 package tp1.logic;
 
+import tp1.logic.gameobjects.RegularAlien;
+import tp1.logic.gameobjects.UCMLaser;
+import tp1.logic.gameobjects.UCMShip;
+
 import java.util.Random;
 
 // TODO implementarlo
@@ -8,10 +12,17 @@ public class Game {
 	public static final int DIM_X = 9;
 	public static final int DIM_Y = 8;
 
-	//TODO fill your code
+	public UCMShip UCMship;
 
+	public RegularAlien[] regularAliens;
+
+	//TODO fill your code
+	private Level level;
+	private long seed;
 	public Game(Level level, long seed) {
 		//TODO fill your code
+		this.level 	= level;
+		this.seed	=  seed;
 	}
 
 	public String stateToString() {
@@ -30,8 +41,21 @@ public class Game {
 	}
 
 	public String positionToString(int col, int row) {
-		//TODO fill your code
-		return null;
+		for (RegularAlien alien: regularAliens) {
+			if(alien.position.equals(col, row))
+				return "R["+ alien.getHealth() +"]";
+		}
+
+		if(UCMship.position.equals(col, row))
+			return "^__^";
+
+		UCMLaser laser = UCMship.getLaser();
+		if(laser != null) {
+			if(laser.position.equals(col, row))
+				return "oo";
+		}
+
+		return "";
 	}
 
 	public boolean playerWin() {

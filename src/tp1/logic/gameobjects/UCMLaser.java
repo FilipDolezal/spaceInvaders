@@ -15,6 +15,12 @@ public class UCMLaser {
 	private Move dir;
 	private Game game;
 
+	public Position position;
+
+	public UCMLaser(Position position, Move dir) {
+		this.position = position;
+		this.dir = dir;
+	}
 
 	/**
 	 *  Method called when the laser disappears from the board
@@ -39,6 +45,7 @@ public class UCMLaser {
 	
 	
 	private void die() {
+		onDelete();
 		//TODO fill your code
 	}
 
@@ -48,7 +55,7 @@ public class UCMLaser {
 	}
 
 	private void performMovement(Move dir) {
-		//TODO fill your code
+		this.position = position.move(dir);
 	}
 
 	/**

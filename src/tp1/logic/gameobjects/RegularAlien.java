@@ -14,12 +14,17 @@ public class RegularAlien {
 
 	//TODO fill your code
 	private int cyclesToMove;
-	private int speed;
+	private int speed, health;
 	private Move dir;
+
+	public Position position;
 	
 	private AlienManager alienManager;
 
 	//TODO fill your code
+	public RegularAlien(Position position) {
+		this.position = position;
+	}
 
 	/**
 	 *  Implements the automatic movement of the regular alien	
@@ -46,6 +51,10 @@ public class RegularAlien {
 	public boolean receiveAttack(UCMLaser laser) {
 		//TODO fill your code
 		return false;
+	}
+
+	public int getHealth() {
+		return this.health;
 	}
 	
 

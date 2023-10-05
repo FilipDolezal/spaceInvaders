@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import tp1.logic.Game;
 import tp1.logic.Move;
+import tp1.logic.gameobjects.UCMLaser;
 import tp1.view.GamePrinter;
 import tp1.view.Messages;
 
@@ -43,6 +44,34 @@ public class Controller {
 	 * Runs the game logic
 	 */
 	public void run() {
+		while(true) {
+			printGame();
+			String[] prompt = prompt();
+			switch (prompt[0].charAt(0)) {
+				case 'm': // move [direction]
+					this.game.UCMship.preformMovement(
+							switch (prompt[1]) {
+								case "left" -> Move.LEFT;
+								case "lleft" -> Move.LLEFT;
+								case "right" -> Move.RIGHT;
+								case "rright" -> Move.RRIGHT;
+								default -> Move.NONE;
+							}
+					);
+					break;
+				case 's': // shoot
+					this.game.UCMship.preformAttack();
+					break;
+				case 'n': // none
+					return;
+			}
+
+			UCMLaser laser = this.game.UCMship.getLaser();
+			if(laser != null) {
+				laser.automaticMove();
+			}
+		}
+
 		//TODO fill your code
 	}
 
