@@ -13,16 +13,18 @@ public class Game {
 	public static final int DIM_Y = 8;
 
 	public UCMShip UCMship;
+	public AlienManager alienManager;
 
-	public RegularAlien[] regularAliens;
 
 	//TODO fill your code
 	private Level level;
 	private long seed;
+
 	public Game(Level level, long seed) {
 		//TODO fill your code
 		this.level 	= level;
-		this.seed	=  seed;
+		this.seed	= seed;
+		this.alienManager = new AlienManager(this, level);
 	}
 
 	public String stateToString() {
@@ -41,7 +43,7 @@ public class Game {
 	}
 
 	public String positionToString(int col, int row) {
-		for (RegularAlien alien: regularAliens) {
+		for (RegularAlien alien: alienManager.regularAliens) {
 			if(alien.position.equals(col, row))
 				return "R["+ alien.getHealth() +"]";
 		}
@@ -82,4 +84,7 @@ public class Game {
 		return null;
 	}
 
+	public boolean isInBorder(Position position) {
+		return (position.col >= DIM_X || position.col < 0);
+	}
 }

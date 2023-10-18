@@ -37,7 +37,14 @@ public enum Level {
 	public double getUfoFrequency() {
 		return ufoFrequency;
 	}
-	
+
+	public int getNumRegularAliens() {
+		return numRegularAliens;
+	}
+
+	public int getNumRowsRegularAliens() {
+		return numRowsRegularAliens;
+	}
 
 	/**
 	 * Parse a string and return any matching level

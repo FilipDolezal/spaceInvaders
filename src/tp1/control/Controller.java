@@ -70,6 +70,8 @@ public class Controller {
 			if(laser != null) {
 				laser.automaticMove();
 			}
+
+			this.game.alienManager.automaticMove();
 		}
 
 		//TODO fill your code

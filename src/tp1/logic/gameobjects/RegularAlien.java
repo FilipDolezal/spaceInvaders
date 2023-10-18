@@ -22,30 +22,33 @@ public class RegularAlien {
 	private AlienManager alienManager;
 
 	//TODO fill your code
-	public RegularAlien(Position position) {
-		this.position = position;
+	public RegularAlien(AlienManager alienManager, Position position) {
+		this.alienManager 	= alienManager;
+		this.position 		= position;
 	}
 
 	/**
 	 *  Implements the automatic movement of the regular alien	
 	 */
 	public void automaticMove() {
-		//TODO fill your code
+		performMovement(dir);
 	}
 
 	private void descent() {
-		//TODO fill your code
-		
+		this.position = this.position.move(Move.DOWN);
 	}
 
 	private void performMovement(Move dir) {
-		//TODO fill your code
-		
+		this.position = this.position.move(dir);
 	}
 
-	private boolean isInBorder() {
-		//TODO fill your code
-		return false;
+	public void changeDirection() {
+		this.position = position.move(Move.DOWN);
+		this.dir = switch (this.dir) {
+			case LEFT -> Move.RIGHT;
+			case RIGHT -> Move.LEFT;
+			default -> Move.NONE;
+		};
 	}
 
 	public boolean receiveAttack(UCMLaser laser) {

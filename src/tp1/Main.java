@@ -57,8 +57,6 @@ public class Main {
 		
 					Game game = new Game(level, seed);
 					game.UCMship = new UCMShip();
-					game.regularAliens = new RegularAlien[1];
-					game.regularAliens[0] = new RegularAlien(new Position(4, 5));
 					Scanner scanner = new Scanner(System.in);
 					Controller controller = new Controller(game, scanner);
 					controller.run();
