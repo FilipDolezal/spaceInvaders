@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 import tp1.logic.Game;
 import tp1.logic.Move;
+import tp1.logic.Position;
+import tp1.logic.gameobjects.RegularAlien;
 import tp1.logic.gameobjects.UCMLaser;
 import tp1.view.GamePrinter;
 import tp1.view.Messages;
@@ -44,34 +46,48 @@ public class Controller {
 	 * Runs the game logic
 	 */
 	public void run() {
-		while(true) {
-			printGame();
+		printGame();
+
+		beginning: while(true) {
 			String[] prompt = prompt();
 			switch (prompt[0].charAt(0)) {
 				case 'm': // move [direction]
-					this.game.UCMship.preformMovement(
-							switch (prompt[1]) {
-								case "left" -> Move.LEFT;
-								case "lleft" -> Move.LLEFT;
-								case "right" -> Move.RIGHT;
-								case "rright" -> Move.RRIGHT;
-								default -> Move.NONE;
-							}
-					);
+					Move move = switch (prompt[1]) {
+						case "left" -> Move.LEFT;
+						case "lleft" -> Move.LLEFT;
+						case "right" -> Move.RIGHT;
+						case "rright" -> Move.RRIGHT;
+						default -> Move.NONE;
+					};
+					Position position = this.game.UCMship.position;
+					boolean isOutOfBounds = this.game.isOutOfBoundX(position.move(move));
+					if(!isOutOfBounds) this.game.UCMship.preformMovement(move);
+					else  {
+						System.out.println("Movement cannot be preformed");
+						continue beginning;
+					}
+
 					break;
 				case 's': // shoot
-					this.game.UCMship.preformAttack();
+					this.game.UCMship.preformAttack(game);
 					break;
 				case 'n': // none
 					return;
 			}
 
+			this.game.alienManager.automaticMove();
+
 			UCMLaser laser = this.game.UCMship.getLaser();
 			if(laser != null) {
-				laser.automaticMove();
+				boolean isHit = false;
+				for (RegularAlien alien: this.game.alienManager.regularAliens) {
+					isHit = laser.weaponAttack(alien);
+					if(isHit) break;
+				}
+				if(!isHit) laser.automaticMove();
 			}
 
-			this.game.alienManager.automaticMove();
+			printGame();
 		}
 
 		//TODO fill your code

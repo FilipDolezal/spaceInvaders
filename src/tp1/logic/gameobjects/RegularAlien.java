@@ -1,7 +1,6 @@
 package tp1.logic.gameobjects;
 
 import tp1.logic.AlienManager;
-import tp1.logic.Game;
 import tp1.logic.Move;
 import tp1.logic.Position;
 
@@ -14,8 +13,9 @@ public class RegularAlien {
 
 	//TODO fill your code
 	private int cyclesToMove;
-	private int speed, health;
-	private Move dir;
+	private int speed, health = 1;
+
+	private Move dir = Move.RIGHT;;
 
 	public Position position;
 	
@@ -34,10 +34,6 @@ public class RegularAlien {
 		performMovement(dir);
 	}
 
-	private void descent() {
-		this.position = this.position.move(Move.DOWN);
-	}
-
 	private void performMovement(Move dir) {
 		this.position = this.position.move(dir);
 	}
@@ -52,13 +48,15 @@ public class RegularAlien {
 	}
 
 	public boolean receiveAttack(UCMLaser laser) {
-		//TODO fill your code
+		if(--this.health == 0) {
+			this.alienManager.regularAliens.remove(this);
+			return true;
+		}
 		return false;
 	}
 
 	public int getHealth() {
 		return this.health;
 	}
-	
 
 }

@@ -74,6 +74,10 @@ public class Game {
 		//TODO fill your code		
 	}
 
+	public void disableLaser() {
+		this.UCMship.disableLaser();
+	}
+
 	public Random getRandom() {
 		//TODO fill your code
 		return null;
@@ -84,7 +88,19 @@ public class Game {
 		return null;
 	}
 
-	public boolean isInBorder(Position position) {
+	public boolean isOnBorderX(Position position) {
+		return (position.col >= DIM_X-1 || position.col <= 0);
+	}
+
+	public boolean isOutOfBoundX(Position position) {
 		return (position.col >= DIM_X || position.col < 0);
+	}
+
+	public boolean isOnBorderY(Position position) {
+		return (position.row >= DIM_Y-1 || position.row <= 0);
+	}
+
+	public boolean isOutOfBoundY(Position position) {
+		return (position.row >= DIM_Y || position.row < 0);
 	}
 }

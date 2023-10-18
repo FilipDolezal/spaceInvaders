@@ -3,9 +3,7 @@ package tp1.logic;
 //import tp1.logic.gameobjects.DestroyerAlien;
 import tp1.logic.gameobjects.RegularAlien;
 //import tp1.logic.lists.DestroyerAlienList;
-import tp1.logic.lists.RegularAlienList;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -21,7 +19,6 @@ public class AlienManager {
 	private int remainingAliens;
 	
 	private boolean squadInFinalRow;
-	private int shipsOnBorder;
 	private boolean onBorder;
 
 	public ArrayList<RegularAlien> regularAliens;
@@ -62,37 +59,17 @@ public class AlienManager {
 //	}
 
 	
-	// CONTROL METHODS
-		
-	public void shipOnBorder() {
-		if(!onBorder) {
-			onBorder = true;
-			shipsOnBorder = remainingAliens;
-		}
-	}
-
-	public boolean onBorder() {
-		return false;
-	}
-
-	public void switchDirections() {
-		regularAliens.forEach(a -> a.changeDirection());
-	}
-
 	public void automaticMove() {
 		boolean isAnyInBorder = regularAliens.stream()
-				.filter(a -> this.game.isInBorder(a.position))
+				.filter(a -> this.game.isOnBorderX(a.position))
 				.findAny().isPresent();
 
-		if(isAnyInBorder) {
-			switchDirections();
+		if(isAnyInBorder && this.onBorder) {
+			this.onBorder = false;
+			regularAliens.forEach(a -> a.changeDirection());
+		} else {
+			regularAliens.forEach(a -> a.automaticMove());
+			this.onBorder = true;
 		}
-
-		regularAliens.forEach(a -> a.automaticMove());
 	}
-
-	public boolean isInBorder(Position position) {
-		return this.game.isInBorder(position);
-	}
-
 }

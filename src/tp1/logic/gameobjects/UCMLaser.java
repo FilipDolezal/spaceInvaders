@@ -17,7 +17,8 @@ public class UCMLaser {
 
 	public Position position;
 
-	public UCMLaser(Position position, Move dir) {
+	public UCMLaser(Position position, Move dir, Game game) {
+		this.game = game;
 		this.position = position;
 		this.dir = dir;
 	}
@@ -26,7 +27,7 @@ public class UCMLaser {
 	 *  Method called when the laser disappears from the board
 	 */
 	public void onDelete() {
-		game.enableLaser();
+		game.disableLaser();
 	}
 
 	/**
@@ -50,8 +51,7 @@ public class UCMLaser {
 	}
 
 	private boolean isOut() {
-		//TODO fill your code
-		return false;
+		return this.game.isOutOfBoundY(this.position);
 	}
 
 	private void performMovement(Move dir) {
@@ -96,8 +96,16 @@ public class UCMLaser {
 	 * @param other regular alien under attack by the laser
 	 * @return always returns <code>true</code>
 	 */
-	private boolean weaponAttack(RegularAlien other) {
-		return other.receiveAttack(this);	
+	public boolean weaponAttack(RegularAlien other) {
+		boolean isHit = this.position
+				.move(dir)
+				.equals(other.position);
+
+		if(isHit) {
+			this.game.UCMship.disableLaser();
+			return other.receiveAttack(this);
+		}
+		return false;
 	}
 
 	//TODO fill your code
