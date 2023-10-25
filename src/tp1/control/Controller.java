@@ -7,6 +7,7 @@ import java.util.Scanner;
 import tp1.logic.Game;
 import tp1.logic.Move;
 import tp1.logic.Position;
+import tp1.logic.gameobjects.Alien;
 import tp1.logic.gameobjects.RegularAlien;
 import tp1.logic.gameobjects.UCMLaser;
 import tp1.logic.gameobjects.UCMShip;
@@ -53,7 +54,11 @@ public class Controller {
 		printGame();
 
 		beginning: while(true) {
-			//printEndMessage();
+			if(game.playerWin() || game.aliensWin()) {
+				printEndMessage();
+				return;
+			}
+
 			String[] prompt = prompt();
 			switch (prompt[0].charAt(0)) {
 				case 'm': // move [direction]
@@ -96,12 +101,17 @@ public class Controller {
 					System.out.println("[R]egular Alien: points , damage = 1, endurance = 1" );
 					System.out.println("[D]estroyer Alien: points='10', damage='1', endurance='1'");
 					System.out.println("U[f]o: points='25', damage='0', endurance='1'");
+					// System.out.println(this.game.level.printGameAttributes());
 
 					continue beginning;
 
-
+				case 'r':
+					this.game.resetGame();
+					printGame();
+					continue beginning;
 
 				case 'e': // end
+					printEndMessage();
 					System.exit(0);
 			}
 
@@ -110,7 +120,8 @@ public class Controller {
 			UCMLaser laser = this.game.UCMship.getLaser();
 			if(laser != null) {
 				boolean isHit = false;
-				for (RegularAlien alien: this.game.alienManager.regularAliens) {
+				for (Alien alien: this.game.alienManager.getAliens()) {
+					if(alien == null) continue;
 					isHit = laser.weaponAttack(alien);
 					if(isHit) break;
 				}

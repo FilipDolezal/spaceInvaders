@@ -96,7 +96,7 @@ public class UCMLaser {
 	 * @param other regular alien under attack by the laser
 	 * @return always returns <code>true</code>
 	 */
-	public boolean weaponAttack(RegularAlien other) {
+	public boolean weaponAttack(Alien other) {
 		boolean isHit = this.position
 				.move(dir)
 				.equals(other.position);

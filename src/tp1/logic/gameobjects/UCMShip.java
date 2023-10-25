@@ -9,6 +9,7 @@ public class UCMShip {
     public Position position;
 
     public UCMLaser laser;
+    private int health = 3;
 
     public UCMShip() {
         this.position = new Position(4, 7);
@@ -29,5 +30,9 @@ public class UCMShip {
     }
 
     public void disableLaser() { this.laser = null; }
+
+    public boolean isAlive() {
+        return health > 0;
+    }
 
 }

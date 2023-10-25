@@ -1,5 +1,6 @@
 package tp1.logic;
 
+import tp1.logic.gameobjects.Alien;
 import tp1.logic.gameobjects.RegularAlien;
 import tp1.logic.gameobjects.UCMLaser;
 import tp1.logic.gameobjects.UCMShip;
@@ -37,15 +38,16 @@ public class Game {
 		return 0;
 	}
 
+
 	public int getRemainingAliens() {
-		//TODO fill your code
-		return 0;
+		return alienManager.getRemainingAliens();
 	}
 
 	public String positionToString(int col, int row) {
-		for (RegularAlien alien: alienManager.regularAliens) {
+		for (Alien alien: alienManager.getAliens()) {
+			if(alien == null) continue;
 			if(alien.position.equals(col, row))
-				return "R["+ alien.getHealth() +"]";
+				return alien.toString();
 		}
 
 		if(UCMship.position.equals(col, row))
@@ -61,13 +63,11 @@ public class Game {
 	}
 
 	public boolean playerWin() {
-		//TODO fill your code
-		return false;
+		return alienManager.getRemainingAliens() == 0;
 	}
 
 	public boolean aliensWin() {
-		//TODO fill your code
-		return false;
+		return !this.UCMship.isAlive();
 	}
 
 	public void enableLaser() {
@@ -102,5 +102,11 @@ public class Game {
 
 	public boolean isOutOfBoundY(Position position) {
 		return (position.row >= DIM_Y || position.row < 0);
+	}
+
+	public void resetGame()
+	{
+		alienManager.resetAliens();
+		UCMship = new UCMShip();
 	}
 }
