@@ -9,6 +9,7 @@ import tp1.logic.Move;
 import tp1.logic.Position;
 import tp1.logic.gameobjects.RegularAlien;
 import tp1.logic.gameobjects.UCMLaser;
+import tp1.logic.gameobjects.UCMShip;
 import tp1.view.GamePrinter;
 import tp1.view.Messages;
 
@@ -45,10 +46,14 @@ public class Controller {
 	/**
 	 * Runs the game logic
 	 */
+
+
+	//Prompt gets the input from the user. Prompt[0].charAt(0) takes the first char of the input to know what the command will be.
 	public void run() {
 		printGame();
 
 		beginning: while(true) {
+			//printEndMessage();
 			String[] prompt = prompt();
 			switch (prompt[0].charAt(0)) {
 				case 'm': // move [direction]
@@ -60,10 +65,11 @@ public class Controller {
 						default -> Move.NONE;
 					};
 					Position position = this.game.UCMship.position;
+					//Checks if the next movement is possible or not.
 					boolean isOutOfBounds = this.game.isOutOfBoundX(position.move(move));
 					if(!isOutOfBounds) this.game.UCMship.preformMovement(move);
 					else  {
-						System.out.println("Movement cannot be preformed");
+						System.out.println("Movement cannot be performed");
 						continue beginning;
 					}
 
@@ -73,6 +79,30 @@ public class Controller {
 					break;
 				case 'n': // none
 					return;
+				case 'h': // ask for help
+					System.out.println("Available commands:");
+					System.out.println("[m]ove <left|lleft|right|rright>: moves the UCMShip to the indicated direction");
+					System.out.println("[s]hoot: player shoots a laser");
+					System.out.println("shock[W]ave: player releases a shock wave");
+					System.out.println("[l]ist: print the list of current ships");
+					System.out.println("[r]eset: start a new game");
+					System.out.println("[h]elp: print this help message");
+					System.out.println("[e]xit: end the execution of the game");
+					System.out.println("[n]one | '' '' : skips cycle");
+					continue beginning;
+
+				case 'l': // displays the list of objects; ask filip how to put the attributes of each thing.
+					System.out.println("[U]CM Ship: damage = 1, endurance = 3");
+					System.out.println("[R]egular Alien: points , damage = 1, endurance = 1" );
+					System.out.println("[D]estroyer Alien: points='10', damage='1', endurance='1'");
+					System.out.println("U[f]o: points='25', damage='0', endurance='1'");
+
+					continue beginning;
+
+
+
+				case 'e': // end
+					System.exit(0);
 			}
 
 			this.game.alienManager.automaticMove();
@@ -99,12 +129,12 @@ public class Controller {
 	private void printGame() {
 		System.out.println(printer);
 	}
-	
+
 	/**
 	 * Prints the final message once the game is finished
 	 */
 	public void printEndMessage() {
 		System.out.println(printer.endMessage());
 	}
-	
+
 }
