@@ -4,7 +4,7 @@ import tp1.logic.AlienManager;
 import tp1.logic.Move;
 import tp1.logic.Position;
 
-    public abstract class Alien {
+public abstract class Alien {
     protected char symbol;
     protected int speed, health = 1;
 

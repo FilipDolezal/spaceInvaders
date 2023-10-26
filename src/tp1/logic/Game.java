@@ -14,12 +14,16 @@ public class Game {
 	public static final int DIM_Y = 8;
 
 	public UCMShip UCMship;
+
+	public UCMLaser laser;
 	public AlienManager alienManager;
 
 
 	//TODO fill your code
 	private Level level;
 	private long seed;
+
+	private int cycleCount = 0;
 
 	public Game(Level level, long seed) {
 		//TODO fill your code
@@ -34,8 +38,7 @@ public class Game {
 	}
 
 	public int getCycle() {
-		//TODO fill your code
-		return 0;
+		return this.cycleCount;
 	}
 
 
@@ -44,18 +47,15 @@ public class Game {
 	}
 
 	public String positionToString(int col, int row) {
-		for (Alien alien: alienManager.getAliens()) {
-			if(alien == null) continue;
-			if(alien.position.equals(col, row))
+		for (Alien alien: alienManager.getAliens())
+			if(alien.getPosition().equals(col, row))
 				return alien.toString();
-		}
 
-		if(UCMship.position.equals(col, row))
+		if(UCMship.getPosition().equals(col, row))
 			return "^__^";
 
-		UCMLaser laser = UCMship.getLaser();
 		if(laser != null) {
-			if(laser.position.equals(col, row))
+			if(laser.getPosition().equals(col, row))
 				return "oo";
 		}
 
@@ -71,11 +71,16 @@ public class Game {
 	}
 
 	public void enableLaser() {
-		//TODO fill your code		
+		if(laser != null) return;
+
+		laser = new UCMLaser(
+			this.UCMship.getPosition(),
+			Move.UP, this
+		);
 	}
 
 	public void disableLaser() {
-		this.UCMship.disableLaser();
+		this.laser = null;
 	}
 
 	public Random getRandom() {
@@ -88,25 +93,66 @@ public class Game {
 		return null;
 	}
 
-	public boolean isOnBorderX(Position position) {
+	public static boolean isOnBorderX(Position position) {
 		return (position.col >= DIM_X-1 || position.col <= 0);
 	}
 
-	public boolean isOutOfBoundX(Position position) {
+	public static boolean isOutOfBoundX(Position position) {
 		return (position.col >= DIM_X || position.col < 0);
 	}
 
-	public boolean isOnBorderY(Position position) {
+	public static boolean isOnBorderY(Position position) {
 		return (position.row >= DIM_Y-1 || position.row <= 0);
 	}
 
-	public boolean isOutOfBoundY(Position position) {
+	public static boolean isOutOfBoundY(Position position) {
 		return (position.row >= DIM_Y || position.row < 0);
+	}
+
+	/**
+	 * method that executes the cycle
+	 */
+	public void performCycle() {
+		// increment cycle
+		cycleCount++;
+
+		// move aliens
+		alienManager.automaticMove();
+
+		// move laser if exists
+		if(laser != null) {
+			Alien[] aliens = alienManager.getAliens();
+			boolean collision;
+			int index = 0;
+
+			do {
+				collision = laser.performAttack(aliens[index]);
+			} while (!collision && ++index < aliens.length);
+			// while there is no collision and there are still untested aliens
+
+			if(!collision) laser.automaticMove();
+		}
+	}
+
+	/**
+	 * attempt to move the UCMship
+	 * @param move
+	 * @return true if attempt to move was successful
+	 */
+	public boolean moveShip(Move move)
+	{
+		if(Game.isOutOfBoundX(UCMship.getPosition().move(move)))
+			return false;
+
+		UCMship.preformMovement(move);
+		return true;
 	}
 
 	public void resetGame()
 	{
+		cycleCount = 0;
 		alienManager.resetAliens();
 		UCMship = new UCMShip();
+		laser = null;
 	}
 }
