@@ -129,6 +129,8 @@ public class Game {
 				collision = laser.performAttack(aliens[index]);
 			} while (!collision && ++index < aliens.length);
 			// while there is no collision and there are still untested aliens
+
+			if(!collision) laser.automaticMove();
 		}
 	}
 
