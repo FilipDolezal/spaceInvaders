@@ -45,11 +45,8 @@ public class Controller {
 	}
 
 	/**
-	 * Runs the game logic
+	 * Runs the game logic.
 	 */
-
-
-	//Prompt gets the input from the user. Prompt[0].charAt(0) takes the first char of the input to know what the command will be.
 	public void run() {
 		printGame();
 
@@ -61,7 +58,8 @@ public class Controller {
 
 			String[] prompt = prompt();
 			switch (prompt[0].charAt(0)) {
-				case 'm': // move [direction]
+				// move [direction]
+				case 'm':
 					Move move = switch (prompt[1]) {
 						case "left" -> Move.LEFT;
 						case "lleft" -> Move.LLEFT;
@@ -69,22 +67,24 @@ public class Controller {
 						case "rright" -> Move.RRIGHT;
 						default -> Move.NONE;
 					};
-					Position position = this.game.UCMship.position;
-					//Checks if the next movement is possible or not.
-					boolean isOutOfBounds = this.game.isOutOfBoundX(position.move(move));
-					if(!isOutOfBounds) this.game.UCMship.preformMovement(move);
-					else  {
+					// move the ship and if return false -> ship couldn't be moved
+					if(!this.game.moveShip(move)) {
 						System.out.println("Movement cannot be performed");
 						continue beginning;
 					}
+					break;
 
+				// shoot
+				case 's':
+					this.game.enableLaser();
 					break;
-				case 's': // shoot
-					this.game.UCMship.preformAttack(game);
-					break;
-				case 'n': // none
-					return;
-				case 'h': // ask for help
+
+				// none
+				case 'n':
+					continue beginning;
+
+				// ask for help
+				case 'h':
 					System.out.println("Available commands:");
 					System.out.println("[m]ove <left|lleft|right|rright>: moves the UCMShip to the indicated direction");
 					System.out.println("[s]hoot: player shoots a laser");
@@ -96,42 +96,30 @@ public class Controller {
 					System.out.println("[n]one | '' '' : skips cycle");
 					continue beginning;
 
-				case 'l': // displays the list of objects; ask filip how to put the attributes of each thing.
+				// displays the list of objects
+				case 'l':
 					System.out.println("[U]CM Ship: damage = 1, endurance = 3");
 					System.out.println("[R]egular Alien: points , damage = 1, endurance = 1" );
 					System.out.println("[D]estroyer Alien: points='10', damage='1', endurance='1'");
 					System.out.println("U[f]o: points='25', damage='0', endurance='1'");
 					// System.out.println(this.game.level.printGameAttributes());
-
 					continue beginning;
 
+				// reset
 				case 'r':
 					this.game.resetGame();
 					printGame();
 					continue beginning;
 
-				case 'e': // end
+				// end
+				case 'e':
 					printEndMessage();
-					System.exit(0);
+					return;
 			}
 
-			this.game.alienManager.automaticMove();
-
-			UCMLaser laser = this.game.UCMship.getLaser();
-			if(laser != null) {
-				boolean isHit = false;
-				for (Alien alien: this.game.alienManager.getAliens()) {
-					if(alien == null) continue;
-					isHit = laser.weaponAttack(alien);
-					if(isHit) break;
-				}
-				if(!isHit) laser.automaticMove();
-			}
-
+			this.game.performCycle();
 			printGame();
 		}
-
-		//TODO fill your code
 	}
 
 	/**

@@ -6,9 +6,11 @@ import tp1.logic.Position;
 
 public abstract class Alien {
     protected char symbol;
-    protected int cyclesToMove, speed, health = 1;
+    protected int speed, health = 1;
+
     protected Move dir;
-    public Position position;
+
+    protected Position position;
     protected AlienManager alienManager;
 
     public Alien(AlienManager alienManager, Position position){
@@ -16,12 +18,11 @@ public abstract class Alien {
         this.position 		= position;
     }
 
-
     /**
      *  Implements the automatic movement of the regular alien
      */
     public void automaticMove() {
-        performMovement(dir);
+        this.performMovement(dir);
     }
 
     private void performMovement(Move dir) {
@@ -37,7 +38,7 @@ public abstract class Alien {
         };
     }
 
-    public boolean receiveAttack(UCMLaser laser) {
+    public boolean receiveAttack() {
         if(--this.health == 0) {
             this.alienManager.removeAlien(this);
             return true;
@@ -47,5 +48,9 @@ public abstract class Alien {
 
     public String toString() {
         return this.symbol + "[" + this.health + "]";
+    }
+
+    public Position getPosition() {
+        return position;
     }
 }

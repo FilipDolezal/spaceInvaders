@@ -22,10 +22,11 @@ public class AlienManager {
 	private Game game;
 
 	private boolean squadInFinalRow;
-	private boolean onBorder;
+	private boolean onBorder = true;
+	private int cyclesToMove;
 
-	public AlienList regularAliens;
-	public AlienList destroyerAliens;
+	private AlienList regularAliens;
+	private AlienList destroyerAliens;
 
 	public AlienManager(Game game, Level level) {
 		this.level = level;
@@ -33,18 +34,17 @@ public class AlienManager {
 
 		this.regularAliens = this.initializeRegularAliens();
 		this.destroyerAliens = this.initializeDestroyerAliens();
+		this.cyclesToMove = (level.numCyclesToMoveOneCell - 1);
 	}
 		
-	// INITIALIZER METHODS
-	
 	/**
 	 * Initializes the list of regular aliens
 	 * @return the initial list of regular aliens according to the current level
 	 */
-	protected AlienList initializeRegularAliens() {
-		AlienList list = new AlienList(this.level.getNumRegularAliens() * this.level.getNumRowsRegularAliens());
-		for (int row = 0, index = 0; row < this.level.getNumRowsRegularAliens(); row++) {
-			for (int col = 0; col < this.level.getNumRegularAliens(); col++, index++) {
+	private AlienList initializeRegularAliens() {
+		AlienList list = new AlienList(level.numRegularAliens * level.numRowsRegularAliens);
+		for (int row = 0, index = 0; row < level.numRowsRegularAliens; row++) {
+			for (int col = 0; col < level.numRegularAliens; col++, index++) {
 
 				list.aliens[index] = new RegularAlien(
 						this,
@@ -59,18 +59,22 @@ public class AlienManager {
 	 * Initializes the list of destroyer aliens
 	 * @return the initial list of destroyer aliens according to the current level
 	 */
-	protected AlienList initializeDestroyerAliens() {
-		AlienList list = new AlienList(level.getNumDestroyerAliens());
+	private AlienList initializeDestroyerAliens() {
+		AlienList list = new AlienList(level.numDestroyerAliens);
 		for(int i = 0; i < list.aliens.length; i++) {
 			list.aliens[i] = new DestroyerAlien(
 					this,
-					new Position(i, level.getNumRowsRegularAliens())
+					new Position(i, level.numRowsRegularAliens)
 			);
 		}
 
 		return list;
 	}
 
+	/**
+	 * Returns one array of all the remaining aliens
+	 * @return Alien[] remaining aliens
+	 */
 	public Alien[] getAliens() {
 		Alien[] aliens = new Alien[regularAliens.aliens.length + destroyerAliens.aliens.length];
 		System.arraycopy(regularAliens.aliens, 0, aliens, 0, regularAliens.aliens.length);
@@ -79,33 +83,37 @@ public class AlienManager {
 	}
 
 	public int getRemainingAliens() {
-		return this.regularAliens.num + this.destroyerAliens.num;
+		return this.regularAliens.aliens.length + this.destroyerAliens.aliens.length;
 	}
 
 	public void automaticMove() {
 		Alien[] aliens = getAliens();
 
-		boolean isAnyInBorder = false;
+		boolean nowOnBorder = false;
 		for (Alien a: aliens) {
-			if(a == null) continue;
-			if(this.game.isOnBorderX(a.position)) {
-				isAnyInBorder = true;
+			if(Game.isOnBorderX(a.getPosition())) {
+				nowOnBorder = true;
 				break;
 			}
 		}
 
-		if(isAnyInBorder && this.onBorder) {
-			this.onBorder = false;
-			for (Alien a: aliens) {
-				if(a == null) continue;
-				a.changeDirection();
+		if(nowOnBorder) {
+			if(onBorder) {
+				// already was on border -> wait for move then reset onBorder
+				if(cyclesToMove == 0) onBorder = false;
+
+			} else {
+				// newly on border -> descend now
+				for (Alien a: aliens) a.changeDirection();
+				if(cyclesToMove == 0) cyclesToMove++;
+				onBorder = true;
 			}
-		} else {
-			for (Alien a: aliens) {
-				if(a == null) continue;
-				a.automaticMove();
-			}
-			this.onBorder = true;
+		}
+
+		if(cyclesToMove-- == 0) {
+			for (Alien a: aliens) a.automaticMove();
+			// reset cycle counter back to default
+			cyclesToMove = (level.numCyclesToMoveOneCell-1);
 		}
 	}
 

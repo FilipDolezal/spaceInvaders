@@ -8,17 +8,12 @@ public enum Level {
 
 	EASY(4, 2, 2, 0.1, 3, 0.5), HARD(8, 2, 2, 0.3, 2, 0.2), INSANE(8, 2, 4, 0.5, 1, 0.1);
 
-	private int numRegularAliens;
-	private int numRowsRegularAliens;
-
-	public int getNumDestroyerAliens() {
-		return numDestroyerAliens;
-	}
-
-	private int numDestroyerAliens;
-	private int numCyclesToMoveOneCell;
-	private double ufoFrequency;
-	private double shootFrequency;
+	public final int numRegularAliens;
+	public final int numRowsRegularAliens;
+	public final int numDestroyerAliens;
+	public final int numCyclesToMoveOneCell;
+	public final double ufoFrequency;
+	public final double shootFrequency;
 
 	private Level(int numRegularAliens, int numRowsRegularAliens, 
 			      int numDestroyerAliens, 
@@ -50,6 +45,12 @@ public enum Level {
 	public int getNumRowsRegularAliens() {
 		return numRowsRegularAliens;
 	}
+
+	public int getNumCyclesToMoveOneCell() { return numCyclesToMoveOneCell; 	}
+
+	public double getShootFrequency() { return shootFrequency; }
+
+	public int getNumDestroyerAliens() { return numDestroyerAliens; }
 
 	/**
 	 * Parse a string and return any matching level

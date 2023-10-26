@@ -34,7 +34,7 @@ public class Ufo {
 	 * @return <code>true</code> if an ufo should be generated.
 	 */
 	private boolean canGenerateRandomUfo(){
-		return game.getRandom().nextDouble() < game.getLevel().getUfoFrequency();
+		return game.getRandom().nextDouble() < game.getLevel().ufoFrequency;
 	}
 	
 }
