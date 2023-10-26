@@ -4,19 +4,20 @@ import tp1.logic.gameobjects.Alien;
 
 public class AlienList {
     public Alien[] aliens;
-    public final int initSize;
+    public int num;
 
-    public AlienList(int initSize) {
-        this.initSize = initSize;
-        this.aliens = new Alien[initSize];
+    public AlienList(int num) {
+        this.num = num;
+        this.aliens = new Alien[num];
     }
 
     public void remove(Alien alien){
-        Alien[] newArr = new Alien[aliens.length-1];
-        for(int i = 0, x = 0; i < aliens.length; i++) {
-            if(aliens[i].equals(alien)) continue;
-            newArr[x++] = aliens[i];
+        for(int i = 0; i < aliens.length; i++) {
+            if(aliens[i] == null) continue;
+            if (aliens[i].equals(alien)) {
+                aliens[i] = null;
+                num--;
+            }
         }
-        this.aliens = newArr;
     }
 }

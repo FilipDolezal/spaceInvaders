@@ -6,7 +6,7 @@ package tp1.logic;
  */
 public enum Level {
 
-	EASY(4, 2, 2, 0.1, 3, 0.5), HARD(8, 2, 2, 0.3, 2, 0.2), INSANE(8, 2, 4, 0.5, 1, 0.1);
+	EASY(4, 1, 2, 0.1, 3, 0.5), HARD(8, 2, 2, 0.3, 2, 0.2), INSANE(8, 2, 4, 0.5, 1, 0.1);
 
 	public final int numRegularAliens;
 	public final int numRowsRegularAliens;
@@ -42,6 +42,8 @@ public enum Level {
 		return numRegularAliens;
 	}
 
+	public int getNumRegularAliensPerRow(){return (numRegularAliens / numRowsRegularAliens);}
+
 	public int getNumRowsRegularAliens() {
 		return numRowsRegularAliens;
 	}
@@ -51,6 +53,10 @@ public enum Level {
 	public double getShootFrequency() { return shootFrequency; }
 
 	public int getNumDestroyerAliens() { return numDestroyerAliens; }
+
+	public int getNumCyclesToMoveOneCell() {
+		return numCyclesToMoveOneCell;
+	}
 
 	/**
 	 * Parse a string and return any matching level

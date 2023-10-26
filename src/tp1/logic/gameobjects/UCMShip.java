@@ -5,7 +5,10 @@ import tp1.logic.Move;
 import tp1.logic.Position;
 
 public class UCMShip {
-    private Position position;
+
+    public Position position;
+
+    public UCMLaser laser;
     private int health = 3;
 
     public UCMShip() {
@@ -16,11 +19,17 @@ public class UCMShip {
         this.position = position.move(move);
     }
 
-
-
-    public Position getPosition() {
-        return this.position;
+    public void preformAttack(Game game) {
+        if(laser == null) {
+            laser = new UCMLaser(position, Move.UP, game);
+        }
     }
+
+    public UCMLaser getLaser() {
+        return this.laser;
+    }
+
+    public void disableLaser() { this.laser = null; }
 
     public boolean isAlive() {
         return health > 0;
