@@ -1,9 +1,6 @@
 package tp1.logic;
 
-import tp1.logic.gameobjects.Alien;
-import tp1.logic.gameobjects.RegularAlien;
-import tp1.logic.gameobjects.UCMLaser;
-import tp1.logic.gameobjects.UCMShip;
+import tp1.logic.gameobjects.*;
 
 import java.util.Random;
 
@@ -16,6 +13,7 @@ public class Game {
 	public UCMShip UCMship;
 
 	public UCMLaser laser;
+	public Bomb bomb;
 	public AlienManager alienManager;
 
 
@@ -24,6 +22,7 @@ public class Game {
 	private long seed;
 
 	private int cycleCount = 0;
+	private int points = 0;
 
 	public Game(Level level, long seed) {
 		//TODO fill your code
@@ -32,9 +31,13 @@ public class Game {
 		this.alienManager = new AlienManager(this, level);
 	}
 
+
+	public int totalPoints(){
+		return this.points;
+	}
 	public String stateToString() {
-		//TODO fill your code
-		return null;
+
+		return "\n";
 	}
 
 	public int getCycle() {
@@ -57,6 +60,12 @@ public class Game {
 		if(laser != null) {
 			if(laser.getPosition().equals(col, row))
 				return "oo";
+
+	//	if (bomb != null){
+			//if (bomb.getPosition().equals(col, row))
+				//return "*";
+
+		//}
 		}
 
 		return "";
@@ -154,5 +163,9 @@ public class Game {
 		alienManager.resetAliens();
 		UCMship = new UCMShip();
 		laser = null;
+	}
+
+	public void disableBomb() {
+		this.bomb = null;
 	}
 }

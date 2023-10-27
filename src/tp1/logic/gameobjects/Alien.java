@@ -6,6 +6,7 @@ import tp1.logic.Position;
 
 public abstract class Alien {
     protected char symbol;
+    protected int points; //Assign the points to each type of alien.
     protected int speed, health = 1;
 
     protected Move dir;

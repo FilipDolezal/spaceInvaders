@@ -15,7 +15,7 @@ public class Bomb {
         this.dir = dir;
     }
 
-    public void onDelete() {
+    /*public void onDelete() {
         game.disableBomb();
     }
     private void die() {
@@ -46,4 +46,7 @@ public class Bomb {
         if(isOut())
             die();
     }
+    public Position getPosition() {
+        return position;
+    }*/
 }

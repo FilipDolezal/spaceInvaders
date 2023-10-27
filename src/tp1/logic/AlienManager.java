@@ -42,13 +42,13 @@ public class AlienManager {
 	 * @return the initial list of regular aliens according to the current level
 	 */
 	private AlienList initializeRegularAliens() {
-		AlienList list = new AlienList(level.numRegularAliens * level.numRowsRegularAliens);
+		AlienList list = new AlienList(level.numRegularAliens);
 		for (int row = 0, index = 0; row < level.numRowsRegularAliens; row++) {
-			for (int col = 0; col < level.numRegularAliens; col++, index++) {
+			for (int col = 0; col < level.getNumAliensPerRow(); col++, index++) {
 
 				list.aliens[index] = new RegularAlien(
 						this,
-						new Position(col, row)
+						new Position(col + 2 , row + 1)
 				);
 			}
 		}
@@ -64,7 +64,7 @@ public class AlienManager {
 		for(int i = 0; i < list.aliens.length; i++) {
 			list.aliens[i] = new DestroyerAlien(
 					this,
-					new Position(i, level.numRowsRegularAliens)
+					new Position(i + 3, level.numRowsRegularAliens + 1)
 			);
 		}
 
