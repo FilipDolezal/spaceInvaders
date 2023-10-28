@@ -10,10 +10,10 @@ import tp1.logic.Position;
  *
  */
 public class RegularAlien extends Alien {
-
+	public static final int SCORE = 5;
 	public RegularAlien(AlienManager alienManager, Position position) {
 		super(alienManager, position);
-		this.dir = Move.RIGHT;
+		this.dir = Move.LEFT;
 		this.symbol = 'R';
 	}
 

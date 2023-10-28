@@ -8,9 +8,11 @@ import tp1.logic.Position;
 public class DestroyerAlien extends Alien
 {
     private Bomb bomb;
+    public static final int SCORE = 10;
+
     public DestroyerAlien(AlienManager alienManager, Position position) {
         super(alienManager, position);
-        this.dir = Move.RIGHT;
+        this.dir = Move.LEFT;
         this.symbol = 'D';
     }
 

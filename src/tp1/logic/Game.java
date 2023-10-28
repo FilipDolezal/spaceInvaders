@@ -8,7 +8,6 @@ public class Game {
 	public static final int DIM_X = 9, DIM_Y = 8;
 	public UCMShip UCMship;
 	public UCMLaser laser;
-	public Bomb bomb;
 	public AlienManager alienManager;
 
 	private Level level;
@@ -23,13 +22,12 @@ public class Game {
 		this.alienManager = new AlienManager(this, level);
 	}
 
-
-	public int totalPoints(){
-		return this.points;
-	}
 	public String stateToString() {
-
-		return "\n";
+		StringBuilder sb = new StringBuilder();
+		sb.append("Life: ").append(this.UCMship.getHealth()).append(System.lineSeparator());
+		sb.append("Points: ").append(this.points).append(System.lineSeparator());
+		//sb.append("ShockWave: ").append(this.UCMship.getHealth()).append(System.lineSeparator());
+		return sb.toString();
 	}
 	public int getCycle() {
 		return this.cycleCount;
@@ -45,7 +43,7 @@ public class Game {
 		return alienManager.getRemainingAliens() == 0;
 	}
 	public boolean aliensWin() {
-		return !this.UCMship.isAlive();
+		return alienManager.getSquadInFinalRow() || !this.UCMship.isAlive();
 	}
 
 	public String positionToString(int col, int row) {
@@ -93,8 +91,8 @@ public class Game {
 		return (position.col >= DIM_X || position.col < 0);
 	}
 
-	public static boolean isOnBorderY(Position position) {
-		return (position.row >= DIM_Y-1 || position.row <= 0);
+	public static boolean isInFinalRow(Position position) {
+		return position.row == Game.DIM_Y - 1;
 	}
 
 	public static boolean isOutOfBoundY(Position position) {
@@ -121,7 +119,17 @@ public class Game {
 			int index = 0;
 
 			do {
-				collision = laser.performAttack(aliens[index]);
+				Alien hitAlien = aliens[index];
+				collision = laser.performAttack(hitAlien);
+				if(hitAlien.getHealth() == 0) {
+					if(hitAlien instanceof RegularAlien)
+						points += RegularAlien.SCORE;
+					else if(hitAlien instanceof DestroyerAlien)
+						points += DestroyerAlien.SCORE;
+					// else if(hitAlien instanceof Ufo)
+						// points += Ufo.SCORE;
+				}
+
 			} while (!collision && ++index < aliens.length);
 			// while there is no collision and there are still untested aliens
 

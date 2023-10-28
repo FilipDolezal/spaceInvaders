@@ -14,7 +14,6 @@ public enum Level {
 	public final int numCyclesToMoveOneCell;
 	public final double ufoFrequency;
 	public final double shootFrequency;
-	public int getNumAliensPerRow;
 
 	private Level(int numRegularAliens, int numRowsRegularAliens, 
 			      int numDestroyerAliens, 

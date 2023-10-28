@@ -21,8 +21,7 @@ public class AlienManager {
 	private Level level;
 	private Game game;
 
-	private boolean squadInFinalRow;
-	private boolean onBorder = true;
+	private boolean squadInFinalRow = false, onBorder = false;
 	private int cyclesToMove;
 
 	private AlienList regularAliens;
@@ -45,10 +44,10 @@ public class AlienManager {
 		AlienList list = new AlienList(level.numRegularAliens);
 		for (int row = 0, index = 0; row < level.numRowsRegularAliens; row++) {
 			for (int col = 0; col < level.getNumAliensPerRow(); col++, index++) {
-
+				int reqCenter = (Game.DIM_X/2) - (level.getNumAliensPerRow()/2);
 				list.aliens[index] = new RegularAlien(
 						this,
-						new Position(col + 2 , row + 1)
+						new Position(col + reqCenter , row + 1)
 				);
 			}
 		}
@@ -62,9 +61,13 @@ public class AlienManager {
 	private AlienList initializeDestroyerAliens() {
 		AlienList list = new AlienList(level.numDestroyerAliens);
 		for(int i = 0; i < list.aliens.length; i++) {
+
+			int reqCenter = (Game.DIM_X/2) - (level.getNumAliensPerRow()/2);
+			int offset = reqCenter + (level.getNumAliensPerRow() / level.numDestroyerAliens) - 1;
+
 			list.aliens[i] = new DestroyerAlien(
 					this,
-					new Position(i + 3, level.numRowsRegularAliens + 1)
+					new Position(i + offset, level.numRowsRegularAliens + 1)
 			);
 		}
 
@@ -85,6 +88,8 @@ public class AlienManager {
 	public int getRemainingAliens() {
 		return this.regularAliens.aliens.length + this.destroyerAliens.aliens.length;
 	}
+
+	public boolean getSquadInFinalRow() { return this.squadInFinalRow; }
 
 	public void destroyerAttack(UCMShip ship) {
 		for (Alien a: destroyerAliens.aliens) {
@@ -120,7 +125,11 @@ public class AlienManager {
 
 			} else {
 				// newly on border -> descend now
-				for (Alien a: aliens) a.changeDirection();
+				for (Alien a: aliens) {
+					a.changeDirection();
+					if(Game.isInFinalRow(a.getPosition()))
+						this.squadInFinalRow = true;
+				}
 				if(cyclesToMove == 0) cyclesToMove++;
 				onBorder = true;
 			}

@@ -54,4 +54,8 @@ public abstract class Alien {
     public Position getPosition() {
         return position;
     }
+
+    public int getHealth() {
+        return this.health;
+    }
 }

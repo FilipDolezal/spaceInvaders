@@ -80,8 +80,7 @@ public class Controller {
 					break;
 
 				// none
-				case 'n':
-					continue beginning;
+				case 'n': break;
 
 				// ask for help
 				case 'h':
