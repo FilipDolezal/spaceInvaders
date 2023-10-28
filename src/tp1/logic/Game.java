@@ -4,28 +4,20 @@ import tp1.logic.gameobjects.*;
 
 import java.util.Random;
 
-// TODO implementarlo
 public class Game {
-
-	public static final int DIM_X = 9;
-	public static final int DIM_Y = 8;
-
+	public static final int DIM_X = 9, DIM_Y = 8;
 	public UCMShip UCMship;
-
 	public UCMLaser laser;
 	public Bomb bomb;
 	public AlienManager alienManager;
 
-
-	//TODO fill your code
 	private Level level;
+	private Random random = new Random();
 	private long seed;
-
 	private int cycleCount = 0;
 	private int points = 0;
 
 	public Game(Level level, long seed) {
-		//TODO fill your code
 		this.level 	= level;
 		this.seed	= seed;
 		this.alienManager = new AlienManager(this, level);
@@ -39,44 +31,45 @@ public class Game {
 
 		return "\n";
 	}
-
 	public int getCycle() {
 		return this.cycleCount;
 	}
-
+	public Random getRandom() { return this.random; }
+	public Level getLevel() { return this.level; }
 
 	public int getRemainingAliens() {
 		return alienManager.getRemainingAliens();
 	}
-
-	public String positionToString(int col, int row) {
-		for (Alien alien: alienManager.getAliens())
-			if(alien.getPosition().equals(col, row))
-				return alien.toString();
-
-		if(UCMship.getPosition().equals(col, row))
-			return "^__^";
-
-		if(laser != null) {
-			if(laser.getPosition().equals(col, row))
-				return "oo";
-
-	//	if (bomb != null){
-			//if (bomb.getPosition().equals(col, row))
-				//return "*";
-
-		//}
-		}
-
-		return "";
-	}
-
+	public boolean tryFiringChance() { return random.nextDouble() < level.shootFrequency; }
 	public boolean playerWin() {
 		return alienManager.getRemainingAliens() == 0;
 	}
-
 	public boolean aliensWin() {
 		return !this.UCMship.isAlive();
+	}
+
+	public String positionToString(int col, int row) {
+		for (Alien alien: alienManager.getAliens()) {
+			if(alien.getPosition().equals(col, row)) {
+				return alien.getSymbol();
+			}
+
+			if(alien instanceof DestroyerAlien) {
+				DestroyerAlien da = (DestroyerAlien) alien;
+				if(da.isBombActive() && da.getBombPosition().equals(col, row)) {
+					return Bomb.SYMBOL;
+				}
+			}
+		}
+
+		if(UCMship.getPosition().equals(col, row))
+			return UCMShip.SYMBOL;
+
+		if(laser != null) {
+			if(laser.getPosition().equals(col, row))
+				return UCMLaser.SYMBOL;
+		}
+		return "";
 	}
 
 	public void enableLaser() {
@@ -90,16 +83,6 @@ public class Game {
 
 	public void disableLaser() {
 		this.laser = null;
-	}
-
-	public Random getRandom() {
-		//TODO fill your code
-		return null;
-	}
-
-	public Level getLevel() {
-		//TODO fill your code
-		return null;
 	}
 
 	public static boolean isOnBorderX(Position position) {
@@ -124,6 +107,9 @@ public class Game {
 	public void performCycle() {
 		// increment cycle
 		cycleCount++;
+
+		// Bombs attack UCMShip
+		alienManager.destroyerAttack(UCMship);
 
 		// move aliens
 		alienManager.automaticMove();
@@ -163,9 +149,5 @@ public class Game {
 		alienManager.resetAliens();
 		UCMship = new UCMShip();
 		laser = null;
-	}
-
-	public void disableBomb() {
-		this.bomb = null;
 	}
 }

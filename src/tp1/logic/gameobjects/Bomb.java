@@ -5,48 +5,62 @@ import tp1.logic.Move;
 import tp1.logic.Position;
 
 public class Bomb {
-    private Move dir;
-    Position position;
-    private Game game;
+    public static final String SYMBOL = "*";
 
-    public Bomb(Position position, Move dir, Game game) {
-        this.game = game;
-        this.position = position;
-        this.dir = dir;
+    private Move dir = Move.DOWN;
+    private DestroyerAlien alien;
+    private Position position;
+
+    public Bomb(DestroyerAlien alien) {
+        this.alien = alien;
+        this.position = alien.getPosition().move(dir);
     }
 
-    /*public void onDelete() {
-        game.disableBomb();
+    public void onDelete() {
+        alien.disableBomb();
     }
+
     private void die() {
         onDelete();
     }
-
 
     private void performMovement(Move dir) {
         this.position = position.move(dir);
     }
     private boolean isOut() {
-        return this.game.isOutOfBoundY(this.position);
+        return Game.isOutOfBoundY(this.position);
     }
-    public boolean weaponAttack(UCMShip ship) {
+
+    public Position getPosition() { return this.position; }
+
+    /**
+     * Method that implements the attack by the bomb to UCMShip.
+     * It checks whether both objects are alive and in the same position.
+     * If so call the "actual" attack method {@link weaponAttack}.
+     * @param ship the UCMShip possibly under attack
+     * @return <code>true</code> if the ship has been attacked by the laser.
+     */
+    public boolean performAttack(UCMShip ship) {
         boolean isHit = this.position
                 .move(dir)
-                .equals(ship.position);
+                .equals(ship.getPosition());
 
-        if(isHit) {
-            this.game.alienManager.destroyerAliens.disableBomb();
-            ship.receiveAttack();
-        }
-        return false;
+        return isHit ? this.weaponAttack(ship): false;
+    }
+
+    /**
+     *
+     * @param ship UCMShip under attack by the bomb
+     * @return always returns <code>true</code>
+     */
+    private boolean weaponAttack(UCMShip ship) {
+        alien.disableBomb();
+        ship.receiveAttack();
+        return true;
     }
 
     public void automaticMove () {
         performMovement(dir);
-        if(isOut())
-            die();
+        if(isOut()) die();
     }
-    public Position getPosition() {
-        return position;
-    }*/
 }

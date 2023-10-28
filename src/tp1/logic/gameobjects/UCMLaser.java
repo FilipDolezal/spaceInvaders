@@ -10,6 +10,7 @@ import tp1.logic.Position;
  *
  */
 public class UCMLaser {
+	public static final String SYMBOL = "oo";
 	private Move dir;
 	private Game game;
 	private Position position;

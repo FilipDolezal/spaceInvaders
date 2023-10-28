@@ -4,6 +4,7 @@ package tp1.logic;
 import tp1.logic.gameobjects.Alien;
 import tp1.logic.gameobjects.DestroyerAlien;
 import tp1.logic.gameobjects.RegularAlien;
+import tp1.logic.gameobjects.UCMShip;
 import tp1.logic.lists.AlienList;
 //import tp1.logic.lists.DestroyerAlienList;
 
@@ -17,7 +18,6 @@ import java.util.Arrays;
  *
  */
 public class AlienManager {
-	
 	private Level level;
 	private Game game;
 
@@ -86,6 +86,14 @@ public class AlienManager {
 		return this.regularAliens.aliens.length + this.destroyerAliens.aliens.length;
 	}
 
+	public void destroyerAttack(UCMShip ship) {
+		for (Alien a: destroyerAliens.aliens) {
+			DestroyerAlien da = ((DestroyerAlien) a);
+			if(da.isBombActive())
+				da.performAttack(ship);
+		}
+	}
+
 	public void automaticMove() {
 		Alien[] aliens = getAliens();
 
@@ -94,6 +102,14 @@ public class AlienManager {
 			if(Game.isOnBorderX(a.getPosition())) {
 				nowOnBorder = true;
 				break;
+			}
+		}
+
+		for (Alien a: aliens) {
+			if(a instanceof DestroyerAlien) {
+				DestroyerAlien da = (DestroyerAlien) a;
+				da.moveBomb();
+				if(game.tryFiringChance()) da.enableBomb();
 			}
 		}
 

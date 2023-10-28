@@ -47,7 +47,7 @@ public abstract class Alien {
         return false;
     }
 
-    public String toString() {
+    public String getSymbol() {
         return this.symbol + "[" + this.health + "]";
     }
 

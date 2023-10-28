@@ -5,6 +5,7 @@ import tp1.logic.Move;
 import tp1.logic.Position;
 
 public class UCMShip {
+    public static final String SYMBOL = "^__^";
     private Position position;
     private int health = 3;
     private int points;
@@ -22,8 +23,6 @@ public class UCMShip {
         this.position = position.move(move);
     }
 
-
-
     public Position getPosition() {
         return this.position;
     }
@@ -31,5 +30,7 @@ public class UCMShip {
     public boolean isAlive() {
         return health > 0;
     }
+
+    public void receiveAttack() { this.health--; }
 
 }
