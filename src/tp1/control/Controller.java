@@ -114,6 +114,8 @@ public class Controller {
 				case 'e':
 					printEndMessage();
 					return;
+				case 'w':
+					// - 1 health to all aliens except ufo
 			}
 
 			this.game.performCycle();

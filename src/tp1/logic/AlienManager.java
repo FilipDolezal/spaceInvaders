@@ -1,15 +1,10 @@
 package tp1.logic;
 
 //import tp1.logic.gameobjects.DestroyerAlien;
-import tp1.logic.gameobjects.Alien;
-import tp1.logic.gameobjects.DestroyerAlien;
-import tp1.logic.gameobjects.RegularAlien;
-import tp1.logic.gameobjects.UCMShip;
+import tp1.logic.gameobjects.*;
 import tp1.logic.lists.AlienList;
 //import tp1.logic.lists.DestroyerAlienList;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * 
@@ -26,6 +21,7 @@ public class AlienManager {
 
 	private AlienList regularAliens;
 	private AlienList destroyerAliens;
+	private Ufo ufo;
 
 	public AlienManager(Game game, Level level) {
 		this.level = level;
@@ -33,6 +29,7 @@ public class AlienManager {
 
 		this.regularAliens = this.initializeRegularAliens();
 		this.destroyerAliens = this.initializeDestroyerAliens();
+		this.ufo = initializeUfo();
 		this.cyclesToMove = (level.numCyclesToMoveOneCell - 1);
 	}
 		
@@ -73,6 +70,11 @@ public class AlienManager {
 
 		return list;
 	}
+	private Ufo initializeUfo(){
+
+        return new Ufo(game.alienManager, new Position(Game.DIM_X - 1, 0));
+	}
+
 
 	/**
 	 * Returns one array of all the remaining aliens
@@ -154,6 +156,8 @@ public class AlienManager {
 			destroyerAliens.remove(alien);
 		else if(alien instanceof  RegularAlien)
 			regularAliens.remove(alien);
+		else if(alien instanceof Ufo)
+			ufo = null;
 
 	}
 }

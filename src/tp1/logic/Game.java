@@ -9,6 +9,7 @@ public class Game {
 	public UCMShip UCMship;
 	public UCMLaser laser;
 	public AlienManager alienManager;
+	private boolean shockWave = false;
 
 	private Level level;
 	private Random random = new Random();

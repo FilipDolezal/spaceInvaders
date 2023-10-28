@@ -1,11 +1,12 @@
 package tp1.logic.gameobjects;
 
+import tp1.logic.AlienManager;
 import tp1.logic.Game;
 import tp1.logic.Move;
 import tp1.logic.Position;
 
 
-public class Ufo {
+public class Ufo extends Alien{
 
 	//TODO fill your code
 
@@ -13,6 +14,11 @@ public class Ufo {
 	private Game game;
 	
 	//TODO fill your code
+	public Ufo(AlienManager alienManager, Position position){
+		super(alienManager, position);
+		this.dir = Move.LEFT;
+		this.symbol = 'U';
+	}
 
 	public void computerAction() {
 		if(!enabled && canGenerateRandomUfo()) {
@@ -21,12 +27,17 @@ public class Ufo {
 	}
 	
 	private void enable() {
-		//TODO fill your code
 	}
 
-	public void onDelete() {
-		//TODO fill your code
+//	public void remove(){
+//		this.enabled = false;
+//	}
+
+	public void automaticMove() {
+		super.automaticMove();
 	}
+
+
 
 	/**
 	 * Checks if the game should generate an ufo.

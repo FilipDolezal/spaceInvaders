@@ -7,7 +7,7 @@ import tp1.logic.Position;
 public class Bomb {
     public static final String SYMBOL = "*";
 
-    private Move dir = Move.DOWN;
+    private final Move dir = Move.DOWN;
     private DestroyerAlien alien;
     private Position position;
 
