@@ -60,7 +60,14 @@ public class UCMLaser {
 				.move(dir)
 				.equals(other.getPosition());
 
-		return isHit ? this.weaponAttack(other): false;
+		return isHit && this.weaponAttack(other);
+	}
+	public boolean performAttack(Ufo ufo) {
+		boolean isHit = this.position
+				.move(dir)
+				.equals(ufo.getPosition());
+
+		return isHit && this.weaponAttack(ufo);
 	}
 
 	/**
@@ -72,7 +79,10 @@ public class UCMLaser {
 		this.game.disableLaser();
 		return other.receiveAttack();
 	}
-
+	private boolean weaponAttack(Ufo ufo) {
+		this.game.disableLaser();
+		return ufo.receiveAttack();
+	}
 	//TODO fill your code
 
 

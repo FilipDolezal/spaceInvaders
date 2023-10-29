@@ -21,7 +21,6 @@ public class AlienManager {
 
 	private AlienList regularAliens;
 	private AlienList destroyerAliens;
-	private Ufo ufo;
 
 	public AlienManager(Game game, Level level) {
 		this.level = level;
@@ -29,7 +28,6 @@ public class AlienManager {
 
 		this.regularAliens = this.initializeRegularAliens();
 		this.destroyerAliens = this.initializeDestroyerAliens();
-		this.ufo = initializeUfo();
 		this.cyclesToMove = (level.numCyclesToMoveOneCell - 1);
 	}
 		
@@ -70,10 +68,7 @@ public class AlienManager {
 
 		return list;
 	}
-	private Ufo initializeUfo(){
 
-        return new Ufo(game.alienManager, new Position(Game.DIM_X - 1, 0));
-	}
 
 
 	/**
@@ -104,6 +99,7 @@ public class AlienManager {
 	public void automaticMove() {
 		Alien[] aliens = getAliens();
 
+
 		boolean nowOnBorder = false;
 		for (Alien a: aliens) {
 			if(Game.isOnBorderX(a.getPosition())) {
@@ -111,7 +107,6 @@ public class AlienManager {
 				break;
 			}
 		}
-
 		for (Alien a: aliens) {
 			if(a instanceof DestroyerAlien) {
 				DestroyerAlien da = (DestroyerAlien) a;
@@ -156,8 +151,5 @@ public class AlienManager {
 			destroyerAliens.remove(alien);
 		else if(alien instanceof  RegularAlien)
 			regularAliens.remove(alien);
-		else if(alien instanceof Ufo)
-			ufo = null;
-
 	}
 }

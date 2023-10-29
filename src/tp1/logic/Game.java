@@ -8,6 +8,7 @@ public class Game {
 	public static final int DIM_X = 9, DIM_Y = 8;
 	public UCMShip UCMship;
 	public UCMLaser laser;
+	public Ufo ufo;
 	public AlienManager alienManager;
 	private boolean shockWave = false;
 
@@ -21,6 +22,7 @@ public class Game {
 		this.level 	= level;
 		this.seed	= seed;
 		this.alienManager = new AlienManager(this, level);
+		this.ufo = new Ufo(this);
 	}
 
 	public String stateToString() {
@@ -49,16 +51,19 @@ public class Game {
 
 	public String positionToString(int col, int row) {
 		for (Alien alien: alienManager.getAliens()) {
-			if(alien.getPosition().equals(col, row)) {
+			if (alien.getPosition().equals(col, row)) {
 				return alien.getSymbol();
 			}
 
-			if(alien instanceof DestroyerAlien) {
+			if (alien instanceof DestroyerAlien) {
 				DestroyerAlien da = (DestroyerAlien) alien;
-				if(da.isBombActive() && da.getBombPosition().equals(col, row)) {
+				if (da.isBombActive() && da.getBombPosition().equals(col, row)) {
 					return Bomb.SYMBOL;
 				}
 			}
+		}
+		if(ufo.isEnabled() && ufo.getPosition().equals(col, row)) {
+			return ufo.getSymbol();
 		}
 
 		if(UCMship.getPosition().equals(col, row))
@@ -106,7 +111,8 @@ public class Game {
 	public void performCycle() {
 		// increment cycle
 		cycleCount++;
-
+		
+		ufo.computerAction();
 		// Bombs attack UCMShip
 		alienManager.destroyerAttack(UCMship);
 
@@ -121,7 +127,8 @@ public class Game {
 
 			do {
 				Alien hitAlien = aliens[index];
-				collision = laser.performAttack(hitAlien);
+				Ufo ufo = new Ufo(this);
+				collision = laser.performAttack(hitAlien) || laser.performAttack(ufo);
 				if(hitAlien.getHealth() == 0) {
 					if(hitAlien instanceof RegularAlien)
 						points += RegularAlien.SCORE;
@@ -129,7 +136,10 @@ public class Game {
 						points += DestroyerAlien.SCORE;
 					// else if(hitAlien instanceof Ufo)
 						// points += Ufo.SCORE;
+
 				}
+				else if (ufo.getHealth() == 0)
+					points += ufo.SCORE;
 
 			} while (!collision && ++index < aliens.length);
 			// while there is no collision and there are still untested aliens
@@ -151,12 +161,12 @@ public class Game {
 		UCMship.preformMovement(move);
 		return true;
 	}
-
 	public void resetGame()
 	{
 		cycleCount = 0;
 		alienManager.resetAliens();
 		UCMship = new UCMShip();
-		laser = null;
+		disableLaser();
+		ufo.remove();
 	}
 }

@@ -20,6 +20,5 @@ public class AlienList {
         this.aliens = newArr;
     }
 
-    public void setEnabled(boolean b) {
-    }
+
 }
