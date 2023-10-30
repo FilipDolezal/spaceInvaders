@@ -3,6 +3,7 @@ package tp1.logic.gameobjects;
 import tp1.logic.Game;
 import tp1.logic.Move;
 import tp1.logic.Position;
+import tp1.view.Messages;
 
 /**
  * 
@@ -10,7 +11,7 @@ import tp1.logic.Position;
  *
  */
 public class UCMLaser {
-	public static final String SYMBOL = "oo";
+	public static final String SYMBOL = Messages.LASER_SYMBOL;
 	private Move dir;
 	private Game game;
 	private Position position;
@@ -62,6 +63,7 @@ public class UCMLaser {
 
 		return isHit && this.weaponAttack(other);
 	}
+
 	public boolean performAttack(Ufo ufo) {
 		boolean isHit = this.position
 				.move(dir)
@@ -79,11 +81,11 @@ public class UCMLaser {
 		this.game.disableLaser();
 		return other.receiveAttack();
 	}
+
 	private boolean weaponAttack(Ufo ufo) {
 		this.game.disableLaser();
 		return ufo.receiveAttack();
 	}
-	//TODO fill your code
 
 
 	// RECEIVE ATTACK METHODS

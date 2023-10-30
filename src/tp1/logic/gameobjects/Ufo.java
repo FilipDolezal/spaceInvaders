@@ -4,20 +4,17 @@ import tp1.logic.AlienManager;
 import tp1.logic.Game;
 import tp1.logic.Move;
 import tp1.logic.Position;
+import tp1.view.Messages;
 
 
 public class Ufo{
-	//TODO fill your code
-
-	private boolean enabled = false;
 	private Game game;
 	private int health = 1;
-	public static final String SYMBOL = "U";
-	public final int SCORE = 25;
+	public static final String SYMBOL = Messages.UFO_SYMBOL;
+	public static final int SCORE = 25;
 	private Position position;
 	private Move dir;
 	
-	//TODO fill your code
 	public Ufo(Game game) {
 		this.game = game;
 		this.position = new Position(Game.DIM_X, 0);
@@ -45,41 +42,19 @@ public class Ufo{
 		return this.health;
 	}
 	public void computerAction() {
-		if(!isEnabled() && canGenerateRandomUfo()) {
-			enable();
-		}
-		if (isEnabled()) {
-			automaticMove();
-			if (Game.isOutOfBoundX(this.position)){
-				remove();
-			}
+		this.automaticMove();
+		if (Game.isOutOfBoundX(this.position)){
+			game.disableUfo();
 		}
 	}
 
-	private void enable() {
-		if(!this.enabled)
-			enabled = true;
-	}
+
 
 	public void remove(){
-		this.enabled = false;
+		this.game.ufo = null;
 	}
 
-
-
-	public boolean isEnabled() {
-		return enabled;
-	}
 	public String getSymbol() {
 		return SYMBOL + "[" + this.health + "]";
 	}
-	/**
-	 * Checks if the game should generate an ufo.
-	 * 
-	 * @return <code>true</code> if an ufo should be generated.
-	 */
-	private boolean canGenerateRandomUfo(){
-		return game.getRandom().nextDouble() < game.getLevel().ufoFrequency;
-	}
-	
 }

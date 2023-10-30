@@ -4,6 +4,7 @@ import tp1.logic.AlienManager;
 import tp1.logic.Game;
 import tp1.logic.Move;
 import tp1.logic.Position;
+import tp1.view.Messages;
 
 public class DestroyerAlien extends Alien
 {
@@ -13,7 +14,7 @@ public class DestroyerAlien extends Alien
     public DestroyerAlien(AlienManager alienManager, Position position) {
         super(alienManager, position);
         this.dir = Move.LEFT;
-        this.symbol = 'D';
+        this.symbol = Messages.DESTROYER_ALIEN_SYMBOL;
     }
 
     /**

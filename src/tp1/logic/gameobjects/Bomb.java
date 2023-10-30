@@ -3,9 +3,10 @@ package tp1.logic.gameobjects;
 import tp1.logic.Game;
 import tp1.logic.Move;
 import tp1.logic.Position;
+import tp1.view.Messages;
 
 public class Bomb {
-    public static final String SYMBOL = "*";
+    public static final String SYMBOL = Messages.BOMB_SYMBOL;
 
     private final Move dir = Move.DOWN;
     private DestroyerAlien alien;
