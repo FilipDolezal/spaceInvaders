@@ -78,8 +78,9 @@ public class UCMLaser {
 		boolean isHit = this.position
 				.equals(bombPos);
 
-		Position futurePos = this.position.move(dir);
-		boolean willHit = futurePos.equals(bombPos);
+		boolean willHit = this.position
+				.move(dir)
+				.equals(bombPos);
 
 		return (isHit || willHit) && this.weaponAttack(bomb);
 	}
@@ -103,20 +104,6 @@ public class UCMLaser {
 		this.game.disableLaser();
 		return bomb.receiveAttack();
 	}
-
-
-	// RECEIVE ATTACK METHODS
-	
-	/**
-	 * Method to implement the effect of bomb attack on a laser
-	 * @return always returns <code>true</code>
-	 */
-	/*
-	public boolean receiveAttack(Bomb weapon) {
-		receiveDamage(weapon.getDamage());
-		return true;
-	}
-	*/
 
 	public Position getPosition() {
 		return position;

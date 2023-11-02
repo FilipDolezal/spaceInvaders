@@ -1,27 +1,31 @@
 package tp1.logic;
 
-//import tp1.logic.gameobjects.DestroyerAlien;
 import tp1.logic.gameobjects.*;
 import tp1.logic.lists.AlienList;
-//import tp1.logic.lists.DestroyerAlienList;
 
 
 /**
- * 
- * Manages alien initialization and
- * used by aliens to coordinate movement
- *
+ * Manages alien initialization and is used by aliens to coordinate movement.
  */
 public class AlienManager {
+
+	// instance attributes of game and level.
 	private Level level;
 	private Game game;
 
+	// instance attributes for different states of the game
 	private boolean squadInFinalRow = false, onBorder = false;
 	private int cyclesToMove;
 
+	// instance attributes of Lists of Aliens
 	private AlienList regularAliens;
 	private AlienList destroyerAliens;
 
+	/**
+	 * Constructor for AlienManager instance
+	 * @param game
+	 * @param level
+	 */
 	public AlienManager(Game game, Level level) {
 		this.level = level;
 		this.game = game;
@@ -82,12 +86,20 @@ public class AlienManager {
 		return  aliens;
 	}
 
+	/**
+	 * Returns the number of all the remaining aliens within AlienManager Lists
+	 * @return int
+	 */
 	public int getRemainingAliens() {
 		return this.regularAliens.aliens.length + this.destroyerAliens.aliens.length;
 	}
 
 	public boolean getSquadInFinalRow() { return this.squadInFinalRow; }
 
+	/**
+	 * All destroyer aliens bombs will be checked if their bombs made contact with UCMShip
+	 * @param ship the UCMShip to be hit
+	 */
 	public void destroyerAttack(UCMShip ship) {
 		for (Alien a: destroyerAliens.aliens) {
 			DestroyerAlien da = ((DestroyerAlien) a);
@@ -96,6 +108,9 @@ public class AlienManager {
 		}
 	}
 
+	/**
+	 * Will calculate the next movement and move all the aliens automatically
+	 */
 	public void automaticMove() {
 		Alien[] aliens = getAliens();
 
@@ -108,8 +123,7 @@ public class AlienManager {
 			}
 		}
 		for (Alien a: aliens) {
-			if(a instanceof DestroyerAlien) {
-				DestroyerAlien da = (DestroyerAlien) a;
+			if(a instanceof DestroyerAlien da) {
 				da.moveBomb();
 				if(game.tryFiringChance()) da.enableBomb();
 			}
@@ -139,12 +153,19 @@ public class AlienManager {
 		}
 	}
 
+	/**
+	 * method that will reset itself to its initial state
+	 */
 	public void resetAliens() {
 		this.destroyerAliens = this.initializeDestroyerAliens();
 		this.regularAliens = this.initializeRegularAliens();
 		this.onBorder = false;
 	}
 
+	/**
+	 * will remove alien from the corresponding list
+	 * @param alien to be removed
+	 */
 	public void removeAlien(Alien alien)
 	{
 		if(alien instanceof DestroyerAlien)

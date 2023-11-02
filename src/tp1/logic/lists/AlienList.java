@@ -19,6 +19,4 @@ public class AlienList {
         }
         this.aliens = newArr;
     }
-
-
 }

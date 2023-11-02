@@ -4,19 +4,37 @@ import tp1.logic.gameobjects.*;
 
 import java.util.Random;
 
+/**
+ * The single instance of game will chain all game objects together and keep reference to them.
+ * The game instance will also keep the current score, cycle and shockwave.
+ * The game will execute the cycle.
+ *
+ */
 public class Game {
+	// class constants
 	public static final int DIM_X = 9, DIM_Y = 8;
+
+	// instance game object attributes
 	private UCMShip UCMship;
 	private UCMLaser laser;
 	private Ufo ufo;
-	private final AlienManager alienManager;
+	private AlienManager alienManager;
+
+	// instance final attributes
 	private final Level level;
 	private final Random random = new Random();
 	private final long seed;
+
+	// instance attributes
 	private int cycleCount = 0;
 	private int points = 0;
 	private boolean shockWave = false;
 
+	/**
+	 * Game constructor
+	 * @param level
+	 * @param seed
+	 */
 	public Game(Level level, long seed) {
 		this.level 	= level;
 		this.seed	= seed;
@@ -24,30 +42,57 @@ public class Game {
 		this.UCMship = new UCMShip();
 	}
 
+	/**
+	 * Method will return String with the current state of the game.
+	 * Life, Points, Shockwave,
+	 *
+	 * @return String current state of game formatted
+	 */
 	public String stateToString() {
 		String sb = "Life: " + this.UCMship.getHealth() + System.lineSeparator() +
 				"Points: " + this.points + System.lineSeparator() +
 				"ShockWave: " + (shockWave ? "ON" : "OFF") + System.lineSeparator();
 		return sb;
 	}
+
+	/** @return current cycle number */
 	public int getCycle() {
 		return this.cycleCount;
 	}
-	public Random getRandom() { return this.random; }
 	public Level getLevel() { return this.level; }
 	public int getRemainingAliens() {
 		return alienManager.getRemainingAliens();
 	}
+
+	/**
+	 * Will randomly evaluate if a bomb should be dropped based on the current level
+	 * @return true if shot should be fired
+	 */
 	public boolean tryFiringChance() { return random.nextDouble() < level.shootFrequency; }
 
+	/**
+	 * Will randomly evaluate if a UFO should be spawned based on the current level
+	 * @return true if UFO should be spawned
+	 */
 	public boolean tryUfoSpawnChange() { return this.ufo == null && random.nextDouble() < level.ufoFrequency; }
+
+	/**	@return true if the player has won else false otherwise */
 	public boolean playerWin() {
 		return alienManager.getRemainingAliens() == 0;
 	}
+
+	/**	@return true if the aliens have won else false otherwise */
 	public boolean aliensWin() {
 		return alienManager.getSquadInFinalRow() || !this.UCMship.isAlive();
 	}
 
+	/**
+	 * Returns the string representative of the position in the play field based on which element is within it.
+	 *
+	 * @param col integer [0-{@value DIM_X}] of the column
+	 * @param row integer [0-{@value DIM_Y}] of the column
+	 * @return String representative of the current grid position
+	 */
 	public String positionToString(int col, int row) {
 		for (Alien alien: alienManager.getAliens()) {
 			if (alien.getPosition().equals(col, row)) {
@@ -111,7 +156,9 @@ public class Game {
 	}
 
 	/**
-	 * method that executes the cycle
+	 * Method that executes the cycle by moving aliens,
+	 * moving bombs and lasers and checking for collisions between them.
+	 * It takes care of the score and current cycle.
 	 */
 	public void performCycle() {
 		// increment cycle
@@ -168,9 +215,9 @@ public class Game {
 	}
 
 	/**
-	 * attempt to move the UCMship
-	 * @param boolean if ship moved
-	 * @return true if attempt to move was successful
+	 * attempt to move the UCMShip
+	 * @param move Direction of the attempted move
+	 * @return true if attempt to move was successful, false otherwise
 	 */
 	public boolean moveShip(Move move)
 	{
@@ -180,6 +227,10 @@ public class Game {
 		UCMship.preformMovement(move);
 		return true;
 	}
+
+	/**
+	 * will reset the cycle count, aliens, UCMShip and disable all bombs and laser.
+	 */
 	public void resetGame()
 	{
 		cycleCount = 0;
@@ -189,6 +240,10 @@ public class Game {
 		if(ufo != null) ufo.remove();
 	}
 
+	/**
+	 * Method that will perform shockwave if possible.
+	 * @return true if shockwave performed.
+	 */
 	public boolean performShockWave()
 	{
 		if(!shockWave) return false;
