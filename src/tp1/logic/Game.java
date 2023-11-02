@@ -6,30 +6,29 @@ import java.util.Random;
 
 public class Game {
 	public static final int DIM_X = 9, DIM_Y = 8;
-	public UCMShip UCMship;
-	public UCMLaser laser;
-	public Ufo ufo;
-	public AlienManager alienManager;
-	private boolean shockWave = false;
-
-	private Level level;
-	private Random random = new Random();
-	private long seed;
+	private UCMShip UCMship;
+	private UCMLaser laser;
+	private Ufo ufo;
+	private final AlienManager alienManager;
+	private final Level level;
+	private final Random random = new Random();
+	private final long seed;
 	private int cycleCount = 0;
 	private int points = 0;
+	private boolean shockWave = false;
 
 	public Game(Level level, long seed) {
 		this.level 	= level;
 		this.seed	= seed;
 		this.alienManager = new AlienManager(this, level);
+		this.UCMship = new UCMShip();
 	}
 
 	public String stateToString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("Life: ").append(this.UCMship.getHealth()).append(System.lineSeparator());
-		sb.append("Points: ").append(this.points).append(System.lineSeparator());
-		sb.append("ShockWave: ").append(shockWave ? "ON" : "OFF").append(System.lineSeparator());
-		return sb.toString();
+		String sb = "Life: " + this.UCMship.getHealth() + System.lineSeparator() +
+				"Points: " + this.points + System.lineSeparator() +
+				"ShockWave: " + (shockWave ? "ON" : "OFF") + System.lineSeparator();
+		return sb;
 	}
 	public int getCycle() {
 		return this.cycleCount;
@@ -55,8 +54,7 @@ public class Game {
 				return alien.getSymbol();
 			}
 
-			if (alien instanceof DestroyerAlien) {
-				DestroyerAlien da = (DestroyerAlien) alien;
+			if (alien instanceof DestroyerAlien da) {
 				if (da.isBombActive() && da.getBombPosition().equals(col, row)) {
 					return Bomb.SYMBOL;
 				}
@@ -139,6 +137,7 @@ public class Game {
 			do {
 				Alien hitAlien = aliens[index];
 				collision = laser.performAttack(hitAlien);
+
 				if(hitAlien.getHealth() == 0) {
 					if(hitAlien instanceof RegularAlien)
 						points += RegularAlien.SCORE;
@@ -146,11 +145,15 @@ public class Game {
 						points += DestroyerAlien.SCORE;
 				}
 
+				if(hitAlien instanceof DestroyerAlien) {
+					collision = collision || ((DestroyerAlien) hitAlien).isBombHit(laser);
+				}
+
 			} while (!collision && ++index < aliens.length);
 			// while there is no collision and there are still untested aliens
 
 			// if laser is about to be on highest row AND there was no collision AND ufo is set
-			if(!collision && laser.getPosition().row == 1 && ufo != null) {
+			if(!collision && laser.getPosition().inRow(1) && ufo != null) {
 				// performAttack on UFO
 				collision = laser.performAttack(ufo);
 				// ufo was shot down
@@ -166,7 +169,7 @@ public class Game {
 
 	/**
 	 * attempt to move the UCMship
-	 * @param move
+	 * @param boolean if ship moved
 	 * @return true if attempt to move was successful
 	 */
 	public boolean moveShip(Move move)

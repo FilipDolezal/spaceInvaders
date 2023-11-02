@@ -12,8 +12,8 @@ import tp1.view.Messages;
  */
 public class UCMLaser {
 	public static final String SYMBOL = Messages.LASER_SYMBOL;
-	private Move dir;
-	private Game game;
+	private final Move dir;
+	private final Game game;
 	private Position position;
 
 	public UCMLaser(Position position, Move dir, Game game) {
@@ -42,7 +42,7 @@ public class UCMLaser {
 	}
 
 	private boolean isOut() {
-		return this.game.isOutOfBoundY(this.position);
+		return Game.isOutOfBoundY(this.position);
 	}
 
 	private void performMovement(Move dir) {
@@ -52,7 +52,7 @@ public class UCMLaser {
 	/**
 	 * Method that implements the attack by the laser to a regular alien.
 	 * It checks whether both objects are alive and in the same position.
-	 * If so call the "actual" attack method {@link weaponAttack}.
+	 * If so call the "actual" attack method
 	 * @param other the regular alien possibly under attack
 	 * @return <code>true</code> if the alien has been attacked by the laser.
 	 */
@@ -72,6 +72,18 @@ public class UCMLaser {
 		return isHit && this.weaponAttack(ufo);
 	}
 
+	public boolean performAttack(Bomb bomb) {
+		Position bombPos = bomb.getPosition();
+
+		boolean isHit = this.position
+				.equals(bombPos);
+
+		Position futurePos = this.position.move(dir);
+		boolean willHit = futurePos.equals(bombPos);
+
+		return (isHit || willHit) && this.weaponAttack(bomb);
+	}
+
 	/**
 	 * 
 	 * @param other regular alien under attack by the laser
@@ -87,12 +99,16 @@ public class UCMLaser {
 		return ufo.receiveAttack();
 	}
 
+	private boolean weaponAttack(Bomb bomb) {
+		this.game.disableLaser();
+		return bomb.receiveAttack();
+	}
+
 
 	// RECEIVE ATTACK METHODS
 	
 	/**
 	 * Method to implement the effect of bomb attack on a laser
-	 * @param weapon the received bomb
 	 * @return always returns <code>true</code>
 	 */
 	/*

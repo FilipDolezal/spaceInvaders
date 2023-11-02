@@ -31,6 +31,8 @@ public class Position {
 		return this.equals(new Position(col, row));
 	}
 
+	public boolean inRow(int row) { return this.row == row; }
+
 	public String toString() {
 		return "col: "+ col + "| row: " + row;
 	}

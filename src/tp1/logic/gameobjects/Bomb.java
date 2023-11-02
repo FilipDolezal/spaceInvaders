@@ -7,14 +7,22 @@ import tp1.view.Messages;
 
 public class Bomb {
     public static final String SYMBOL = Messages.BOMB_SYMBOL;
-
     private final Move dir = Move.DOWN;
-    private DestroyerAlien alien;
+    private int health = 1;
+    private final DestroyerAlien alien;
     private Position position;
 
     public Bomb(DestroyerAlien alien) {
         this.alien = alien;
         this.position = alien.getPosition().move(dir);
+    }
+
+    public boolean receiveAttack() {
+        if(--this.health == 0) {
+            this.alien.disableBomb();
+            return true;
+        }
+        return false;
     }
 
     public void onDelete() {
@@ -37,16 +45,13 @@ public class Bomb {
     /**
      * Method that implements the attack by the bomb to UCMShip.
      * It checks whether both objects are alive and in the same position.
-     * If so call the "actual" attack method {@link weaponAttack}.
-     * @param ship the UCMShip possibly under attack
      * @return <code>true</code> if the ship has been attacked by the laser.
      */
     public boolean performAttack(UCMShip ship) {
         boolean isHit = this.position
-                .move(dir)
                 .equals(ship.getPosition());
 
-        return isHit ? this.weaponAttack(ship): false;
+        return isHit && this.weaponAttack(ship);
     }
 
     /**
@@ -62,6 +67,7 @@ public class Bomb {
 
     public void automaticMove () {
         performMovement(dir);
+        System.out.println(this.position);
         if(isOut()) die();
     }
 }

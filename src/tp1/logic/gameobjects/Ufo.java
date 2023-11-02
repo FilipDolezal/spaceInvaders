@@ -1,6 +1,5 @@
 package tp1.logic.gameobjects;
 
-import tp1.logic.AlienManager;
 import tp1.logic.Game;
 import tp1.logic.Move;
 import tp1.logic.Position;
@@ -8,12 +7,12 @@ import tp1.view.Messages;
 
 
 public class Ufo{
-	private Game game;
-	private int health = 1;
 	public static final String SYMBOL = Messages.UFO_SYMBOL;
 	public static final int SCORE = 25;
+	private final Game game;
+	private int health = 1;
 	private Position position;
-	private Move dir;
+	private final Move dir;
 	
 	public Ufo(Game game) {
 		this.game = game;
@@ -38,9 +37,6 @@ public class Ufo{
 		return this.position;
 	}
 
-	public int getHealth() {
-		return this.health;
-	}
 	public void computerAction() {
 		this.automaticMove();
 		if (Game.isOutOfBoundX(this.position)){
@@ -48,10 +44,8 @@ public class Ufo{
 		}
 	}
 
-
-
 	public void remove(){
-		this.game.ufo = null;
+		this.game.disableUfo();
 	}
 
 	public String getSymbol() {

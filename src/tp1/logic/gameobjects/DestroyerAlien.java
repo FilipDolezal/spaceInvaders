@@ -1,7 +1,6 @@
 package tp1.logic.gameobjects;
 
 import tp1.logic.AlienManager;
-import tp1.logic.Game;
 import tp1.logic.Move;
 import tp1.logic.Position;
 import tp1.view.Messages;
@@ -15,14 +14,6 @@ public class DestroyerAlien extends Alien
         super(alienManager, position);
         this.dir = Move.LEFT;
         this.symbol = Messages.DESTROYER_ALIEN_SYMBOL;
-    }
-
-    /**
-     *  Implements the automatic movement of the destroyer alien and its bomb
-     */
-    @Override
-    public void automaticMove() {
-        super.automaticMove();
     }
 
     public void moveBomb() {
@@ -48,4 +39,9 @@ public class DestroyerAlien extends Alien
     }
 
     public boolean isBombActive() { return this.bomb != null; }
+
+    public boolean isBombHit(UCMLaser laser) {
+        if(!isBombActive()) return false;
+        return laser.performAttack(this.bomb);
+    }
 }
