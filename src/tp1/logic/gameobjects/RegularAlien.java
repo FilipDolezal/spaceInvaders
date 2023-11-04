@@ -13,7 +13,6 @@ import tp1.view.Messages;
  */
 public class RegularAlien extends Alien {
 	public static final int SCORE = 5;
-	private int health = 2;
 	public RegularAlien(AlienManager alienManager, Position position) {
 		super(alienManager, position);
 		this.dir = Move.LEFT;
