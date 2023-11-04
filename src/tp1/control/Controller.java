@@ -46,8 +46,8 @@ public class Controller {
 	 * Runs the game logic.
 	 */
 	public void run() {
-		printGame();
 
+		printGame();
 		beginning: while(true) {
 			if(game.playerWin() || game.aliensWin()) {
 				printEndMessage();
@@ -121,6 +121,9 @@ public class Controller {
 						System.out.println(Messages.SHOCKWAVE_ERROR);
 						continue beginning;
 					}
+
+					default:
+					continue beginning;
 			}
 
 			this.game.performCycle();

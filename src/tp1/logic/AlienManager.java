@@ -154,7 +154,7 @@ public class AlienManager {
 	}
 
 	/**
-	 * method that will reset itself to its initial state
+	 * Method that will reset itself to its initial state
 	 */
 	public void resetAliens() {
 		this.destroyerAliens = this.initializeDestroyerAliens();
@@ -163,7 +163,7 @@ public class AlienManager {
 	}
 
 	/**
-	 * will remove alien from the corresponding list
+	 * Will remove alien from the corresponding list
 	 * @param alien to be removed
 	 */
 	public void removeAlien(Alien alien)

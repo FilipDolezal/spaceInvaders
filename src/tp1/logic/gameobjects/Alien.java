@@ -11,7 +11,7 @@ import tp1.logic.Position;
 public abstract class Alien {
 
     protected String symbol;
-    protected int health = 1;
+    protected int health;
 
     protected Move dir;
 

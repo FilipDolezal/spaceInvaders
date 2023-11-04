@@ -7,11 +7,13 @@ import tp1.view.Messages;
 
 /**
  * 
- * Class representing a regular alien
+ * Class representing a regular alien. <br>
+ * Extends the abstract class of Alien.
  *
  */
 public class RegularAlien extends Alien {
 	public static final int SCORE = 5;
+	private int health = 2;
 	public RegularAlien(AlienManager alienManager, Position position) {
 		super(alienManager, position);
 		this.dir = Move.LEFT;
