@@ -1,6 +1,7 @@
 package tp1.logic;
 
 import tp1.logic.gameobjects.*;
+import tp1.view.Messages;
 
 import java.util.Random;
 
@@ -83,9 +84,16 @@ public class Game {
 
 	/**	@return true if the aliens have won else false otherwise */
 	public boolean aliensWin() {
-		return alienManager.getSquadInFinalRow() || !this.UCMship.isAlive();
+		return inFinalRow() || !this.UCMship.isAlive();
 	}
-
+	public boolean inFinalRow(){
+		if(alienManager.getSquadInFinalRow()){
+			UCMship.setHealth(-200);
+			return true;
+		}
+		else
+			return false;
+	}
 	/**
 	 * Returns the string representative of the position in the play field based on which element is within it.
 	 *
@@ -94,24 +102,29 @@ public class Game {
 	 * @return String representative of the current grid position
 	 */
 	public String positionToString(int col, int row) {
+
+		if(ufo != null && ufo.getPosition().equals(col, row))
+			return ufo.getSymbol();
+
+		if (UCMship.getPosition().equals(col, row) && aliensWin())
+			return Messages.UCMSHIP_DEAD_SYMBOL;
+
+		else if(UCMship.getPosition().equals(col, row))
+			return UCMShip.SYMBOL;
+
+
+
 		for (Alien alien: alienManager.getAliens()) {
 			if (alien.getPosition().equals(col, row)) {
 				return alien.getSymbol();
 			}
-
+			//Prints the bombs if they are active and if they are in the board, returning the symbol.
 			if (alien instanceof DestroyerAlien da) {
 				if (da.isBombActive() && da.getBombPosition().equals(col, row)) {
 					return Bomb.SYMBOL;
 				}
 			}
 		}
-
-		if(ufo != null && ufo.getPosition().equals(col, row))
-			return ufo.getSymbol();
-
-		if(UCMship.getPosition().equals(col, row))
-			return UCMShip.SYMBOL;
-
 		if(laser != null && laser.getPosition().equals(col, row))
 			return UCMLaser.SYMBOL;
 
@@ -229,7 +242,7 @@ public class Game {
 	}
 
 	/**
-	 * will reset the cycle count, aliens, UCMShip and disable all bombs and laser.
+	 * Will reset the cycle count, aliens, UCMShip and disable all bombs and laser.
 	 */
 	public void resetGame()
 	{

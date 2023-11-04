@@ -63,7 +63,13 @@ public class UCMLaser {
 
 		return isHit && this.weaponAttack(other);
 	}
-
+	/**
+	 * Method that implements the attack by the laser to the Ufo.
+	 * It checks whether both objects are alive and in the same position.
+	 * If so call the "actual" attack method
+	 * @param ufo possibly under attack
+	 * @return <code>true</code> if the ufo has been attacked by the laser.
+	 */
 	public boolean performAttack(Ufo ufo) {
 		boolean isHit = this.position
 				.move(dir)
@@ -71,7 +77,13 @@ public class UCMLaser {
 
 		return isHit && this.weaponAttack(ufo);
 	}
-
+	/**
+	 * Method that implements the attack by the laser to a Bomb.
+	 * It checks whether both objects are alive and in the same position.
+	 * If so call the "actual" attack method
+	 * @param bomb possibly under attack
+	 * @return <code>true</code> if the bomb has been attacked by the laser.
+	 */
 	public boolean performAttack(Bomb bomb) {
 		Position bombPos = bomb.getPosition();
 
@@ -96,11 +108,20 @@ public class UCMLaser {
 		return true;
 	}
 
+	/**
+	 *
+	 * @param ufo under attack by the laser
+	 * @return always returns <code>true</code>
+	 */
 	private boolean weaponAttack(Ufo ufo) {
 		this.game.disableLaser();
 		return ufo.receiveAttack();
 	}
-
+	/**
+	 *
+	 * @param bomb under attack by the laser
+	 * @return always returns <code>true</code>
+	 */
 	private boolean weaponAttack(Bomb bomb) {
 		this.game.disableLaser();
 		return bomb.receiveAttack();
