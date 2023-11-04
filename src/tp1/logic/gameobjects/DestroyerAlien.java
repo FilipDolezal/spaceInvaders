@@ -14,6 +14,7 @@ public class DestroyerAlien extends Alien
         super(alienManager, position);
         this.dir = Move.LEFT;
         this.symbol = Messages.DESTROYER_ALIEN_SYMBOL;
+        this.health = 1;
     }
 
     public void moveBomb() {

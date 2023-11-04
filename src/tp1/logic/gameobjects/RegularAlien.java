@@ -16,6 +16,7 @@ public class RegularAlien extends Alien {
 		super(alienManager, position);
 		this.dir = Move.LEFT;
 		this.symbol = Messages.REGULAR_ALIEN_SYMBOL;
+		this.health = 2;
 	}
 
 

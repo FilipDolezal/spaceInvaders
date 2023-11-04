@@ -92,7 +92,8 @@ public class UCMLaser {
 	 */
 	private boolean weaponAttack(Alien other) {
 		this.game.disableLaser();
-		return other.receiveAttack();
+		other.receiveAttack();
+		return true;
 	}
 
 	private boolean weaponAttack(Ufo ufo) {
