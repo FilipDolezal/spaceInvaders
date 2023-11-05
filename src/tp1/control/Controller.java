@@ -55,9 +55,10 @@ public class Controller {
 			}
 
 			String[] prompt = prompt();
-			switch (prompt[0].charAt(0)) {
+			switch (prompt[0]) {
 				// move [direction]
-				case 'm':
+
+				case "move":
 					Move move = switch (prompt[1]) {
 						case "left" -> Move.LEFT;
 						case "lleft" -> Move.LLEFT;
@@ -72,28 +73,36 @@ public class Controller {
 					}
 					break;
 
+                case "":
+                    break;
 				// shoot
-				case 's':
-					this.game.enableLaser();
-					break;
+				case "s":
+					if (!game.LaserOn()){
+						this.game.enableLaser();
+						break;
+					}
+					else{
+						System.out.println(Messages.LASER_ERROR);
+						continue beginning;
+					}
 
 				// none
-				case 'n': break;
+				case "n": break;
 
 				// ask for help
-				case 'h':
+				case "h":
 					System.out.println(Messages.HELP);
 					continue beginning;
 
 				// displays the list of objects
-				case 'l':
+				case "l":
 					System.out.println(Messages.ucmShipDescription(
-							Messages.UCM_DESCRIPTION,
-							3, 1)
+							Messages.UCMSHIP_DESCRIPTION,
+							1, 3)
 					);
 					System.out.println(Messages.alienDescription(
 							Messages.REGULAR_ALIEN_DESCRIPTION,
-							RegularAlien.SCORE, 0, 1)
+							RegularAlien.SCORE, 0, 2    )
 					);
 					System.out.println(Messages.alienDescription(
 						Messages.DESTROYER_ALIEN_DESCRIPTION,
@@ -106,25 +115,28 @@ public class Controller {
 					continue beginning;
 
 				// reset
-				case 'r':
+				case "r":
 					this.game.resetGame();
 					printGame();
 					continue beginning;
 
 				// end
-				case 'e':
+				case "e":
 					printEndMessage();
 					return;
-				case 'w':
+				case "w":
 					boolean result = game.performShockWave();
 					if(!result) {
 						System.out.println(Messages.SHOCKWAVE_ERROR);
 						continue beginning;
 					}
+                default:
+                    System.out.println(Messages.UNKNOWN_COMMAND);
+                    continue beginning;
+            }
 
-					default:
-					continue beginning;
-			}
+
+
 
 			this.game.performCycle();
 			printGame();

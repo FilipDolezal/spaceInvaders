@@ -48,8 +48,9 @@ public class Bomb {
      * @return <code>true</code> if the ship has been attacked by the laser.
      */
     public boolean performAttack(UCMShip ship) {
+        Position shipPos = ship.getPosition();
         boolean isHit = this.position
-                .equals(ship.getPosition());
+                .equals(shipPos);
 
         return isHit && this.weaponAttack(ship);
     }

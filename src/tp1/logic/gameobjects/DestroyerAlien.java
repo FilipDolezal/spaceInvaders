@@ -50,11 +50,11 @@ public class DestroyerAlien extends Alien
 
     /**
      * Method that returns true if the bomb has hit the UCMShip.
+     *
      * @param ship UCMShip
-     * @return True if hit, False otherwise.
      */
-    public boolean performAttack(UCMShip ship) {
-        return bomb.performAttack(ship);
+    public void performAttack(UCMShip ship) {
+        bomb.performAttack(ship);
     }
 
     public Position getBombPosition() {

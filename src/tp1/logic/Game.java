@@ -23,7 +23,7 @@ public class Game {
 
 	// instance final attributes
 	private final Level level;
-	private final Random random = new Random();
+	private Random random;
 	private final long seed;
 
 	// instance attributes
@@ -41,6 +41,7 @@ public class Game {
 		this.seed	= seed;
 		this.alienManager = new AlienManager(this, level);
 		this.UCMship = new UCMShip();
+		this.random = new Random(seed);
 	}
 
 	/**
@@ -125,6 +126,7 @@ public class Game {
 				}
 			}
 		}
+
 		if(laser != null && laser.getPosition().equals(col, row))
 			return UCMLaser.SYMBOL;
 
@@ -239,6 +241,13 @@ public class Game {
 
 		UCMship.preformMovement(move);
 		return true;
+	}
+
+	public boolean LaserOn(){
+		if (this.laser == null)
+			return false;
+		else
+			return true;
 	}
 
 	/**
