@@ -53,8 +53,8 @@ public class DestroyerAlien extends Alien
      *
      * @param ship UCMShip
      */
-    public void performAttack(UCMShip ship) {
-        bomb.performAttack(ship);
+    public boolean performAttack(UCMShip ship) {
+        return bomb.performAttack(ship);
     }
 
     public Position getBombPosition() {

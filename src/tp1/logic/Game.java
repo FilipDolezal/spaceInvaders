@@ -186,7 +186,7 @@ public class Game {
 		if(ufo != null) ufo.computerAction();
 
 		// Bombs attack UCMShip
-		alienManager.destroyerAttack(UCMship);
+		alienManager.destroyerAttack(UCMship, laser);
 
 		// move aliens
 		alienManager.automaticMove();
@@ -205,10 +205,6 @@ public class Game {
 						points += RegularAlien.SCORE;
 					else if(hitAlien instanceof DestroyerAlien)
 						points += DestroyerAlien.SCORE;
-				}
-
-				if(hitAlien instanceof DestroyerAlien) {
-					collision = collision || ((DestroyerAlien) hitAlien).isBombHit(laser);
 				}
 
 			} while (!collision && ++index < aliens.length);

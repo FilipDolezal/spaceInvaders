@@ -50,6 +50,7 @@ public class Bomb {
     public boolean performAttack(UCMShip ship) {
         Position shipPos = ship.getPosition();
         boolean isHit = this.position
+                .move(dir)
                 .equals(shipPos);
 
         return isHit && this.weaponAttack(ship);

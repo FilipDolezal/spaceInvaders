@@ -97,14 +97,21 @@ public class AlienManager {
 	public boolean getSquadInFinalRow() { return this.squadInFinalRow; }
 
 	/**
-	 * All destroyer aliens bombs will be checked if their bombs made contact with UCMShip
+	 * All destroyer aliens bombs will be checked if their bombs made contact with UCMShip or UCMLaser
+	 * if it hit the laser - it will disable laser
 	 * @param ship the UCMShip to be hit
+	 * @param laser UCMLaser to be hit
 	 */
-	public void destroyerAttack(UCMShip ship) {
+	public void destroyerAttack(UCMShip ship, UCMLaser laser) {
 		for (Alien a: destroyerAliens.aliens) {
 			DestroyerAlien da = ((DestroyerAlien) a);
-			if(da.isBombActive())
-				da.performAttack(ship);
+			if(da.isBombActive()) {
+				if(laser != null && da.isBombHit(laser)) {
+					game.disableLaser();
+					return;
+				}
+				if(da.performAttack(ship)) return;
+			}
 		}
 	}
 

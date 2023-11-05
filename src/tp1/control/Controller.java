@@ -57,8 +57,8 @@ public class Controller {
 			String[] prompt = prompt();
 			switch (prompt[0]) {
 				// move [direction]
-
 				case "move":
+				case "m":
 					Move move = switch (prompt[1]) {
 						case "left" -> Move.LEFT;
 						case "lleft" -> Move.LLEFT;
