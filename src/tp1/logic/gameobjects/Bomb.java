@@ -67,7 +67,6 @@ public class Bomb {
 
     public void automaticMove () {
         performMovement(dir);
-        System.out.println(this.position);
         if(isOut()) die();
     }
 }
