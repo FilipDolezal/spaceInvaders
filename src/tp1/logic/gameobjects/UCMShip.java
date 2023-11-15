@@ -1,56 +1,52 @@
 package tp1.logic.gameobjects;
 
+import tp1.logic.Game;
 import tp1.logic.Move;
 import tp1.logic.Position;
+import tp1.util.MyStringUtils;
 import tp1.view.Messages;
 
 /**
  * Class of the UCMShip that contains all the attributes and methods.
  */
-public class UCMShip {
-    //Constant.
-    public static final String SYMBOL = Messages.UCMSHIP_SYMBOL;
-    //Instance of the position.
-    private Position position;
-    //Health attribute.
-    private int health = 3;
-
+public class UCMShip extends Ship{
     /**
      * Constructor for the UCMShip.
      */
-    public UCMShip() {
-        this.position = new Position(4, 7);
+    public UCMShip(Game game, Position position) {
+        super(game, position, 3);
     }
 
-    /**
-     * Method used to perform the movement of the UCMShip with the direction provided by the user.
-     * @param move
-     */
-    public void preformMovement(Move move) {
-        this.position = position.move(move);
+    @Override
+    public boolean isOnPosition(Position pos) {
+        return this.pos.equals(pos);
     }
 
-    public Position getPosition() {
-        return this.position;
+    @Override
+    protected String getSymbol() {
+        return Messages.UCMSHIP_SYMBOL;
     }
 
-    /**
-     *
-     * @return True if the UCMShip is alive, False otherwise.
-     */
-    public boolean isAlive() {
-        return health > 0;
+    @Override
+    protected int getDamage() {
+        return 0;
     }
 
-    /**
-     * Method that decreases the health of the UCMShip
-     */
-    public void receiveAttack() { this.health--; }
+    @Override
+    protected int getArmour() {
+        return 0;
+    }
 
-    public int getHealth() {
-        return this.health;
+    @Override
+    public void onDelete() {
+
     }
-    public void setHealth(int health){
-        this.health = health;
+
+    @Override
+    public void automaticMove() {
+
     }
+
+    @Override
+    public boolean receiveAttack(EnemyWeapon weapon) {return false;}
 }

@@ -7,6 +7,7 @@ import java.util.Scanner;
 import tp1.control.commands.Command;
 import tp1.control.commands.CommandGenerator;
 import tp1.logic.Game;
+import tp1.logic.GameModel;
 import tp1.view.BoardPrinter;
 import tp1.view.GamePrinter;
 import tp1.view.Messages;
@@ -16,7 +17,7 @@ import tp1.view.Messages;
  */
 public class Controller {
 
-	private Game game;
+	private GameModel game;
 	private Scanner scanner;
 	private GamePrinter printer;
 

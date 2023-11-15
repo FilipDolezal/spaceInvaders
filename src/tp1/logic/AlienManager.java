@@ -1,6 +1,6 @@
 package tp1.logic;
 
-import tp1.logic.gameobjects.RegularAlien;
+import tp1.logic.gameobjects.Ufo;
 
 public class AlienManager  {
 	
@@ -13,7 +13,7 @@ public class AlienManager  {
 		this.remainingAliens = 0;
 		GameObjectContainer container = new GameObjectContainer();
 		
-		initializeOvni(container);
+		initializeUFO(container);
 		initializeRegularAliens(container);
 		initializeDestroyerAliens(container);
 		
@@ -23,8 +23,8 @@ public class AlienManager  {
 		return container;
 	}
 	
-	private void initializeOvni(GameObjectContainer container) {
-		//container.add(new Ufo(game));
+	private void initializeUFO(GameObjectContainer container) {
+		container.add(new Ufo(game));
 	}
 	
 	private void initializeRegularAliens (GameObjectContainer container) {

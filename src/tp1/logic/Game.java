@@ -4,7 +4,7 @@ import tp1.logic.gameobjects.GameObject;
 import tp1.logic.gameobjects.UCMShip;
 
 
-public class Game implements GameStatus {
+public class Game implements GameStatus, GameModel, GameWorld {
 
 	//TODO fill with your code
 
@@ -18,8 +18,10 @@ public class Game implements GameStatus {
 	
 	//TODO fill with your code
 
+	private Level level;
+
 	public Game (Level level, long seed){
-		//TODO fill with your code
+		this.level = level;
 		initGame();
 	}
 		
@@ -27,7 +29,7 @@ public class Game implements GameStatus {
 		//TODO fill with your code
 		this.container = alienManager.initialize();
 		this.player = new UCMShip(this, new Position(DIM_X / 2, DIM_Y - 1));
-		//container.add(player);
+		container.add(player);
 	}
 
 	//CONTROL METHODS
@@ -102,4 +104,18 @@ public class Game implements GameStatus {
 		return 0;
 	}
 
+	@Override
+	public boolean move(Move move) {
+		return false;
+	}
+
+	@Override
+	public boolean shootLaser() {
+		return false;
+	}
+
+	@Override
+	public void reset() {
+
+	}
 }

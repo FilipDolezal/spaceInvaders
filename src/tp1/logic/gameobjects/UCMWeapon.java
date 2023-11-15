@@ -3,9 +3,8 @@ package tp1.logic.gameobjects;
 import tp1.logic.Game;
 import tp1.logic.Position;
 
-public abstract class EnemyWeapon extends Weapon{
-
-    public EnemyWeapon(Game game, Position pos, int life) {
+public abstract class UCMWeapon extends Weapon{
+    public UCMWeapon(Game game, Position pos, int life) {
         super(game, pos, life);
     }
 
@@ -14,7 +13,4 @@ public abstract class EnemyWeapon extends Weapon{
         //Todo: implement attack
         return false;
     }
-
-    @Override
-    public boolean receiveAttack(UCMWeapon weapon) {return false;}
 }

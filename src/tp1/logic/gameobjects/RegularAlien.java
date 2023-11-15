@@ -1,6 +1,7 @@
 package tp1.logic.gameobjects;
 
 import tp1.logic.AlienManager;
+import tp1.logic.Game;
 import tp1.logic.Move;
 import tp1.logic.Position;
 import tp1.view.Messages;
@@ -11,14 +12,39 @@ import tp1.view.Messages;
  * Extends the abstract class of Alien.
  *
  */
-public class RegularAlien extends Alien {
-	public static final int SCORE = 5;
-	public RegularAlien(AlienManager alienManager, Position position) {
-		super(alienManager, position);
-		this.dir = Move.LEFT;
-		this.symbol = Messages.REGULAR_ALIEN_SYMBOL;
-		this.health = 2;
+public class RegularAlien extends AlienShip {
+
+	public RegularAlien(Game game, Position pos, int life) {
+		super(game, pos, life);
 	}
 
+	@Override
+	public boolean isOnPosition(Position pos) {
+		return false;
+	}
 
+	@Override
+	protected String getSymbol() {
+		return null;
+	}
+
+	@Override
+	protected int getDamage() {
+		return 0;
+	}
+
+	@Override
+	protected int getArmour() {
+		return 0;
+	}
+
+	@Override
+	public void onDelete() {
+
+	}
+
+	@Override
+	public void automaticMove() {
+
+	}
 }

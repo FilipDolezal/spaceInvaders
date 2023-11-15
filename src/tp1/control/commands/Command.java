@@ -2,6 +2,7 @@ package tp1.control.commands;
 
 import tp1.control.ExecutionResult;
 import tp1.logic.Game;
+import tp1.logic.GameModel;
 
 /**
  * Represents a user action in the game.
@@ -21,7 +22,7 @@ public abstract class Command {
 		 * 
 		 * @return {@code ExecutionResult} representing if command was successful and if board must be printed
 		 */
-	  public abstract ExecutionResult execute(Game game);	  
+	  public abstract ExecutionResult execute(GameModel game);
 	  
 	  public abstract Command parse(String[] commandWords);
 	  
