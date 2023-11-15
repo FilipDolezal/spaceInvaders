@@ -41,11 +41,9 @@ public class MoveCommand extends Command {
 		return null;
 	}
 
-
 	@Override
 	public Command parse(String[] commandWords) {
-        //TODO fill with your code
-	    return null;
+	    return new MoveCommand(Move.valueOf(commandWords[1]));
 	}
 
 }

@@ -32,5 +32,4 @@ public class HelpCommand extends NoParamsCommand {
 		System.out.println(CommandGenerator.commandHelp());
 		return new ExecutionResult(false);
 	}
-
 }

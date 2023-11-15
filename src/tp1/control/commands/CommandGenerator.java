@@ -12,10 +12,13 @@ public class CommandGenerator {
 		//TODO fill with your code
 	);
 
-	public static Command parse(String[] commandWords) {		
+	public static Command parse(String[] commandWords) {
 		Command command = null;
 		for (Command c: availableCommands) {
-			//TODO fill with your code
+			if(c.matchCommandName(commandWords[0])) {
+				command = c.parse(commandWords);
+				break;
+			}
 		}
 		return command;
 	}
