@@ -8,7 +8,7 @@ import tp1.logic.Level;
  */
 public class Messages {
 
-	public static final String VERSION = "1.0";
+	public static final String VERSION = "2.0";
 
 	public static final String GAME_NAME = "Space Invaders";
 
@@ -38,19 +38,9 @@ public class Messages {
 
 	public static final String LINE_SEPARATOR = System.lineSeparator();
 
-	/* @formatter:off */
-	public static final String[] HELP_LINES = new String[] { "Available commands:",
-			"[m]ove <left|lleft|right|rright>: moves the UCMShip to the indicated direction",
-			"[s]hoot: player shoots a laser",
-			"shock[W]ave: player releases a shock wave",
-			"[l]ist: print the list of current ships",
-			"[r]eset: start a new game",
-			"[h]elp: print this help message",
-			"[e]xit: end the execution of the game",
-			"[n]one | \"\": skips cycle"};
-	/* @formatter:on */
+	public static final String HELP_AVAILABLE_COMMANDS = "Available commands:";
 
-	public static final String HELP = String.join(System.lineSeparator(), HELP_LINES);
+	public static final String HELP_DETAILS_COMMAND_HELP_SEPARATOR = ": ";
 
 	public static final String UNKNOWN_COMMAND = "Unknown command";
 
@@ -107,7 +97,7 @@ public class Messages {
 
 	public static final String UCMSHIP_SYMBOL = "^__^";
 
-	public static final String UCMSHIP_DEAD_SYMBOL = "^xx^";
+	public static final String UCMSHIP_DEAD_SYMBOL = "#--#";
 
 	public static final String UCMSHIP_DESCRIPTION = "[U]CM Ship";
 
@@ -119,21 +109,55 @@ public class Messages {
 
 	public static final String DESTROYER_ALIEN_DESCRIPTION = "[D]estroyer Alien";
 
+	public static final String EXPLOSIVE_ALIEN_SYMBOL = "E";
+
+	public static final String EXPLOSIVE_ALIEN_DESCRIPTION = "[E]xplosive Alien";
+
 	public static final String UFO_SYMBOL = "U";
 
 	public static final String UFO_DESCRIPTION = "U[f]o";
 
+	//Commands
+	
+	public static final String COMMAND_EXIT_NAME = "exit";
+	public static final String COMMAND_EXIT_SHORTCUT = "e";
+	public static final String COMMAND_EXIT_DETAILS = "[e]xit";
+	public static final String COMMAND_EXIT_HELP = "exits the game";
 
-	/**
-	 * Formats an debug message.
-	 * 
-	 * @param message debug message
-	 * 
-	 * @return the formated debug message;
-	 */
-	public static final String debug(String message) {
-		return Messages.DEBUG.formatted(message);
-	}
+	public static final String COMMAND_HELP_NAME = "help";
+	public static final String COMMAND_HELP_SHORTCUT = "h";
+	public static final String COMMAND_HELP_DETAILS = "[h]elp";
+	public static final String COMMAND_HELP_HELP = "shows this help";
+	
+	public static final String COMMAND_LIST_NAME = "list";
+	public static final String COMMAND_LIST_SHORTCUT = "l";
+	public static final String COMMAND_LIST_DETAILS = "[l]ist";
+	public static final String COMMAND_LIST_HELP = "prints the list of current ships";
+	
+	public static final String COMMAND_MOVE_NAME = "move";
+	public static final String COMMAND_MOVE_SHORTCUT = "m";
+	public static final String COMMAND_MOVE_DETAILS = "[m]ove <left|lleft|right|rright>";
+	public static final String COMMAND_MOVE_HELP = "moves the UCMShip in the indicated direction";
+	
+	public static final String COMMAND_RESET_NAME = "reset";
+	public static final String COMMAND_RESET_SHORTCUT = "r";
+	public static final String COMMAND_RESET_DETAILS = "[r]eset";
+	public static final String COMMAND_RESET_HELP = "resets the game";
+
+	public static final String COMMAND_SHOCKWAVE_NAME = "shockwave";
+	public static final String COMMAND_SHOCKWAVE_SHORTCUT = "w";
+	public static final String COMMAND_SHOCKWAVE_DETAILS = "sock[w]ave";
+	public static final String COMMAND_SHOCKWAVE_HELP = "player shoots a shockwave";
+
+	public static final String COMMAND_SHOOT_NAME = "shoot";
+	public static final String COMMAND_SHOOT_SHORTCUT = "s";
+	public static final String COMMAND_SHOOT_DETAILS = "[s]hoot";
+	public static final String COMMAND_SHOOT_HELP = "player shoots a laser";
+
+	public static final String COMMAND_NONE_NAME = "none";
+	public static final String COMMAND_NONE_SHORTCUT = "[n]";
+	public static final String COMMAND_NONE_DETAILS = "[n]one";
+	public static final String COMMAND_NONE_HELP = "user does not perform any action";
 
 	/**
 	 * Formats an error message.
@@ -148,6 +172,17 @@ public class Messages {
 
 	public static final String status(String icon, int lives) {
 		return Messages.GAME_OBJECT_STATUS.formatted(icon, lives);
+	}
+	
+	/**
+	 * Formats an debug message.
+	 * 
+	 * @param message debug message
+	 * 
+	 * @return the formated debug message;
+	 */
+	public static final String debug(String message) {
+		return Messages.DEBUG.formatted(message);
 	}
 
 	public static final String alienDescription(String alienNameAndShortcut, int points, int damage, int endurance) {
