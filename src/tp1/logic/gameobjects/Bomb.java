@@ -11,11 +11,6 @@ public class Bomb extends EnemyWeapon {
     }
 
     @Override
-    public boolean isOnPosition(Position pos) {
-        return false;
-    }
-
-    @Override
     protected String getSymbol() {
         return null;
     }

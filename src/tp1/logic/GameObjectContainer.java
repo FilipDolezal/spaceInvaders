@@ -22,17 +22,18 @@ public class GameObjectContainer {
 	}
 
 	public void automaticMoves() {
-		for (int i=0;i<objects.size();i++) {
-				GameObject object = objects.get(i);
-			//TODO fill with your code
+		for (GameObject o: objects) {
+			o.automaticMove();
 		}
-		//TODO fill with your code
 	}
 
 	public void computerActions() {
-		// TODO fill with your code
+		for (GameObject o: objects) {
+			o.computerAction();
+		}
 	}
 
-	//TODO fill with your code
-	
+	public List<GameObject> getObjects() {
+		return objects;
+	}
 }

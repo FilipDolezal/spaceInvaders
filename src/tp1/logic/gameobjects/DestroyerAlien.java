@@ -18,13 +18,8 @@ public class DestroyerAlien extends AlienShip
     }
 
     @Override
-    public boolean isOnPosition(Position pos) {
-        return false;
-    }
-
-    @Override
     protected String getSymbol() {
-        return null;
+        return Messages.DESTROYER_ALIEN_SYMBOL;
     }
 
     @Override

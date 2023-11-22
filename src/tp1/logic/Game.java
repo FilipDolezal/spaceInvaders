@@ -2,6 +2,7 @@ package tp1.logic;
 
 import tp1.logic.gameobjects.GameObject;
 import tp1.logic.gameobjects.UCMShip;
+import tp1.util.MyStringUtils;
 
 
 public class Game implements GameStatus, GameModel, GameWorld {
@@ -18,18 +19,22 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	
 	//TODO fill with your code
 
+	public Level getLevel() {
+		return level;
+	}
+
 	private Level level;
 
 	public Game (Level level, long seed){
 		this.level = level;
+		this.alienManager = new AlienManager(this);
 		initGame();
 	}
 		
-	private void initGame () {	
-		//TODO fill with your code
+	private void initGame () {
 		this.container = alienManager.initialize();
 		this.player = new UCMShip(this, new Position(DIM_X / 2, DIM_Y - 1));
-		container.add(player);
+		this.container.add(player);
 	}
 
 	//CONTROL METHODS
@@ -62,8 +67,13 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	//VIEW METHODS
 	
 	public String positionToString(int col, int row) {
-		return null;
-		//return container.toString(new Position(col, row));
+		Position position = new Position(col, row);
+		for (GameObject o: this.container.getObjects()) {
+			if(o.isOnPosition(position)) {
+				return o.toString();
+			}
+		}
+		return "";
 	}
 	
 	

@@ -9,11 +9,6 @@ public class Shockwave extends UCMWeapon {
     }
 
     @Override
-    public boolean isOnPosition(Position pos) {
-        return false;
-    }
-
-    @Override
     protected String getSymbol() {
         return null;
     }

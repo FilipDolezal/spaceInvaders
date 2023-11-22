@@ -14,11 +14,6 @@ public class Ufo extends EnemyShip {
 	}
 
 	@Override
-	public boolean isOnPosition(Position pos) {
-		return false;
-	}
-
-	@Override
 	protected String getSymbol() {
 		return null;
 	}

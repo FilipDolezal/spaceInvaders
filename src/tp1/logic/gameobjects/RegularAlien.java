@@ -19,13 +19,8 @@ public class RegularAlien extends AlienShip {
 	}
 
 	@Override
-	public boolean isOnPosition(Position pos) {
-		return false;
-	}
-
-	@Override
 	protected String getSymbol() {
-		return null;
+		return Messages.REGULAR_ALIEN_SYMBOL;
 	}
 
 	@Override

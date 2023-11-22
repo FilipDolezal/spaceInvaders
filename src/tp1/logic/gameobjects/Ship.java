@@ -8,4 +8,7 @@ public abstract class Ship extends GameObject {
         super(game, pos, life);
     }
 
+    protected void dealDamage(Weapon weapon) {
+        this.life -= weapon.getDamage();
+    }
 }

@@ -16,18 +16,13 @@ public class UCMLaser extends UCMWeapon {
 	}
 
 	@Override
-	public boolean isOnPosition(Position pos) {
-		return false;
-	}
-
-	@Override
 	protected String getSymbol() {
 		return null;
 	}
 
 	@Override
 	protected int getDamage() {
-		return 0;
+		return 1;
 	}
 
 	@Override

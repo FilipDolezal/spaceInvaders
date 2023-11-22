@@ -5,6 +5,10 @@ import tp1.logic.Position;
 
 public abstract class GameObject implements GameItem {
 
+	public Position getPos() {
+		return pos;
+	}
+
 	protected Position pos;
 	protected int life;
 	protected Game game;
@@ -24,7 +28,6 @@ public abstract class GameObject implements GameItem {
 		return this.life;
 	}
 
-	//TODO fill with your code
 
 	
 	protected abstract String getSymbol();
@@ -47,4 +50,13 @@ public abstract class GameObject implements GameItem {
 	@Override
 	public boolean receiveAttack(UCMWeapon weapon) {return false;}
 
+	@Override
+	public String toString() {
+		return this.getSymbol();
+	}
+
+	@Override
+	public boolean isOnPosition(Position pos) {
+		return this.pos.equals(pos);
+	}
 }

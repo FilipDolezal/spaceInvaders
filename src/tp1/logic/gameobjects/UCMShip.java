@@ -18,11 +18,6 @@ public class UCMShip extends Ship{
     }
 
     @Override
-    public boolean isOnPosition(Position pos) {
-        return this.pos.equals(pos);
-    }
-
-    @Override
     protected String getSymbol() {
         return Messages.UCMSHIP_SYMBOL;
     }
@@ -48,5 +43,10 @@ public class UCMShip extends Ship{
     }
 
     @Override
-    public boolean receiveAttack(EnemyWeapon weapon) {return false;}
+    public boolean receiveAttack(EnemyWeapon weapon) {
+        if(!this.pos.equals(weapon.pos)) return false;
+
+        this.dealDamage(weapon);
+        return true;
+    }
 }
