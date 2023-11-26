@@ -2,6 +2,7 @@ package tp1.logic;
 
 import tp1.logic.gameobjects.GameObject;
 import tp1.logic.gameobjects.UCMShip;
+import tp1.logic.gameobjects.UCMWeapon;
 import tp1.util.MyStringUtils;
 
 
@@ -45,7 +46,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	}
 
 	public void exit() {
-		// TODO fill with your code
+		System.exit(0);
 	}
 
 	public void update() {
@@ -75,6 +76,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 		}
 		return "";
 	}
+
 	@Override
 	public String infoToString() {
 		// TODO fill with your code
@@ -111,29 +113,28 @@ public class Game implements GameStatus, GameModel, GameWorld {
 		return 0;
 	}
 
+	@Override
+	public boolean move(Move move) {
+		return this.player.move(move);
+	}
 
 	@Override
 	public boolean shootLaser() {
-		return false;
+		return this.player.shootLaser();
 	}
 
 	@Override
 	public void reset() {
 
 	}
-	@Override
-	public boolean move(Move move){
-		Position playerPos = player.getPos();
-		boolean finish;
-		if (isOutOfBoundX(playerPos.move(move)))
-			finish = false;
-		else{
-			this.player.performMovement(move);
-			finish = true;
-			}
-	return finish;
+
+	public boolean inBoundsX(Position pos) {
+		return pos.col >= 0 && pos.col < DIM_X;
 	}
-	public static boolean isOutOfBoundX(Position position) {
-		return (position.col >= DIM_X || position.col < 0);
+
+	public boolean inBoundsY(Position pos) { return pos.row >= 0 && pos.row < DIM_Y; }
+
+	public boolean attackEnemy(UCMWeapon ucmWeapon) {
+		return this.container.performAttackOnAliens(ucmWeapon);
 	}
 }

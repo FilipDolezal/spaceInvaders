@@ -11,13 +11,15 @@ import tp1.view.Messages;
  *
  */
 public class UCMLaser extends UCMWeapon {
-	public UCMLaser(Game game, Position pos, int life) {
-		super(game, pos, life);
+	public UCMLaser(Game game, UCMShip ship) {
+		super(game, ship.getPos().move(Move.UP), 1);
+		this.ship = ship;
+		this.dir = Move.UP;
 	}
 
 	@Override
 	protected String getSymbol() {
-		return null;
+		return Messages.LASER_SYMBOL;
 	}
 
 	@Override
@@ -32,12 +34,7 @@ public class UCMLaser extends UCMWeapon {
 
 	@Override
 	public void onDelete() {
-
-	}
-
-	@Override
-	public void automaticMove() {
-
+		this.ship.disableLaser();
 	}
 
 	@Override

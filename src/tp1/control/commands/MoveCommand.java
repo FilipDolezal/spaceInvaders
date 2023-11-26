@@ -9,7 +9,6 @@ import tp1.view.Messages;
 public class MoveCommand extends Command {
 
 	private Move move;
-	private Game GAME;
 
 	public MoveCommand() {}
 
@@ -39,13 +38,27 @@ public class MoveCommand extends Command {
 
 	@Override
 	public ExecutionResult execute(GameModel game) {
-		GAME.move(move);
-		return new ExecutionResult(true);
+		switch(move) {
+			case UP:
+			case DOWN:
+				return new ExecutionResult(Messages.MOVEMENT_ERROR);
+		}
+
+
+		boolean success = game.move(move);
+		game.update();
+
+		if(success) return new ExecutionResult();
+		else return new ExecutionResult(Messages.MOVEMENT_ERROR);
 	}
 
 	@Override
 	public Command parse(String[] commandWords) {
-	    return new MoveCommand(Move.valueOf(commandWords[1]));
+		if(commandWords.length != 2) return null;
+		if(!matchCommandName(commandWords[0])) return null;
+
+		Move move = Move.valueOf(commandWords[1].toUpperCase());
+	    return new MoveCommand(move);
 	}
 
 }

@@ -1,58 +1,68 @@
-    package tp1.logic.gameobjects;
+package tp1.logic.gameobjects;
 
-    import tp1.logic.Game;
-    import tp1.logic.Move;
-    import tp1.logic.Position;
-    import tp1.util.MyStringUtils;
-    import tp1.view.Messages;
+import tp1.logic.Game;
+import tp1.logic.Move;
+import tp1.logic.Position;
+import tp1.util.MyStringUtils;
+import tp1.view.Messages;
 
+/**
+ * Class of the UCMShip that contains all the attributes and methods.
+ */
+public class UCMShip extends Ship{
+
+    private UCMLaser laser;
     /**
-     * Class of the UCMShip that contains all the attributes and methods.
+     * Constructor for the UCMShip.
      */
-    public class UCMShip extends Ship{
-        /**
-         * Constructor for the UCMShip.
-         */
-        public UCMShip(Game game, Position position) {
-            super(game, position, 3);
-        }
+    public UCMShip(Game game, Position position) {
+        super(game, position, 3);
+    }
 
-        @Override
-        protected String getSymbol() {
-            return Messages.UCMSHIP_SYMBOL;
-        }
+    public boolean move(Move move) {
+        if(!this.game.inBoundsX(this.pos.move(move)))
+            return false;
 
-        @Override
-        protected int getDamage() {
-            return 0;
-        }
+        this.dir = move;
+        return true;
+    }
 
-        @Override
-        protected int getArmour() {
-            return 0;
-        }
+    public boolean shootLaser() {
+        if(laser != null) return false;
 
-        @Override
-        public void onDelete() {
+        UCMLaser laser = new UCMLaser(this.game, this);
+        this.laser = laser;
+        this.game.addObject(laser);
+        return true;
+    }
 
-        }
+    public void disableLaser() {
+        this.laser = null;
+    }
 
-        @Override
-        public void automaticMove() {
-            //not used because the UCMShip doesn't have an automatic movement
-        }
+    @Override
+    protected String getSymbol() {
+        return Messages.UCMSHIP_SYMBOL;
+    }
 
-        @Override
-        public boolean receiveAttack(EnemyWeapon weapon) {
-            if(!this.pos.equals(weapon.pos)) return false;
+    @Override
+    protected int getDamage() {
+        return 0;
+    }
 
-            this.dealDamage(weapon);
-            return true;
-        }
-        public void performMovement(Move move){
-            this.pos = pos.move(move);
+    @Override
+    protected int getArmour() {
+        return 0;
+    }
 
-
-        }
+    @Override
+    public void onDelete() {
 
     }
+
+    @Override
+    public boolean receiveAttack(EnemyWeapon weapon) {
+        this.dealDamage(weapon);
+        return true;
+    }
+}

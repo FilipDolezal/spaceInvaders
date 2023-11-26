@@ -7,10 +7,9 @@ public abstract class NoParamsCommand extends Command {
 		return switch(commandWords[0]) {
 			case "help" -> new HelpCommand();
 			case "exit" -> new ExitCommand();
-			case "move" -> new MoveCommand();
+			case "shoot" -> new ShootCommand();
 			default -> null;
 		};
-
 	}
 	
 }

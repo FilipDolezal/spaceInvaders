@@ -14,8 +14,7 @@ public abstract class GameObject implements GameItem {
 	protected int life;
 	protected Game game;
 	protected Move dir;
-
-
+	
 	public GameObject(Game game, Position pos, int life) {	
 		this.pos = pos;
 		this.game = game;
@@ -30,8 +29,10 @@ public abstract class GameObject implements GameItem {
 	protected int getLife() {
 		return this.life;
 	}
-
-	//TODO fill with your code
+	protected void performMovement(Move dir)
+	{
+		this.pos = this.pos.move(dir);
+	}
 
 	
 	protected abstract String getSymbol();
@@ -40,13 +41,10 @@ public abstract class GameObject implements GameItem {
 	
 			
 	public abstract void onDelete();
-	public abstract void automaticMove();
-
-	public void computerAction() {
-
-	};
-	
-	//TODO fill with your code
+	public void automaticMove() {
+		this.performMovement(this.dir);
+	}
+	public void computerAction() {};
 	
 	@Override
 	public boolean performAttack(GameItem other) {return false;}
@@ -66,7 +64,4 @@ public abstract class GameObject implements GameItem {
 	public boolean isOnPosition(Position pos) {
 		return this.pos.equals(pos);
 	}
-
-
-
 }
