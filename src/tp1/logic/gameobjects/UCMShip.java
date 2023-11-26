@@ -10,11 +10,34 @@ import tp1.view.Messages;
  * Class of the UCMShip that contains all the attributes and methods.
  */
 public class UCMShip extends Ship{
+
+    private UCMLaser laser;
     /**
      * Constructor for the UCMShip.
      */
     public UCMShip(Game game, Position position) {
         super(game, position, 3);
+    }
+
+    public boolean move(Move move) {
+        if(!this.game.inBoundsX(this.pos.move(move)))
+            return false;
+
+        this.dir = move;
+        return true;
+    }
+
+    public boolean shootLaser() {
+        if(laser != null) return false;
+
+        UCMLaser laser = new UCMLaser(this.game, this);
+        this.laser = laser;
+        this.game.addObject(laser);
+        return true;
+    }
+
+    public void disableLaser() {
+        this.laser = null;
     }
 
     @Override
@@ -38,14 +61,7 @@ public class UCMShip extends Ship{
     }
 
     @Override
-    public void automaticMove() {
-
-    }
-
-    @Override
     public boolean receiveAttack(EnemyWeapon weapon) {
-        if(!this.pos.equals(weapon.pos)) return false;
-
         this.dealDamage(weapon);
         return true;
     }

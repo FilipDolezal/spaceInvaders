@@ -12,6 +12,7 @@ import tp1.view.Messages;
  */
 public class DestroyerAlien extends AlienShip
 {
+    private Bomb bomb;
 
     public DestroyerAlien(Game game, Position pos, int life) {
         super(game, pos, life);
@@ -38,7 +39,16 @@ public class DestroyerAlien extends AlienShip
     }
 
     @Override
-    public void automaticMove() {
+    public void computerAction() {
+        if(this.bomb == null) {
+            Bomb bomb = new Bomb(
+                    this.game,
+                    this.pos,
+                    1
+            );
 
-    }
+            this.bomb = bomb;
+            this.game.addObject(bomb);
+        }
+    };
 }

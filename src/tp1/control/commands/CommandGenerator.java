@@ -7,18 +7,18 @@ public class CommandGenerator {
 
 	private static final List<Command> availableCommands = Arrays.asList(
 		new HelpCommand(),
-		new MoveCommand(),
-		new ExitCommand()
+		new ExitCommand(),
+		new ShootCommand(),
+		new MoveCommand()
 		//TODO fill with your code
 	);
 
 	public static Command parse(String[] commandWords) {
+		if(commandWords.length == 0) return null;
 		Command command = null;
 		for (Command c: availableCommands) {
-			if(c.matchCommandName(commandWords[0])) {
-				command = c.parse(commandWords);
-				break;
-			}
+			command = c.parse(commandWords);
+			if(command != null) break;
 		}
 		return command;
 	}
@@ -26,7 +26,10 @@ public class CommandGenerator {
 	public static String commandHelp() {
 		StringBuilder commands = new StringBuilder();	
 		for (Command c: availableCommands) {
-			//TODO fill with your code
+			commands
+					.append("\t").append(c.getName()).append(":\t")
+					.append(c.getHelp()).append(System.lineSeparator())
+					.append("\t\t\t").append(c.getDetails()).append(System.lineSeparator());
 		}
 		return commands.toString();
 	}

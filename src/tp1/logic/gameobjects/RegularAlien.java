@@ -37,9 +37,4 @@ public class RegularAlien extends AlienShip {
 	public void onDelete() {
 
 	}
-
-	@Override
-	public void automaticMove() {
-
-	}
 }

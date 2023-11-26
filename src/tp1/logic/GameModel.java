@@ -6,4 +6,5 @@ public interface GameModel {
     public void reset();
     public boolean isFinished();
     public void exit();
+    public void update();
 }

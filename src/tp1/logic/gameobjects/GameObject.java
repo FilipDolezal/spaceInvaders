@@ -1,6 +1,7 @@
 package tp1.logic.gameobjects;
 
 import tp1.logic.Game;
+import tp1.logic.Move;
 import tp1.logic.Position;
 
 public abstract class GameObject implements GameItem {
@@ -12,6 +13,7 @@ public abstract class GameObject implements GameItem {
 	protected Position pos;
 	protected int life;
 	protected Game game;
+	protected Move dir;
 	
 	public GameObject(Game game, Position pos, int life) {	
 		this.pos = pos;
@@ -27,7 +29,10 @@ public abstract class GameObject implements GameItem {
 	protected int getLife() {
 		return this.life;
 	}
-
+	protected void performMovement(Move dir)
+	{
+		this.pos = this.pos.move(dir);
+	}
 
 	
 	protected abstract String getSymbol();
@@ -36,10 +41,10 @@ public abstract class GameObject implements GameItem {
 	
 			
 	public abstract void onDelete();
-	public abstract void automaticMove();
+	public void automaticMove() {
+		this.performMovement(this.dir);
+	}
 	public void computerAction() {};
-	
-	//TODO fill with your code
 	
 	@Override
 	public boolean performAttack(GameItem other) {return false;}

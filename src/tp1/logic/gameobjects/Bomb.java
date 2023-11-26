@@ -8,16 +8,17 @@ import tp1.view.Messages;
 public class Bomb extends EnemyWeapon {
     public Bomb(Game game, Position pos, int life) {
         super(game, pos, life);
+        this.dir = Move.DOWN;
     }
 
     @Override
     protected String getSymbol() {
-        return null;
+        return Messages.BOMB_SYMBOL;
     }
 
     @Override
     protected int getDamage() {
-        return 0;
+        return 1;
     }
 
     @Override
@@ -27,11 +28,6 @@ public class Bomb extends EnemyWeapon {
 
     @Override
     public void onDelete() {
-
-    }
-
-    @Override
-    public void automaticMove() {
 
     }
 }

@@ -1,9 +1,11 @@
 package tp1.logic;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import tp1.logic.gameobjects.GameObject;
+import tp1.logic.gameobjects.*;
 
 public class GameObjectContainer {
 
@@ -22,18 +24,46 @@ public class GameObjectContainer {
 	}
 
 	public void automaticMoves() {
-		for (GameObject o: objects) {
-			o.automaticMove();
+		for(int i = 0; i < objects.size(); i++ ) {
+			objects.get(i).automaticMove();
 		}
 	}
 
 	public void computerActions() {
-		for (GameObject o: objects) {
-			o.computerAction();
+		for(int i = 0; i < objects.size(); i++ ) {
+			objects.get(i).computerAction();
 		}
+	}
+
+	private List<EnemyWeapon> getEnemyWeapons() {
+		return objects.stream()
+				.filter(o -> o instanceof EnemyWeapon)
+				.map(o -> (EnemyWeapon) o)
+				.collect(Collectors.toList());
+	}
+
+	private List<EnemyShip> getEnemyShips() {
+		return objects.stream()
+				.filter(o -> o instanceof EnemyShip)
+				.map(o -> (EnemyShip) o)
+				.collect(Collectors.toList());
 	}
 
 	public List<GameObject> getObjects() {
 		return objects;
+	}
+
+	public boolean performAttackOnAliens(UCMWeapon weapon) {
+		boolean collision;
+		for (EnemyWeapon enemyWeapon: this.getEnemyWeapons()) {
+			collision = weapon.performAttack(enemyWeapon);
+			if(collision) return true;
+		}
+
+		for (EnemyShip enemyShip: this.getEnemyShips()) {
+			collision = weapon.performAttack(enemyShip);
+			if(collision) return true;
+		}
+		return false;
 	}
 }
