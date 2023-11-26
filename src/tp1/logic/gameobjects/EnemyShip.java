@@ -15,4 +15,5 @@ public abstract class EnemyShip extends Ship{
         this.dealDamage(weapon);
         return true;
     }
+
 }

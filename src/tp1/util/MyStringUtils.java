@@ -61,5 +61,8 @@ public class MyStringUtils {
 		}
 		else
 			return texto.substring(0, ancho);
+
 	}
+
+
 }

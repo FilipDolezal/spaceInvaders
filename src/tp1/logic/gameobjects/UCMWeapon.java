@@ -11,6 +11,11 @@ public abstract class UCMWeapon extends Weapon{
     @Override
     public boolean performAttack(GameItem other) {
         //Todo: implement attack
-        return false;
+       return false;
+    }
+
+    public void receiveAttack() {
+
+
     }
 }

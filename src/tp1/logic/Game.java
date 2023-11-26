@@ -75,9 +75,6 @@ public class Game implements GameStatus, GameModel, GameWorld {
 		}
 		return "";
 	}
-	
-	
-
 	@Override
 	public String infoToString() {
 		// TODO fill with your code
@@ -114,10 +111,6 @@ public class Game implements GameStatus, GameModel, GameWorld {
 		return 0;
 	}
 
-	@Override
-	public boolean move(Move move) {
-		return false;
-	}
 
 	@Override
 	public boolean shootLaser() {
@@ -127,5 +120,20 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	@Override
 	public void reset() {
 
+	}
+	@Override
+	public boolean move(Move move){
+		Position playerPos = player.getPos();
+		boolean finish;
+		if (isOutOfBoundX(playerPos.move(move)))
+			finish = false;
+		else{
+			this.player.performMovement(move);
+			finish = true;
+			}
+	return finish;
+	}
+	public static boolean isOutOfBoundX(Position position) {
+		return (position.col >= DIM_X || position.col < 0);
 	}
 }

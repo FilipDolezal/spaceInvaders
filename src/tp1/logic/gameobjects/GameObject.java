@@ -1,6 +1,7 @@
 package tp1.logic.gameobjects;
 
 import tp1.logic.Game;
+import tp1.logic.Move;
 import tp1.logic.Position;
 
 public abstract class GameObject implements GameItem {
@@ -12,7 +13,9 @@ public abstract class GameObject implements GameItem {
 	protected Position pos;
 	protected int life;
 	protected Game game;
-	
+	protected Move dir;
+
+
 	public GameObject(Game game, Position pos, int life) {	
 		this.pos = pos;
 		this.game = game;
@@ -28,6 +31,7 @@ public abstract class GameObject implements GameItem {
 		return this.life;
 	}
 
+	//TODO fill with your code
 
 	
 	protected abstract String getSymbol();
@@ -37,7 +41,10 @@ public abstract class GameObject implements GameItem {
 			
 	public abstract void onDelete();
 	public abstract void automaticMove();
-	public void computerAction() {};
+
+	public void computerAction() {
+
+	};
 	
 	//TODO fill with your code
 	
@@ -59,4 +66,7 @@ public abstract class GameObject implements GameItem {
 	public boolean isOnPosition(Position pos) {
 		return this.pos.equals(pos);
 	}
+
+
+
 }

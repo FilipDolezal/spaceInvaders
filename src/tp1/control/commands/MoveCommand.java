@@ -9,6 +9,7 @@ import tp1.view.Messages;
 public class MoveCommand extends Command {
 
 	private Move move;
+	private Game GAME;
 
 	public MoveCommand() {}
 
@@ -38,8 +39,8 @@ public class MoveCommand extends Command {
 
 	@Override
 	public ExecutionResult execute(GameModel game) {
-		//TODO fill with your code
-		return null;
+		GAME.move(move);
+		return new ExecutionResult(true);
 	}
 
 	@Override

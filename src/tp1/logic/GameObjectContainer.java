@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tp1.logic.gameobjects.GameObject;
+import tp1.logic.gameobjects.UCMShip;
 
 public class GameObjectContainer {
 
@@ -24,6 +25,7 @@ public class GameObjectContainer {
 	public void automaticMoves() {
 		for (GameObject o: objects) {
 			o.automaticMove();
+
 		}
 	}
 
