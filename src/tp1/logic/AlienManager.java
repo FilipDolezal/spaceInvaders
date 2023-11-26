@@ -21,6 +21,9 @@ public class AlienManager  {
 		initializeRegularAliens(container);
 		initializeDestroyerAliens(container);
 		
+		//TODO fill with your code
+		
+		
 		return container;
 	}
 	
