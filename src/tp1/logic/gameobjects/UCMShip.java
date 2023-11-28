@@ -17,6 +17,7 @@ public class UCMShip extends Ship{
      */
     public UCMShip(Game game, Position position) {
         super(game, position, 3);
+        this.dir = Move.NONE;
     }
 
     public boolean move(Move move) {
@@ -58,6 +59,13 @@ public class UCMShip extends Ship{
     @Override
     public void onDelete() {
 
+    }
+
+    public void automaticMove() {
+        super.automaticMove();
+
+        // remove direction after each move
+        this.dir = Move.NONE;
     }
 
     @Override

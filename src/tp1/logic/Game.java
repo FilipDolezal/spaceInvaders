@@ -23,7 +23,6 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	public Level getLevel() {
 		return level;
 	}
-
 	private Level level;
 
 	public Game (Level level, long seed){
@@ -51,6 +50,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 
 	public void update() {
 	    this.currentCycle++;
+		this.alienManager.computerActions(this.container);
 	    this.container.computerActions();
 	    this.container.automaticMoves();
 	}
@@ -103,14 +103,12 @@ public class Game implements GameStatus, GameModel, GameWorld {
 
 	@Override
 	public int getCycle() {
-		// TODO fill with your code
-		return 0;
+		return this.currentCycle;
 	}
 
 	@Override
 	public int getRemainingAliens() {
-		// TODO fill with your code
-		return 0;
+		return this.alienManager.getRemainingAliens();
 	}
 
 	@Override

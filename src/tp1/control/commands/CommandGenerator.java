@@ -2,6 +2,7 @@ package tp1.control.commands;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class CommandGenerator {
 
@@ -9,18 +10,16 @@ public class CommandGenerator {
 		new HelpCommand(),
 		new ExitCommand(),
 		new ShootCommand(),
+		new NoneCommand(),
 		new MoveCommand()
-		//TODO fill with your code
 	);
 
 	public static Command parse(String[] commandWords) {
-		if(commandWords.length == 0) return null;
-		Command command = null;
-		for (Command c: availableCommands) {
-			command = c.parse(commandWords);
-			if(command != null) break;
-		}
-		return command;
+		Optional match = availableCommands.stream()
+				.filter(c -> c.matchCommandName(commandWords[0]))
+				.findFirst();
+
+		return match.isEmpty() ? null : ((Command) match.get()).parse(commandWords);
 	}
 		
 	public static String commandHelp() {

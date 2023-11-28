@@ -14,8 +14,8 @@ import tp1.view.Messages;
  */
 public class RegularAlien extends AlienShip {
 
-	public RegularAlien(Game game, Position pos, int life) {
-		super(game, pos, life);
+	public RegularAlien(Game game, AlienManager alienManager, Position pos, int life) {
+		super(game, alienManager, pos, life);
 	}
 
 	@Override

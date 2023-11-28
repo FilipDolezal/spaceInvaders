@@ -48,8 +48,7 @@ public class MoveCommand extends Command {
 		boolean success = game.move(move);
 		game.update();
 
-		if(success) return new ExecutionResult();
-		else return new ExecutionResult(Messages.MOVEMENT_ERROR);
+		return new ExecutionResult(success, true, Messages.MOVEMENT_ERROR);
 	}
 
 	@Override

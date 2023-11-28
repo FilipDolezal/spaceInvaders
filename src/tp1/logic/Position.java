@@ -58,6 +58,8 @@ public class Position {
 	 */
 	public boolean inRow(int row) { return this.row == row; }
 
+	public boolean inCol(int col) { return this.col == col; }
+
 	/**
 	 * @return String representative of this position
 	 */

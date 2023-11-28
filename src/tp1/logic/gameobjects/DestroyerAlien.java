@@ -14,8 +14,8 @@ public class DestroyerAlien extends AlienShip
 {
     private Bomb bomb;
 
-    public DestroyerAlien(Game game, Position pos, int life) {
-        super(game, pos, life);
+    public DestroyerAlien(Game game, AlienManager alienManager, Position pos, int life) {
+        super(game, alienManager, pos, life);
     }
 
     @Override
@@ -40,6 +40,7 @@ public class DestroyerAlien extends AlienShip
 
     @Override
     public void computerAction() {
+        super.computerAction();
         if(this.bomb == null) {
             Bomb bomb = new Bomb(
                     this.game,

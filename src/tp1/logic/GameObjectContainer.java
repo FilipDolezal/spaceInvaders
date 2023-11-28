@@ -35,17 +35,24 @@ public class GameObjectContainer {
 		}
 	}
 
-	private List<EnemyWeapon> getEnemyWeapons() {
+	public List<EnemyWeapon> getEnemyWeapons() {
 		return objects.stream()
 				.filter(o -> o instanceof EnemyWeapon)
 				.map(o -> (EnemyWeapon) o)
 				.collect(Collectors.toList());
 	}
 
-	private List<EnemyShip> getEnemyShips() {
+	public List<EnemyShip> getEnemyShips() {
 		return objects.stream()
 				.filter(o -> o instanceof EnemyShip)
 				.map(o -> (EnemyShip) o)
+				.collect(Collectors.toList());
+	}
+
+	public List<AlienShip> getAlienShips() {
+		return objects.stream()
+				.filter(o -> o instanceof AlienShip)
+				.map(o -> (AlienShip) o)
 				.collect(Collectors.toList());
 	}
 
