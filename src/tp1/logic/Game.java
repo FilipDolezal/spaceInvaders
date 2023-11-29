@@ -7,9 +7,6 @@ import tp1.util.MyStringUtils;
 
 
 public class Game implements GameStatus, GameModel, GameWorld {
-
-	//TODO fill with your code
-
 	public static final int DIM_X = 9;
 	public static final int DIM_Y = 8;
 	
@@ -17,13 +14,10 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	private UCMShip player;
 	private AlienManager alienManager;
 	private int currentCycle;
-	
-	//TODO fill with your code
 
 	public Level getLevel() {
 		return level;
 	}
-
 	private Level level;
 
 	public Game (Level level, long seed){
@@ -38,35 +32,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 		this.container.add(player);
 	}
 
-	//CONTROL METHODS
-	
-	public boolean isFinished() {
-		// TODO fill with your code
-		return false;
-	}
-
-	public void exit() {
-		System.exit(0);
-	}
-
-	public void update() {
-	    this.currentCycle++;
-	    this.container.computerActions();
-	    this.container.automaticMoves();
-	}
-
-	// TODO fill with your code
-
-	//CALLBACK METHODS
-	
-	public void addObject(GameObject object) {
-	    this.container.add(object);
-	}
-
-	// TODO fill with your code
-	
-	//VIEW METHODS
-	
+	// ################## GameStatus functions
 	public String positionToString(int col, int row) {
 		Position position = new Position(col, row);
 		for (GameObject o: this.container.getObjects()) {
@@ -76,58 +42,63 @@ public class Game implements GameStatus, GameModel, GameWorld {
 		}
 		return "";
 	}
-
 	@Override
 	public String infoToString() {
 		// TODO fill with your code
 		return null;
 	}
-
 	@Override
 	public String stateToString() {
 		// TODO fill with your code
 		return null;
 	}
-
 	@Override
 	public boolean playerWin() {
 		// TODO fill with your code
 		return false;
 	}
-
 	@Override
 	public boolean aliensWin() {
 		// TODO fill with your code
 		return false;
 	}
-
 	@Override
 	public int getCycle() {
-		// TODO fill with your code
-		return 0;
+		return this.currentCycle;
 	}
-
 	@Override
 	public int getRemainingAliens() {
-		// TODO fill with your code
-		return 0;
+		return this.alienManager.getRemainingAliens();
 	}
 
+	// ################## GameModel functions
 	@Override
 	public boolean move(Move move) {
 		return this.player.move(move);
 	}
-
 	@Override
 	public boolean shootLaser() {
 		return this.player.shootLaser();
 	}
-
 	@Override
 	public void reset() {
 
 	}
-
+	public boolean isFinished() {
+		// TODO fill with your code
+		return false;
+	}
+	public void exit() {
+		System.exit(0);
+	}
+	public void update() {
+		this.currentCycle++;
+		this.alienManager.computerActions(this.container);
+		this.container.computerActions();
+		this.container.automaticMoves();
+	}
+	
+	// ################## GameWorld functions
 	public boolean inBoundsX(Position pos) {
 		return pos.col >= 0 && pos.col < DIM_X;
 	}
@@ -136,5 +107,13 @@ public class Game implements GameStatus, GameModel, GameWorld {
 
 	public boolean attackEnemy(UCMWeapon ucmWeapon) {
 		return this.container.performAttackOnAliens(ucmWeapon);
+	}
+
+	public void addObject(GameObject object) {
+		this.container.add(object);
+	}
+
+	public void removeObject(GameObject object) {
+		this.container.remove(object);
 	}
 }

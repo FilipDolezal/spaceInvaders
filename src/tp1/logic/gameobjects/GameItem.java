@@ -13,4 +13,5 @@ public interface GameItem {
 	public boolean isAlive();
 	public boolean isOnPosition(Position pos);
 
+	// public boolean willBeOnPosition(Position pos);
 }

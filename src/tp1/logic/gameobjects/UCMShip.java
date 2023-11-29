@@ -1,9 +1,9 @@
 package tp1.logic.gameobjects;
 
 import tp1.logic.Game;
+import tp1.logic.GameWorld;
 import tp1.logic.Move;
 import tp1.logic.Position;
-import tp1.util.MyStringUtils;
 import tp1.view.Messages;
 
 /**
@@ -15,8 +15,9 @@ public class UCMShip extends Ship{
     /**
      * Constructor for the UCMShip.
      */
-    public UCMShip(Game game, Position position) {
+    public UCMShip(GameWorld game, Position position) {
         super(game, position, 3);
+        this.dir = Move.NONE;
     }
 
     public boolean move(Move move) {
@@ -58,6 +59,13 @@ public class UCMShip extends Ship{
     @Override
     public void onDelete() {
 
+    }
+
+    public void automaticMove() {
+        super.automaticMove();
+
+        // remove direction after each move
+        this.dir = Move.NONE;
     }
 
     @Override

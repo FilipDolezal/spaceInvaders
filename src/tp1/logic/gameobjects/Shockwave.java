@@ -1,10 +1,11 @@
 package tp1.logic.gameobjects;
 
 import tp1.logic.Game;
+import tp1.logic.GameWorld;
 import tp1.logic.Position;
 
 public class Shockwave extends UCMWeapon {
-    public Shockwave(Game game, Position pos, int life) {
+    public Shockwave(GameWorld game, Position pos, int life) {
         super(game, pos, life);
     }
 

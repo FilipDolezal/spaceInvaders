@@ -1,13 +1,18 @@
 package tp1.logic.gameobjects;
 
-import tp1.logic.Game;
-import tp1.logic.Move;
-import tp1.logic.Position;
+import tp1.logic.*;
 
 public abstract class AlienShip extends EnemyShip {
-    public AlienShip(Game game, Position pos, int life) {
+    protected AlienManager alienManager;
+
+    public AlienShip(GameWorld game, AlienManager alienManager, Position pos, int life) {
         super(game, pos, life);
-        this.dir = Move.LEFT;
+        this.alienManager = alienManager;
+        this.dir = alienManager.getAlienShipMove();
+    }
+
+    public void computerAction() {
+        this.dir = alienManager.getAlienShipMove();
     }
 
     @Override

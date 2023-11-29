@@ -29,5 +29,4 @@ public record ExecutionResult(boolean success, boolean draw, String errorMessage
 		this(false, false, errorMessage);
 	}
 
-	public ExecutionResult() { this(true, true, null); }
 }

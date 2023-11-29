@@ -2,7 +2,7 @@ package tp1.logic.gameobjects;
 
 import tp1.logic.AlienManager;
 import tp1.logic.Game;
-import tp1.logic.Move;
+import tp1.logic.GameWorld;
 import tp1.logic.Position;
 import tp1.view.Messages;
 
@@ -14,8 +14,8 @@ public class DestroyerAlien extends AlienShip
 {
     private Bomb bomb;
 
-    public DestroyerAlien(Game game, Position pos, int life) {
-        super(game, pos, life);
+    public DestroyerAlien(GameWorld game, AlienManager alienManager, Position pos, int life) {
+        super(game, alienManager, pos, life);
     }
 
     @Override
@@ -40,6 +40,7 @@ public class DestroyerAlien extends AlienShip
 
     @Override
     public void computerAction() {
+        super.computerAction();
         if(this.bomb == null) {
             Bomb bomb = new Bomb(
                     this.game,
