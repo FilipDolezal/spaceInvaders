@@ -1,8 +1,7 @@
 package tp1.logic.gameobjects;
 
-import tp1.logic.Game;
+import tp1.logic.GameWorld;
 import tp1.logic.Move;
-import tp1.logic.Position;
 import tp1.view.Messages;
 
 /**
@@ -11,7 +10,7 @@ import tp1.view.Messages;
  *
  */
 public class UCMLaser extends UCMWeapon {
-	public UCMLaser(Game game, UCMShip ship) {
+	public UCMLaser(GameWorld game, UCMShip ship) {
 		super(game, ship.getPos().move(Move.UP), 1);
 		this.ship = ship;
 		this.dir = Move.UP;
@@ -34,6 +33,7 @@ public class UCMLaser extends UCMWeapon {
 
 	@Override
 	public void onDelete() {
+		super.onDelete();
 		this.ship.disableLaser();
 	}
 

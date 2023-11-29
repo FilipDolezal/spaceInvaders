@@ -1,6 +1,6 @@
 package tp1.logic.gameobjects;
 
-import tp1.logic.Game;
+import tp1.logic.GameWorld;
 import tp1.logic.Move;
 import tp1.logic.Position;
 
@@ -12,10 +12,10 @@ public abstract class GameObject implements GameItem {
 
 	protected Position pos;
 	protected int life;
-	protected Game game;
+	protected GameWorld game;
 	protected Move dir;
 	
-	public GameObject(Game game, Position pos, int life) {	
+	public GameObject(GameWorld game, Position pos, int life) {
 		this.pos = pos;
 		this.game = game;
 		this.life = life;
@@ -38,9 +38,10 @@ public abstract class GameObject implements GameItem {
 	protected abstract String getSymbol();
 	protected abstract int getDamage();
 	protected abstract int getArmour();
-	
-			
-	public abstract void onDelete();
+
+	public void onDelete() {
+		this.game.removeObject(this);
+	}
 	public void automaticMove() {
 		this.performMovement(this.dir);
 	}
@@ -64,4 +65,11 @@ public abstract class GameObject implements GameItem {
 	public boolean isOnPosition(Position pos) {
 		return this.pos.equals(pos);
 	}
+
+	/*
+	@Override
+	public boolean willBeOnPosition(Position pos) {
+		return this.pos.move(this.dir).equals(pos);
+	}
+	 */
 }
