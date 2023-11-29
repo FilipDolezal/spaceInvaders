@@ -1,12 +1,14 @@
 package tp1.logic;
 
+import tp1.logic.gameobjects.EnemyWeapon;
 import tp1.logic.gameobjects.GameObject;
 import tp1.logic.gameobjects.UCMWeapon;
 
 public interface GameWorld {
-    public boolean inBoundsX(Position pos);
-    public boolean inBoundsY(Position pos);
-    public boolean attackEnemy(UCMWeapon ucmWeapon);
-    public void removeObject(GameObject object);
-    public void addObject(GameObject object);
+    boolean inBoundsX(Position pos);
+    boolean inBoundsY(Position pos);
+    boolean attackEnemy(UCMWeapon ucmWeapon);
+    boolean attackPlayer(EnemyWeapon enemyWeapon);
+    void removeObject(GameObject object);
+    void addObject(GameObject object);
 }

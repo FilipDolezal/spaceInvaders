@@ -9,12 +9,21 @@ public abstract class EnemyWeapon extends Weapon{
         super(game, pos, life);
     }
 
-    @Override
-    public boolean performAttack(GameItem other) {
-        //Todo: implement attack
-        return false;
+    public void computerAction() {
+        this.game.attackPlayer(this);
     }
 
     @Override
-    public boolean receiveAttack(UCMWeapon weapon) {return false;}
+    public boolean performAttack(GameItem other) {
+        if(!(other.isOnPosition(this.pos) || other.isOnPosition(this.pos.move(this.dir)))) return false;
+        if(!(other instanceof UCMShip)) return false;
+
+        return other.receiveAttack(this);
+    }
+
+    @Override
+    public boolean receiveAttack(UCMWeapon weapon) {
+        this.collision();
+        return true;
+    }
 }

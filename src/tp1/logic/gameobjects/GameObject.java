@@ -25,8 +25,7 @@ public abstract class GameObject implements GameItem {
 	public boolean isAlive() {
 		return this.life > 0;
 	}
-
-	protected int getLife() {
+	public int getLife() {
 		return this.life;
 	}
 	protected void performMovement(Move dir)
@@ -46,13 +45,30 @@ public abstract class GameObject implements GameItem {
 		this.performMovement(this.dir);
 	}
 	public void computerAction() {};
-	
+
+	/**
+	 * Performs attack on another GameItem
+	 * @param other GameItem
+	 * @return true if collision
+	 */
 	@Override
 	public boolean performAttack(GameItem other) {return false;}
-	
+
+	/**
+	 * Handles events after GameItem has been hit by a Weapon
+	 * This method is specific for attacks on player
+	 * @param weapon EnemyWeapon
+	 * @return always true
+	 */
 	@Override
 	public boolean receiveAttack(EnemyWeapon weapon) {return false;}
 
+	/**
+	 * Handles events after GameItem has been hit by a Weapon
+	 * This method is specific for attacks on aliens or their weapons
+	 * @param weapon UCMWeapon
+	 * @return always true
+	 */
 	@Override
 	public boolean receiveAttack(UCMWeapon weapon) {return false;}
 
@@ -66,10 +82,8 @@ public abstract class GameObject implements GameItem {
 		return this.pos.equals(pos);
 	}
 
-	/*
-	@Override
-	public boolean willBeOnPosition(Position pos) {
-		return this.pos.move(this.dir).equals(pos);
-	}
-	 */
+//	@Override
+//	public boolean willBeOnPosition(Position pos) {
+//		return this.pos.move(this.dir).equals(pos);
+//	}
 }

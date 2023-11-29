@@ -34,16 +34,12 @@ public class DestroyerAlien extends AlienShip
     }
 
     @Override
-    public void onDelete() {
-
-    }
-
-    @Override
     public void computerAction() {
         super.computerAction();
         if(this.bomb == null) {
             Bomb bomb = new Bomb(
                     this.game,
+                    this,
                     this.pos,
                     1
             );
@@ -52,4 +48,8 @@ public class DestroyerAlien extends AlienShip
             this.game.addObject(bomb);
         }
     };
+
+    public void deleteBomb() {
+        this.bomb = null;
+    }
 }
