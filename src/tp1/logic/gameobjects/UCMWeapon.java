@@ -22,7 +22,7 @@ public abstract class UCMWeapon extends Weapon{
 
     @Override
     public boolean performAttack(GameItem other) {
-        if(!other.isOnPosition(this.pos)) return false;
+        if(!(other.isOnPosition(this.pos) || other.isOnPosition(this.pos.move(this.dir)))) return false;
         if(!(other instanceof EnemyWeapon || other instanceof EnemyShip)) return false;
 
         return other.receiveAttack(this);

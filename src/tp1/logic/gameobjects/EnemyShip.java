@@ -13,8 +13,6 @@ public abstract class EnemyShip extends Ship{
 
     @Override
     public boolean receiveAttack(UCMWeapon weapon) {
-        if(!this.pos.equals(weapon.pos)) return false;
-
         this.dealDamage(weapon);
         return true;
     }

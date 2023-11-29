@@ -6,9 +6,12 @@ import tp1.logic.Position;
 import tp1.view.Messages;
 
 public class Bomb extends EnemyWeapon {
-    public Bomb(GameWorld game, Position pos, int life) {
+    private DestroyerAlien parent;
+
+    public Bomb(GameWorld game, DestroyerAlien parent, Position pos, int life) {
         super(game, pos, life);
         this.dir = Move.DOWN;
+        this.parent = parent;
     }
 
     @Override
@@ -26,8 +29,8 @@ public class Bomb extends EnemyWeapon {
         return 0;
     }
 
-    @Override
     public void onDelete() {
-
+        super.onDelete();
+        this.parent.deleteBomb();
     }
 }

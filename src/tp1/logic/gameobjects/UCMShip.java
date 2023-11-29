@@ -70,6 +70,8 @@ public class UCMShip extends Ship{
 
     @Override
     public boolean receiveAttack(EnemyWeapon weapon) {
+        if(!weapon.isOnPosition(this.pos)) return false;
+
         this.dealDamage(weapon);
         return true;
     }

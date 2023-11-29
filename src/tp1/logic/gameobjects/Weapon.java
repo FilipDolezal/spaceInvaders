@@ -11,4 +11,5 @@ public abstract class Weapon extends GameObject{
     public void collision() {
         if(--this.life == 0) this.onDelete();
     }
+
 }

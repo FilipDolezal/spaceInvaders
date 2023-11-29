@@ -1,5 +1,6 @@
 package tp1.logic;
 
+import tp1.logic.gameobjects.EnemyWeapon;
 import tp1.logic.gameobjects.GameObject;
 import tp1.logic.gameobjects.UCMShip;
 import tp1.logic.gameobjects.UCMWeapon;
@@ -44,13 +45,11 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	}
 	@Override
 	public String infoToString() {
-		// TODO fill with your code
 		return null;
 	}
 	@Override
 	public String stateToString() {
-		// TODO fill with your code
-		return null;
+		return 	"Life: " + this.player.getLife() + System.lineSeparator();
 	}
 	@Override
 	public boolean playerWin() {
@@ -108,6 +107,8 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	public boolean attackEnemy(UCMWeapon ucmWeapon) {
 		return this.container.performAttackOnAliens(ucmWeapon);
 	}
+
+	public boolean attackPlayer(EnemyWeapon enemyWeapon) { return this.player.receiveAttack(enemyWeapon); }
 
 	public void addObject(GameObject object) {
 		this.container.add(object);
