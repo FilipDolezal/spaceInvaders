@@ -2,7 +2,9 @@ package tp1.logic.gameobjects;
 
 import tp1.logic.Game;
 import tp1.logic.GameWorld;
+import tp1.logic.Move;
 import tp1.logic.Position;
+import tp1.view.Messages;
 
 /**
  * This class manages the UFO. <br>
@@ -12,11 +14,13 @@ import tp1.logic.Position;
 public class Ufo extends EnemyShip {
 	public Ufo(GameWorld game, Position pos, int life) {
 		super(game, pos, life);
+		//this.pos = new Position (Game.DIM_X - 1, 0);	//Ufo starts on col DIMX-1 and row 0
+		this.dir = Move.LEFT;		//His direction is always to the left
 	}
 
 	@Override
 	protected String getSymbol() {
-		return null;
+		return Messages.UFO_SYMBOL;
 	}
 
 	@Override
@@ -26,8 +30,9 @@ public class Ufo extends EnemyShip {
 
 	@Override
 	protected int getArmour() {
-		return 0;
+		return this.armor;
 	}
+
 
 	@Override
 	public void onDelete() {

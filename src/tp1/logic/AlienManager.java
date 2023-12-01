@@ -17,6 +17,8 @@ public class AlienManager  {
 			cyclesToMove;
 	private boolean
 			moveAliens = false,
+
+			aliensInLastRow = false,
 			descend = false;
 
 	private Move
@@ -61,11 +63,13 @@ public class AlienManager  {
 
 		// get all AlienShip instances
 		for (AlienShip ship: container.getAlienShips()) {
-			// if AlienShip is not on borders -> continue loop
-			if(!(ship.getPos().inCol(0) || ship.getPos().inCol(Game.DIM_Y))) continue;
 
+			// if AlienShip is not on borders -> continue loop
+			if(!(ship.getPos().inCol(0) || ship.getPos().inCol(Game.DIM_X - 1)) || aliensInLastRow) continue;
 			if(descend) {
 				// if AlienShips descended last round -> switch directions and set move = direction
+                if (ship.getPos().inRow(Game.DIM_Y - 1))
+                    setAliensInLastRow(true);
 				descend = false;
 				alienShipDirection = switch (alienShipDirection) {
 					case LEFT -> Move.RIGHT;
@@ -77,7 +81,9 @@ public class AlienManager  {
 				// if AlienShips did not descend last round -> set move to DOWN
 				alienShipMove = Move.DOWN;
 				descend = true;
+
 			}
+
 		}
 	}
 
@@ -86,7 +92,7 @@ public class AlienManager  {
 	}
 
 	private void initializeUFO(GameObjectContainer container) {
-		// container.add(new Ufo(game));
+		container.add(new Ufo(this.game, new Position (Game.DIM_X - 1, 0), 1 ));
 	}
 	
 	private void initializeRegularAliens(GameObjectContainer container) {
@@ -121,5 +127,13 @@ public class AlienManager  {
 
 			remainingAliens++;
 		}
+	}
+
+	public boolean isAliensInLastRow() {
+		return aliensInLastRow;
+	}
+
+	public void setAliensInLastRow(boolean aliensInLastRow) {
+		this.aliensInLastRow = aliensInLastRow;
 	}
 }

@@ -18,6 +18,8 @@ public class UCMShip extends Ship{
     public UCMShip(GameWorld game, Position position) {
         super(game, position, 3);
         this.dir = Move.NONE;
+        this.armor = 0;
+
     }
 
     public boolean move(Move move) {
@@ -36,7 +38,9 @@ public class UCMShip extends Ship{
         this.game.addObject(laser);
         return true;
     }
-
+    public void setHealth(int health){
+        this.life = health;
+    }
     public void disableLaser() {
         this.laser = null;
     }
@@ -53,12 +57,12 @@ public class UCMShip extends Ship{
 
     @Override
     protected int getArmour() {
-        return 0;
+        return this.armor;
     }
 
     @Override
     public void onDelete() {
-
+        //not used?¿
     }
 
     public void automaticMove() {

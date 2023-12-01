@@ -1,9 +1,6 @@
 package tp1.logic.gameobjects;
 
-import tp1.logic.Game;
-import tp1.logic.GameWorld;
-import tp1.logic.Move;
-import tp1.logic.Position;
+import tp1.logic.*;
 
 public abstract class EnemyShip extends Ship{
 
@@ -15,5 +12,9 @@ public abstract class EnemyShip extends Ship{
     public boolean receiveAttack(UCMWeapon weapon) {
         this.dealDamage(weapon);
         return true;
+    }
+
+    public void removeObject(GameObject object){
+
     }
 }

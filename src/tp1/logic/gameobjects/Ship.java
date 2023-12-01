@@ -6,8 +6,10 @@ import tp1.logic.Position;
 
 public abstract class Ship extends GameObject {
 
+    protected int armor = 0;
     public Ship(GameWorld game, Position pos, int life) {
         super(game, pos, life);
+
     }
 
     protected void dealDamage(Weapon weapon) {
@@ -19,4 +21,5 @@ public abstract class Ship extends GameObject {
         // delete weapon on collision
         weapon.collision();
     }
+
 }

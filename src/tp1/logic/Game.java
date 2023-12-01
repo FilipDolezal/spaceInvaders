@@ -15,6 +15,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	private UCMShip player;
 	private AlienManager alienManager;
 	private int currentCycle;
+	//private boolean AlienInFinalRow = false;
 
 	public Level getLevel() {
 		return level;
@@ -53,14 +54,21 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	}
 	@Override
 	public boolean playerWin() {
-		// TODO fill with your code
-		return false;
+		System.out.println(this.alienManager.getRemainingAliens() + " aliens remaining");
+        return this.alienManager.getRemainingAliens() == 0;
+    }
+	public boolean inFinalRow(){
+		if(alienManager.isAliensInLastRow()){
+			this.player.setHealth(-200);
+			return true;
+		}
+		else
+			return false;
 	}
 	@Override
 	public boolean aliensWin() {
-		// TODO fill with your code
-		return false;
-	}
+        return inFinalRow() || !this.player.isAlive();
+    }
 	@Override
 	public int getCycle() {
 		return this.currentCycle;
@@ -84,9 +92,8 @@ public class Game implements GameStatus, GameModel, GameWorld {
 
 	}
 	public boolean isFinished() {
-		// TODO fill with your code
-		return false;
-	}
+        return aliensWin() || playerWin();
+    }
 	public void exit() {
 		System.exit(0);
 	}
@@ -96,20 +103,15 @@ public class Game implements GameStatus, GameModel, GameWorld {
 		this.container.computerActions();
 		this.container.automaticMoves();
 	}
-	
 	// ################## GameWorld functions
 	public boolean inBoundsX(Position pos) {
 		return pos.col >= 0 && pos.col < DIM_X;
 	}
-
 	public boolean inBoundsY(Position pos) { return pos.row >= 0 && pos.row < DIM_Y; }
-
 	public boolean attackEnemy(UCMWeapon ucmWeapon) {
 		return this.container.performAttackOnAliens(ucmWeapon);
 	}
-
 	public boolean attackPlayer(EnemyWeapon enemyWeapon) { return this.player.receiveAttack(enemyWeapon); }
-
 	public void addObject(GameObject object) {
 		this.container.add(object);
 	}
