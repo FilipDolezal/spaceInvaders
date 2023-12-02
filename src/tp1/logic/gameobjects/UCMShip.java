@@ -12,6 +12,16 @@ import tp1.view.Messages;
 public class UCMShip extends Ship{
 
     private UCMLaser laser;
+    private boolean ShockwaveAvailable;
+
+    public boolean isShockwaveAvailable() {
+        return ShockwaveAvailable;
+    }
+
+    public void setShockwaveAvailable(boolean shockwaveAvailable) {
+        ShockwaveAvailable = shockwaveAvailable;
+    }
+
     /**
      * Constructor for the UCMShip.
      */
@@ -19,7 +29,7 @@ public class UCMShip extends Ship{
         super(game, position, 3);
         this.dir = Move.NONE;
         this.armor = 0;
-
+        ShockwaveAvailable = true;
     }
 
     public boolean move(Move move) {

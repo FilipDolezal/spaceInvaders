@@ -14,7 +14,7 @@ public abstract class EnemyShip extends Ship{
         return true;
     }
 
-    public void removeObject(GameObject object){
-
-    }
+//    public void removeObject(GameObject object){
+//
+//    }
 }

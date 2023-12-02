@@ -20,7 +20,7 @@ public class Ufo extends EnemyShip {
 
 	@Override
 	protected String getSymbol() {
-		return Messages.UFO_SYMBOL;
+		return " " + Messages.UFO_SYMBOL + '[' + '0' + this.life + ']';
 	}
 
 	@Override
@@ -36,11 +36,13 @@ public class Ufo extends EnemyShip {
 
 	@Override
 	public void onDelete() {
-
 	}
 
 	@Override
-	public void automaticMove() {
-
+	public void computerAction() {
+		if(this.pos.col > 0 && this.pos.col <= Game.DIM_Y)
+			this.pos.move(this.dir);
+		else
+			this.life = 0;
 	}
 }
