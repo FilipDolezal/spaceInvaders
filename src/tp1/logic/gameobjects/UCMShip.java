@@ -12,15 +12,7 @@ import tp1.view.Messages;
 public class UCMShip extends Ship{
 
     private UCMLaser laser;
-    private boolean ShockwaveAvailable;
-
-    public boolean isShockwaveAvailable() {
-        return ShockwaveAvailable;
-    }
-
-    public void setShockwaveAvailable(boolean shockwaveAvailable) {
-        ShockwaveAvailable = shockwaveAvailable;
-    }
+    private Shockwave shockwave;
 
     /**
      * Constructor for the UCMShip.
@@ -29,7 +21,7 @@ public class UCMShip extends Ship{
         super(game, position, 3);
         this.dir = Move.NONE;
         this.armor = 0;
-        ShockwaveAvailable = true;
+        // this.shockwave = new Shockwave(this.game, this);
     }
 
     public boolean move(Move move) {
@@ -53,6 +45,16 @@ public class UCMShip extends Ship{
     }
     public void disableLaser() {
         this.laser = null;
+    }
+
+    public void deleteShockwave() {
+        this.shockwave = null;
+    }
+
+    public Shockwave getShockwave() { return this.shockwave; }
+
+    public void obtainShockwave() {
+        this.shockwave = new Shockwave(this.game,this);
     }
 
     @Override
@@ -84,8 +86,6 @@ public class UCMShip extends Ship{
 
     @Override
     public boolean receiveAttack(EnemyWeapon weapon) {
-        if(!weapon.isOnPosition(this.pos)) return false;
-
         this.dealDamage(weapon);
         return true;
     }

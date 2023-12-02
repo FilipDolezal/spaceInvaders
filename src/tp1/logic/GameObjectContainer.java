@@ -57,6 +57,11 @@ public class GameObjectContainer {
 				.collect(Collectors.toList());
 	}
 
+	public int getRemainingAliens() {
+		// optimize in the future by implementing the counter in alienManager
+		return this.getAlienShips().size();
+	}
+
 	public List<GameObject> getObjects() {
 		return objects;
 	}
@@ -73,5 +78,15 @@ public class GameObjectContainer {
 			if(collision) return true;
 		}
 		return false;
+	}
+
+	public boolean performShockwaveOnAliens(Shockwave shockwave) {
+		if(shockwave == null) return false;
+
+		for (AlienShip enemyShip: this.getAlienShips()) {
+			shockwave.performAttack(enemyShip);
+		}
+
+		return true;
 	}
 }

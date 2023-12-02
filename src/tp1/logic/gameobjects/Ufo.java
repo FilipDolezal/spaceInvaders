@@ -1,6 +1,5 @@
 package tp1.logic.gameobjects;
 
-import tp1.logic.Game;
 import tp1.logic.GameWorld;
 import tp1.logic.Move;
 import tp1.logic.Position;
@@ -33,16 +32,15 @@ public class Ufo extends EnemyShip {
 		return this.armor;
 	}
 
-
 	@Override
 	public void onDelete() {
+		super.onDelete();
+		this.game.obtainShockwave();
 	}
 
 	@Override
 	public void computerAction() {
-		if(this.pos.col > 0 && this.pos.col <= Game.DIM_Y)
-			this.pos.move(this.dir);
-		else
-			this.life = 0;
+		if(!this.game.inBoundsX(this.pos.move(this.dir)))
+			super.onDelete();
 	}
 }

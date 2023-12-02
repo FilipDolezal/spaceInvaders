@@ -82,13 +82,4 @@ public abstract class GameObject implements GameItem {
 	public boolean isOnPosition(Position pos) {
 		return this.pos.equals(pos);
 	}
-
-	public void setLife(int life) {
-		this.life = life;
-	}
-
-//	@Override
-//	public boolean willBeOnPosition(Position pos) {
-//		return this.pos.move(this.dir).equals(pos);
-//	}
 }

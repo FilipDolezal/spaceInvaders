@@ -6,16 +6,16 @@ import tp1.logic.Position;
 import tp1.view.Messages;
 
 public class Bomb extends EnemyWeapon {
-    private DestroyerAlien parent;
+    private DestroyerAlien alien;
 
-    public Bomb(GameWorld game, DestroyerAlien parent, Position pos, int life) {
+    public Bomb(GameWorld game, DestroyerAlien alien, Position pos, int life) {
         super(game, pos, life);
         this.dir = Move.DOWN;
-        this.parent = parent;
+        this.alien = alien;
     }
 
     public void computerAction() {
-        parent.computerAction();
+        super.computerAction();
         boolean inBounds = this.game.inBoundsY(this.pos);
         if(!inBounds) this.onDelete();
     }
@@ -37,6 +37,6 @@ public class Bomb extends EnemyWeapon {
 
     public void onDelete() {
         super.onDelete();
-        this.parent.deleteBomb();
+        this.alien.deleteBomb();
     }
 }

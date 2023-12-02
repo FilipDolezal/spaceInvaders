@@ -11,7 +11,7 @@ import tp1.view.Messages;
  */
 public class UCMLaser extends UCMWeapon {
 	public UCMLaser(GameWorld game, UCMShip ship) {
-		super(game, ship.getPos().move(Move.UP), 1);
+		super(game, ship.getPos(), 1);
 		this.ship = ship;
 		this.dir = Move.UP;
 	}

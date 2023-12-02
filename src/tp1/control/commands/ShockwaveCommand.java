@@ -26,8 +26,9 @@ public class ShockwaveCommand extends NoParamsCommand {
 
     @Override
     public ExecutionResult execute(GameModel game) {
-        game.executeShockwave();
-        return new ExecutionResult(true);
+        boolean result = game.executeShockwave();
+        game.update();
+        return new ExecutionResult(result, result, Messages.SHOCKWAVE_ERROR);
     }
 
 

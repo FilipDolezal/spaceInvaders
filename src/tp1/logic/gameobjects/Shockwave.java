@@ -5,8 +5,11 @@ import tp1.logic.GameWorld;
 import tp1.logic.Position;
 
 public class Shockwave extends UCMWeapon {
-    public Shockwave(GameWorld game, Position pos, int life) {
-        super(game, pos, life);
+
+    public Shockwave(GameWorld game, UCMShip ship) {
+        super(game, new Position(-1, -1), 1);
+
+        super.ship = ship;
     }
 
     @Override
@@ -26,7 +29,18 @@ public class Shockwave extends UCMWeapon {
 
     @Override
     public void onDelete() {
+        // i have no idea why this function is called after shockwave is performed, but it is???
+        this.ship.deleteShockwave();
+    }
 
+    @Override
+    public void computerAction() {}
+
+    @Override
+    public boolean performAttack(GameItem other) {
+        if(!(other instanceof AlienShip)) return false;
+
+        return other.receiveAttack(this);
     }
 
     @Override

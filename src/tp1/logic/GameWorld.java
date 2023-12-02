@@ -11,4 +11,5 @@ public interface GameWorld {
     boolean attackPlayer(EnemyWeapon enemyWeapon);
     void removeObject(GameObject object);
     void addObject(GameObject object);
+    void obtainShockwave();
 }

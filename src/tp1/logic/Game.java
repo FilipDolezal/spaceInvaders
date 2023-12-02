@@ -1,10 +1,8 @@
 package tp1.logic;
 
-import tp1.logic.gameobjects.EnemyWeapon;
-import tp1.logic.gameobjects.GameObject;
-import tp1.logic.gameobjects.UCMShip;
-import tp1.logic.gameobjects.UCMWeapon;
+import tp1.logic.gameobjects.*;
 import tp1.util.MyStringUtils;
+import tp1.view.Messages;
 
 
 public class Game implements GameStatus, GameModel, GameWorld {
@@ -17,7 +15,6 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	private int currentCycle;
 	//private boolean AlienInFinalRow = false;
 	private int score;
-	private Shockwave shockwave;
 
 	public Level getLevel() {
 		return level;
@@ -53,7 +50,12 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	}
 	@Override
 	public String stateToString() {
-		return 	"Life: " + this.player.getLife() + System.lineSeparator();
+
+		return
+				"Life: " 		+ this.player.getLife() + System.lineSeparator() +
+				"ShockWave: "	+ ((this.player.getShockwave() == null) ? "NO" : "YES") + System.lineSeparator();
+				// score
+				//
 	}
 	@Override
 	public boolean playerWin() {
@@ -62,8 +64,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	}
 	@Override
 	public boolean aliensWin() {
-		// TODO fill with your code
-		return false;
+		return this.alienManager.aliensWin() || !this.player.isAlive();
 	}
 	@Override
 	public int getCycle() {
@@ -71,7 +72,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	}
 	@Override
 	public int getRemainingAliens() {
-		return this.alienManager.getRemainingAliens();
+		return this.container.getRemainingAliens();
 	}
 
 	// ################## GameModel functions
@@ -93,18 +94,9 @@ public class Game implements GameStatus, GameModel, GameWorld {
 
 
 	}
-	@Override
-	public void executeShockwave(){
-		if (player.isShockwaveAvailable()){
-			for (GameObject o: this.container.getAlienShips())
-				o.setLife(o.getLife() - 1);
 
-		player.setShockwaveAvailable(false);
-		}
-		else
-			System.out.println(Messages.SHOCKWAVE_ERROR);
-
-
+	public boolean executeShockwave(){
+		return this.container.performShockwaveOnAliens(this.player.getShockwave());
 	}
 	public boolean isFinished() {
 		return this.aliensWin() || this.playerWin();
@@ -130,7 +122,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 		return this.container.performAttackOnAliens(ucmWeapon);
 	}
 
-	public boolean attackPlayer(EnemyWeapon enemyWeapon) { return this.player.receiveAttack(enemyWeapon); }
+	public boolean attackPlayer(EnemyWeapon enemyWeapon) { return enemyWeapon.performAttack(this.player); }
 
 	public void addObject(GameObject object) {
 		this.container.add(object);
@@ -139,4 +131,6 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	public void removeObject(GameObject object) {
 		this.container.remove(object);
 	}
+
+	public void obtainShockwave() { this.player.obtainShockwave(); }
 }

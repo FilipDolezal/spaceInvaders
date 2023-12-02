@@ -15,8 +15,9 @@ public abstract class EnemyWeapon extends Weapon{
 
     @Override
     public boolean performAttack(GameItem other) {
-        if(!(other.isOnPosition(this.pos) || other.isOnPosition(this.pos.move(this.dir)))) return false;
+        if(!other.isOnPosition(this.pos)) return false;
         if(!(other instanceof UCMShip)) return false;
+
 
         return other.receiveAttack(this);
     }

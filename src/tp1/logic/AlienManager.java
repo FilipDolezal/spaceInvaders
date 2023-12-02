@@ -67,8 +67,7 @@ public class AlienManager  {
 		}
 
 		boolean onBorder = container.getAlienShips().stream()
-				.filter(s -> s.getPos().inCol(0) || s.getPos().inCol(Game.DIM_Y))
-				.findAny().isPresent();
+				.anyMatch(s -> s.getPos().inCol(0) || s.getPos().inCol(Game.DIM_Y));
 
 		// if no ships on border -> return
 		if(!onBorder) return;
@@ -107,7 +106,7 @@ public class AlienManager  {
 	}
 
 	private void initializeUFO(GameObjectContainer container) {
-		container.add(new Ufo(this.game, new Position (Game.DIM_X - 1, 0), 1 ));
+		container.add(new Ufo(this.game, new Position (Game.DIM_X - 1, 4), 1 ));
 	}
 	
 	private void initializeRegularAliens(GameObjectContainer container) {
