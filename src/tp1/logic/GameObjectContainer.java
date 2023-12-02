@@ -20,6 +20,7 @@ public class GameObjectContainer {
 	}
 
 	public void remove(GameObject object) {
+
 		objects.remove(object);
 	}
 

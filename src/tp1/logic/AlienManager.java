@@ -107,7 +107,7 @@ public class AlienManager  {
 	}
 
 	private void initializeUFO(GameObjectContainer container) {
-		// container.add(new Ufo(game));
+		container.add(new Ufo(this.game, new Position (Game.DIM_X - 1, 0), 1 ));
 	}
 	
 	private void initializeRegularAliens(GameObjectContainer container) {

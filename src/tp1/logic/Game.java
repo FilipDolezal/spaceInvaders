@@ -15,11 +15,14 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	private UCMShip player;
 	private AlienManager alienManager;
 	private int currentCycle;
+	//private boolean AlienInFinalRow = false;
+	private int score;
+	private Shockwave shockwave;
 
 	public Level getLevel() {
 		return level;
 	}
-	private Level level;
+	private final Level level;
 
 	public Game (Level level, long seed){
 		this.level = level;
@@ -31,6 +34,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 		this.container = alienManager.initialize();
 		this.player = new UCMShip(this, new Position(DIM_X / 2, DIM_Y - 1));
 		this.container.add(player);
+		this.score = 0;
 	}
 
 	// ################## GameStatus functions
@@ -58,7 +62,8 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	}
 	@Override
 	public boolean aliensWin() {
-		return this.alienManager.aliensWin();
+		// TODO fill with your code
+		return false;
 	}
 	@Override
 	public int getCycle() {
@@ -80,6 +85,25 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	}
 	@Override
 	public void reset() {
+		this.container = alienManager.initialize();
+		this.player = new UCMShip(this, new Position(DIM_X / 2, DIM_Y - 1));
+		this.container.add(player);
+		this.score = 0;
+		this.currentCycle = 0;
+
+
+	}
+	@Override
+	public void executeShockwave(){
+		if (player.isShockwaveAvailable()){
+			for (GameObject o: this.container.getAlienShips())
+				o.setLife(o.getLife() - 1);
+
+		player.setShockwaveAvailable(false);
+		}
+		else
+			System.out.println(Messages.SHOCKWAVE_ERROR);
+
 
 	}
 	public boolean isFinished() {

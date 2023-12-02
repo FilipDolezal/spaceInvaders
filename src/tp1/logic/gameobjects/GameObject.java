@@ -11,6 +11,7 @@ public abstract class GameObject implements GameItem {
 	}
 
 	protected Position pos;
+
 	protected int life;
 	protected GameWorld game;
 	protected Move dir;
@@ -44,9 +45,9 @@ public abstract class GameObject implements GameItem {
 	public void automaticMove() {
 		this.performMovement(this.dir);
 	}
-	public void computerAction() {};
+	public void computerAction() {}
 
-	/**
+    /**
 	 * Performs attack on another GameItem
 	 * @param other GameItem
 	 * @return true if collision
@@ -80,6 +81,10 @@ public abstract class GameObject implements GameItem {
 	@Override
 	public boolean isOnPosition(Position pos) {
 		return this.pos.equals(pos);
+	}
+
+	public void setLife(int life) {
+		this.life = life;
 	}
 
 //	@Override

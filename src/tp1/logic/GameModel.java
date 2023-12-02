@@ -7,4 +7,5 @@ public interface GameModel {
     public boolean isFinished();
     public void exit();
     public void update();
+    public void executeShockwave();
 }

@@ -16,7 +16,7 @@ public class Shockwave extends UCMWeapon {
 
     @Override
     protected int getDamage() {
-        return 0;
+        return 1;
     }
 
     @Override
@@ -31,6 +31,6 @@ public class Shockwave extends UCMWeapon {
 
     @Override
     public void automaticMove() {
-
+        //doesnt move
     }
 }

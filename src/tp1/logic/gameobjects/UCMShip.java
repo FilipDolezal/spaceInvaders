@@ -12,12 +12,24 @@ import tp1.view.Messages;
 public class UCMShip extends Ship{
 
     private UCMLaser laser;
+    private boolean ShockwaveAvailable;
+
+    public boolean isShockwaveAvailable() {
+        return ShockwaveAvailable;
+    }
+
+    public void setShockwaveAvailable(boolean shockwaveAvailable) {
+        ShockwaveAvailable = shockwaveAvailable;
+    }
+
     /**
      * Constructor for the UCMShip.
      */
     public UCMShip(GameWorld game, Position position) {
         super(game, position, 3);
         this.dir = Move.NONE;
+        this.armor = 0;
+        ShockwaveAvailable = true;
     }
 
     public boolean move(Move move) {
@@ -36,7 +48,9 @@ public class UCMShip extends Ship{
         this.game.addObject(laser);
         return true;
     }
-
+    public void setHealth(int health){
+        this.life = health;
+    }
     public void disableLaser() {
         this.laser = null;
     }
@@ -53,12 +67,12 @@ public class UCMShip extends Ship{
 
     @Override
     protected int getArmour() {
-        return 0;
+        return this.armor;
     }
 
     @Override
     public void onDelete() {
-
+        //not used?¿
     }
 
     public void automaticMove() {
