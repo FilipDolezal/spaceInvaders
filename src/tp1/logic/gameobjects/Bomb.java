@@ -14,6 +14,12 @@ public class Bomb extends EnemyWeapon {
         this.parent = parent;
     }
 
+    public void computerAction() {
+        parent.computerAction();
+        boolean inBounds = this.game.inBoundsY(this.pos);
+        if(!inBounds) this.onDelete();
+    }
+
     @Override
     protected String getSymbol() {
         return Messages.BOMB_SYMBOL;

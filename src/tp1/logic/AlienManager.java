@@ -6,6 +6,7 @@ import tp1.logic.gameobjects.RegularAlien;
 import tp1.logic.gameobjects.Ufo;
 
 import java.util.List;
+import java.util.Optional;
 
 public class AlienManager  {
 	
@@ -17,7 +18,9 @@ public class AlienManager  {
 			cyclesToMove;
 	private boolean
 			moveAliens = false,
-			descend = false;
+			descend = false,
+			aliensWin = false,
+			playerWin = false;
 
 	private Move
 			alienShipMove = Move.LEFT,
@@ -26,6 +29,10 @@ public class AlienManager  {
 
 	public int getRemainingAliens() {
 		return remainingAliens;
+	}
+
+	public boolean aliensWin() {
+		return aliensWin;
 	}
 
 	public AlienManager(Game game) {
@@ -52,33 +59,47 @@ public class AlienManager  {
 	public void computerActions(GameObjectContainer container) {
 		// check if aliens move this cycle
 		if(--cyclesToMove != 0) {
-			this.moveAliens = false;
+			moveAliens = false;
 			return;
 		} else {
 			cyclesToMove = this.level.numCyclesToMoveOneCell;
-			this.moveAliens = true;
+			moveAliens = true;
 		}
 
-		// get all AlienShip instances
-		for (AlienShip ship: container.getAlienShips()) {
-			// if AlienShip is not on borders -> continue loop
-			if(!(ship.getPos().inCol(0) || ship.getPos().inCol(Game.DIM_Y))) continue;
+		boolean onBorder = container.getAlienShips().stream()
+				.filter(s -> s.getPos().inCol(0) || s.getPos().inCol(Game.DIM_Y))
+				.findAny().isPresent();
 
-			if(descend) {
-				// if AlienShips descended last round -> switch directions and set move = direction
-				descend = false;
-				alienShipDirection = switch (alienShipDirection) {
-					case LEFT -> Move.RIGHT;
-					case RIGHT -> Move.LEFT;
-					default -> throw new RuntimeException("Alien Ships bad direction");
-				};
-				alienShipMove = alienShipDirection;
-			} else {
-				// if AlienShips did not descend last round -> set move to DOWN
-				alienShipMove = Move.DOWN;
-				descend = true;
-			}
+		// if no ships on border -> return
+		if(!onBorder) return;
+
+		if(descend) {
+			// if AlienShips descended last round -> switch directions and set move = direction
+			descend = false;
+			alienShipDirection = switch (alienShipDirection) {
+				case LEFT -> Move.RIGHT;
+				case RIGHT -> Move.LEFT;
+				default -> throw new RuntimeException("Alien Ships bad direction");
+			};
+			alienShipMove = alienShipDirection;
+		} else {
+			// if AlienShips did not descend last round -> set move to DOWN
+			alienShipMove = Move.DOWN;
+			descend = true;
+
+			// check if aliens reached last row
+			aliensWin = this.reachedPlayerRow(container);
 		}
+	}
+
+	private boolean reachedPlayerRow(GameObjectContainer container) {
+		Integer lowest = container.getAlienShips()
+				.stream()
+				.map(s -> s.getPos().move(alienShipMove).row)
+				.min(Math::min)
+				.get();
+
+		return lowest >= Game.DIM_Y - 1;
 	}
 
 	public Move getAlienShipMove() {

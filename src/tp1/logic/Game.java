@@ -58,8 +58,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	}
 	@Override
 	public boolean aliensWin() {
-		// TODO fill with your code
-		return false;
+		return this.alienManager.aliensWin();
 	}
 	@Override
 	public int getCycle() {
@@ -84,8 +83,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 
 	}
 	public boolean isFinished() {
-		// TODO fill with your code
-		return false;
+		return this.aliensWin() || this.playerWin();
 	}
 	public void exit() {
 		System.exit(0);
