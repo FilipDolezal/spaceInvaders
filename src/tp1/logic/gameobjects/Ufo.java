@@ -13,13 +13,13 @@ import tp1.view.Messages;
 public class Ufo extends EnemyShip {
 	public Ufo(GameWorld game, Position pos, int life) {
 		super(game, pos, life);
-		//this.pos = new Position (Game.DIM_X - 1, 0);	//Ufo starts on col DIMX-1 and row 0
-		this.dir = Move.LEFT;		//His direction is always to the left
+		this.dir = Move.LEFT;
+		this.score = 25;
 	}
 
 	@Override
 	protected String getSymbol() {
-		return " " + Messages.UFO_SYMBOL + '[' + '0' + this.life + ']';
+		return Messages.UFO_SYMBOL + '[' + this.life + ']';
 	}
 
 	@Override

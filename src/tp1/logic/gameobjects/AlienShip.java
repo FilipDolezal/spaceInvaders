@@ -4,8 +4,6 @@ import tp1.logic.*;
 
 public abstract class AlienShip extends EnemyShip {
     protected AlienManager alienManager;
-    protected int score = 0;
-
     public AlienShip(GameWorld game, AlienManager alienManager, Position pos, int life) {
         super(game, pos, life);
         this.alienManager = alienManager;
