@@ -17,7 +17,6 @@ public class AlienManager  {
 			remainingAliens,
 			cyclesToMove;
 	private boolean
-			moveAliens = false,
 			descend = false,
 			aliensWin = false,
 			playerWin = false;
@@ -58,13 +57,13 @@ public class AlienManager  {
 	 */
 	public void computerActions(GameObjectContainer container) {
 		// check if aliens move this cycle
-		if(--cyclesToMove != 0) {
-			moveAliens = false;
+		if((--cyclesToMove) > 0) {
+			alienShipMove = Move.NONE;
 			return;
-		} else {
-			cyclesToMove = this.level.numCyclesToMoveOneCell;
-			moveAliens = true;
 		}
+
+		cyclesToMove = this.level.numCyclesToMoveOneCell;
+		alienShipMove = alienShipDirection;
 
 		boolean onBorder = container.getAlienShips().stream()
 				.anyMatch(s -> s.getPos().inCol(0) || s.getPos().inCol(Game.DIM_Y));
@@ -101,9 +100,7 @@ public class AlienManager  {
 		return lowest >= Game.DIM_Y - 1;
 	}
 
-	public Move getAlienShipMove() {
-		return (moveAliens) ? alienShipMove: Move.NONE;
-	}
+	public Move getAlienShipMove() { return alienShipMove; }
 
 	private void initializeUFO(GameObjectContainer container) {
 		container.add(new Ufo(this.game, new Position (Game.DIM_X - 1, 4), 1 ));

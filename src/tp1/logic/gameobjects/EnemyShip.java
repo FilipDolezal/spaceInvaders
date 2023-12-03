@@ -15,6 +15,5 @@ public abstract class EnemyShip extends Ship{
 
     public void onDelete() {
         super.onDelete();
-        this.game.increaseScore(this.score);
     }
 }

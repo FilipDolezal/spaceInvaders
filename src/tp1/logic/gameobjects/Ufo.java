@@ -9,7 +9,6 @@ import tp1.view.Messages;
  * This class manages the UFO. <br>
  * Contains the attributes and the movement of the UFO.
  */
-
 public class Ufo extends EnemyShip {
 	public Ufo(GameWorld game, Position pos, int life) {
 		super(game, pos, life);
@@ -36,6 +35,7 @@ public class Ufo extends EnemyShip {
 	public void onDelete() {
 		super.onDelete();
 		this.game.obtainShockwave();
+		this.game.increaseScore(this.score);
 	}
 
 	@Override

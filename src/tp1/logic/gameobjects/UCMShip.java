@@ -59,7 +59,7 @@ public class UCMShip extends Ship{
 
     @Override
     protected String getSymbol() {
-        return Messages.UCMSHIP_SYMBOL;
+        return this.isAlive() ? Messages.UCMSHIP_SYMBOL: Messages.UCMSHIP_DEAD_SYMBOL;
     }
 
     @Override
