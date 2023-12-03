@@ -14,11 +14,6 @@ public abstract class AlienShip extends EnemyShip {
         this.dir = alienManager.getAlienShipMove();
     }
 
-    public void onDelete() {
-        super.onDelete();
-        this.game.increaseScore(this.score);
-    }
-
     @Override
     public String toString() {
         return this.getSymbol() + "[" + this.getLife() + "]";

@@ -12,4 +12,9 @@ public abstract class EnemyShip extends Ship{
         this.dealDamage(weapon);
         return true;
     }
+
+    public void onDelete() {
+        super.onDelete();
+        this.game.increaseScore(this.score);
+    }
 }
