@@ -16,6 +16,7 @@ public class DestroyerAlien extends AlienShip
 
     public DestroyerAlien(GameWorld game, AlienManager alienManager, Position pos, int life) {
         super(game, alienManager, pos, life);
+        super.score = 25;
     }
 
     @Override

@@ -12,9 +12,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	private GameObjectContainer container;
 	private UCMShip player;
 	private AlienManager alienManager;
-	private int currentCycle;
-	//private boolean AlienInFinalRow = false;
-	private int score;
+	private int currentCycle, score;
 
 	public Level getLevel() {
 		return level;
@@ -35,6 +33,13 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	}
 
 	// ################## GameStatus functions
+
+	/**
+	 * Check which symbol to display on the specified position
+	 * @param col number column
+	 * @param row number row
+	 * @return symbol of the object at the position
+	 */
 	public String positionToString(int col, int row) {
 		Position position = new Position(col, row);
 		for (GameObject o: this.container.getObjects()) {
@@ -50,12 +55,11 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	}
 	@Override
 	public String stateToString() {
-
 		return
 				"Life: " 		+ this.player.getLife() + System.lineSeparator() +
-				"ShockWave: "	+ ((this.player.getShockwave() == null) ? "NO" : "YES") + System.lineSeparator();
-				// score
-				//
+				"ShockWave: "	+ ((this.player.getShockwave() == null) ? "NO" : "YES") + System.lineSeparator() +
+				"Score: "		+ this.score + System.lineSeparator();
+				//...
 	}
 	@Override
 	public boolean playerWin() {
@@ -112,25 +116,64 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	}
 	
 	// ################## GameWorld functions
+	/**
+	 * for checking if the position is out of the X-axis bound
+	 * @param pos the position to check
+	 * @return true if in bounds
+	 */
 	public boolean inBoundsX(Position pos) {
 		return pos.col >= 0 && pos.col < DIM_X;
 	}
 
+	/**
+	 * for checking if the position is out of the Y-axis bound
+	 * @param pos the position to check
+	 * @return true if in bounds
+	 */
 	public boolean inBoundsY(Position pos) { return pos.row >= 0 && pos.row < DIM_Y; }
 
+	/**
+	 * For checking and attacking every possible Enemy target on the board with UCMWeapon
+	 * @param ucmWeapon the weapon of the attack
+	 * @return true if Weapon collided with anything
+	 */
 	public boolean attackEnemy(UCMWeapon ucmWeapon) {
 		return this.container.performAttackOnAliens(ucmWeapon);
 	}
 
+	/**
+	 * For checking and attacking the player with any of the EnemyWeapons
+	 * @param enemyWeapon the weapon of the attack
+	 * @return true if weapon hit player ship
+	 */
 	public boolean attackPlayer(EnemyWeapon enemyWeapon) { return enemyWeapon.performAttack(this.player); }
 
+	/**
+	 * for adding object to the object container
+	 * @param object
+	 */
 	public void addObject(GameObject object) {
 		this.container.add(object);
 	}
 
+	/**
+	 * for removing object from the object container
+	 * @param object
+	 */
 	public void removeObject(GameObject object) {
 		this.container.remove(object);
 	}
 
+	/**
+	 * For giving the player the ShockWave power-up
+	 */
 	public void obtainShockwave() { this.player.obtainShockwave(); }
+
+	/**
+	 * For increasing the score
+	 * @param byNumber number to increase the score by
+	 */
+	public void increaseScore(int byNumber) {
+		this.score += byNumber;
+	}
 }

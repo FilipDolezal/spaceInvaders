@@ -12,4 +12,5 @@ public interface GameWorld {
     void removeObject(GameObject object);
     void addObject(GameObject object);
     void obtainShockwave();
+    void increaseScore(int byScore);
 }

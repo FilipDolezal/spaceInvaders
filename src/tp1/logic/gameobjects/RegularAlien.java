@@ -13,6 +13,7 @@ public class RegularAlien extends AlienShip {
 
 	public RegularAlien(GameWorld game, AlienManager alienManager, Position pos, int life) {
 		super(game, alienManager, pos, life);
+		super.score = 10;
 	}
 
 	@Override

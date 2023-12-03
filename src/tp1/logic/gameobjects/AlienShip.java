@@ -4,7 +4,7 @@ import tp1.logic.*;
 
 public abstract class AlienShip extends EnemyShip {
     protected AlienManager alienManager;
-    private boolean AliensInFinalRow;
+    protected int score = 0;
 
     public AlienShip(GameWorld game, AlienManager alienManager, Position pos, int life) {
         super(game, pos, life);
@@ -14,6 +14,11 @@ public abstract class AlienShip extends EnemyShip {
 
     public void computerAction() {
         this.dir = alienManager.getAlienShipMove();
+    }
+
+    public void onDelete() {
+        super.onDelete();
+        this.game.increaseScore(this.score);
     }
 
     @Override
