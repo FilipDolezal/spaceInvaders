@@ -111,19 +111,8 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	public void update() {
 		this.currentCycle++;
 		this.alienManager.computerActions(this.container);
-
-		// right before it disappears the direction is set to Move.NONE
-		System.out.println(this.alienManager.getAlienShipMove());
-
-		// but SOMEHOW in this function the first AlienShip receives Move.RIGHT
-		// by calling the same getAlienShipMove() function as above ???
 		this.container.computerActions();
 		this.container.automaticMoves();
-
-		// for debugging purposes:
-		// the AlienShip that disappears is hidden behind the next one
-		// because somehow the first ship is moved right even though it's not supposed to move
-		//this.container.getAlienShips().forEach(s -> System.out.println(s + ": " + s.getPos()));
 	}
 	
 	// ################## GameWorld functions

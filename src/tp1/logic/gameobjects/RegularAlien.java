@@ -32,18 +32,6 @@ public class RegularAlien extends AlienShip {
 	}
 
 	@Override
-	public void automaticMove() {
-		super.automaticMove();
-		System.out.println("am: " + this + ": " + this.pos + ": " + this.dir);
-	}
-
-	@Override
-	public void computerAction() {
-		super.computerAction();
-		System.out.println("ca: " + this + ": " + this.pos + ": " + this.dir);
-	}
-
-	@Override
 	public void onDelete() {
 		super.onDelete();
 	}
