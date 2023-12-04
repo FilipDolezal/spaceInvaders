@@ -36,7 +36,4 @@ public class UCMLaser extends UCMWeapon {
 		super.onDelete();
 		this.ship.disableLaser();
 	}
-
-	@Override
-	public boolean receiveAttack(EnemyWeapon weapon) {return false;}
 }

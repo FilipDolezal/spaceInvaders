@@ -7,8 +7,8 @@ import tp1.logic.gameobjects.UCMWeapon;
 public interface GameWorld {
     boolean inBoundsX(Position pos);
     boolean inBoundsY(Position pos);
-    boolean attackEnemy(UCMWeapon ucmWeapon);
-    boolean attackPlayer(EnemyWeapon enemyWeapon);
+    boolean performAttack(UCMWeapon weapon);
+    boolean performAttack(EnemyWeapon weapon);
     void removeObject(GameObject object);
     void addObject(GameObject object);
     void obtainShockwave();

@@ -41,13 +41,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	 * @return symbol of the object at the position
 	 */
 	public String positionToString(int col, int row) {
-		Position position = new Position(col, row);
-		for (GameObject o: this.container.getObjects()) {
-			if(o.isOnPosition(position)) {
-				return o.toString();
-			}
-		}
-		return "";
+		return this.container.positionToString(col, row);
 	}
 	@Override
 	public String infoToString() {
@@ -76,7 +70,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	}
 	@Override
 	public int getRemainingAliens() {
-		return this.container.getRemainingAliens();
+		return 0;
 	}
 
 	// ################## GameModel functions
@@ -100,7 +94,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	}
 
 	public boolean executeShockwave(){
-		return this.container.performShockwaveOnAliens(this.player.getShockwave());
+		return this.container.performShockwave(this.player.getShockwave());
 	}
 	public boolean isFinished() {
 		return this.aliensWin() || this.playerWin();
@@ -113,6 +107,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 		this.alienManager.computerActions(this.container);
 		this.container.computerActions();
 		this.container.automaticMoves();
+		this.container.postActions();
 	}
 	
 	// ################## GameWorld functions
@@ -134,19 +129,21 @@ public class Game implements GameStatus, GameModel, GameWorld {
 
 	/**
 	 * For checking and attacking every possible Enemy target on the board with UCMWeapon
-	 * @param ucmWeapon the weapon of the attack
+	 * @param weapon the weapon of the attack
 	 * @return true if Weapon collided with anything
 	 */
-	public boolean attackEnemy(UCMWeapon ucmWeapon) {
-		return this.container.performAttackOnAliens(ucmWeapon);
+	public boolean performAttack(UCMWeapon weapon) {
+		return this.container.performAttack(weapon);
 	}
 
 	/**
 	 * For checking and attacking the player with any of the EnemyWeapons
-	 * @param enemyWeapon the weapon of the attack
+	 * @param weapon the weapon of the attack
 	 * @return true if weapon hit player ship
 	 */
-	public boolean attackPlayer(EnemyWeapon enemyWeapon) { return enemyWeapon.performAttack(this.player); }
+	public boolean performAttack(EnemyWeapon weapon) {
+		return weapon.performAttack(this.player);
+	}
 
 	/**
 	 * for adding object to the object container

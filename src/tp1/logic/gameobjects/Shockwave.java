@@ -38,8 +38,6 @@ public class Shockwave extends UCMWeapon {
 
     @Override
     public boolean performAttack(GameItem other) {
-        if(!(other instanceof AlienShip)) return false;
-
         return other.receiveAttack(this);
     }
 

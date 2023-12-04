@@ -10,15 +10,12 @@ public abstract class EnemyWeapon extends Weapon{
     }
 
     public void computerAction() {
-        this.game.attackPlayer(this);
+        this.game.performAttack(this);
     }
 
     @Override
     public boolean performAttack(GameItem other) {
         if(!other.isOnPosition(this.pos)) return false;
-        if(!(other instanceof UCMShip)) return false;
-
-
         return other.receiveAttack(this);
     }
 

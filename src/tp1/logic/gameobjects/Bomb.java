@@ -14,8 +14,9 @@ public class Bomb extends EnemyWeapon {
         this.alien = alien;
     }
 
-    public void computerAction() {
-        super.computerAction();
+    @Override
+    public void automaticMove() {
+        super.automaticMove();
         boolean inBounds = this.game.inBoundsY(this.pos);
         if(!inBounds) this.onDelete();
     }

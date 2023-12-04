@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class AlienManager  {
-	
+
 	private Game game;
 	private Level level;
 
@@ -65,8 +65,8 @@ public class AlienManager  {
 		cyclesToMove = this.level.numCyclesToMoveOneCell;
 		alienShipMove = alienShipDirection;
 
-		boolean onBorder = container.getAlienShips().stream()
-				.anyMatch(s -> s.getPos().inCol(0) || s.getPos().inCol(Game.DIM_Y));
+		boolean onBorder = container.getObjects().stream()
+				.anyMatch(s -> s instanceof AlienShip && (s.getPos().inCol(0) || s.getPos().inCol(Game.DIM_Y)));
 
 		// if no ships on border -> return
 		if(!onBorder) return;
@@ -91,8 +91,9 @@ public class AlienManager  {
 	}
 
 	private boolean reachedPlayerRow(GameObjectContainer container) {
-		Integer lowest = container.getAlienShips()
+		Integer lowest = container.getObjects()
 				.stream()
+				.filter(s -> s instanceof AlienShip)
 				.map(s -> s.getPos().move(alienShipMove).row)
 				.min(Math::min)
 				.get();

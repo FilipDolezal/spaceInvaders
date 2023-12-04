@@ -15,7 +15,7 @@ public abstract class UCMWeapon extends Weapon{
         // next position is out of bounds? -> delete weapon
         if(!this.game.inBoundsY(this.pos.move(this.dir))) this.onDelete();
 
-        boolean collision = this.game.attackEnemy(this);
+        boolean collision = this.game.performAttack(this);
         // weapon collided with anything? -> delete weapon
         if(collision) this.onDelete();
     }
@@ -23,8 +23,6 @@ public abstract class UCMWeapon extends Weapon{
     @Override
     public boolean performAttack(GameItem other) {
         if(!(other.isOnPosition(this.pos) || other.isOnPosition(this.pos.move(this.dir)))) return false;
-        if(!(other instanceof EnemyWeapon || other instanceof EnemyShip)) return false;
-
         return other.receiveAttack(this);
     }
 }
