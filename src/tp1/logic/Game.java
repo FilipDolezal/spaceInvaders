@@ -35,10 +35,12 @@ public class Game implements GameStatus, GameModel, GameWorld {
 		this.container.add(player);
 		this.score = 0;
 	}
-	public boolean tryFiringChance(){ return random.nextDouble() < level.ufoFrequency;}
-	public boolean tryUfoSpawnChange() { return random.nextDouble() < level.ufoFrequency; }
-	// ################## GameStatus functions
 
+	public boolean tryUfoSpawnChange() {
+		return random.nextDouble() < level.ufoFrequency;
+	}
+
+	// ################## GameStatus functions
 	/**
 	 * Check which symbol to display on the specified position
 	 * @param col number column
@@ -185,11 +187,24 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	 */
 	public void decreaseAlienCount() { this.alienManager.decreaseAlienCount(); }
 
+	/**
+	 * Determine if SuperLaser may be shot
+	 * If yes -> decrease the score by SuperLaser cost
+	 * @return true if SuperLaser can be shot
+	 */
 	public boolean canShootSuperLaser() {
 		if(this.score > SuperLaser.COST) {
 			this.score -= SuperLaser.COST;
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Randomly determinate if DestroyerAlien should drop bomb
+	 * @return true if bomb should drop
+	 */
+	public boolean tryFiringChance(){
+		return random.nextDouble() < level.shootFrequency;
 	}
 }
