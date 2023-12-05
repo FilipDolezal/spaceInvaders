@@ -10,12 +10,23 @@ public abstract class AlienShip extends EnemyShip {
         this.dir = alienManager.getAlienShipMove();
     }
 
+    @Override
     public void computerAction() {
-        this.dir = alienManager.getAlienShipMove();
+        alienManager.isOnBorder(this.pos);
     }
 
+    @Override
+    public void automaticMove() {
+        // perform movement with calculated move
+        this.performMovement(alienManager.getAlienShipMove());
+        // if alien is in last row -> set aliensWin to true
+        if(pos.inRow(Game.DIM_Y - 1)) this.alienManager.setAliensWin();
+    }
+
+    @Override
     public void onDelete() {
         super.onDelete();
+        this.game.decreaseAlienCount();
         this.game.increaseScore(this.score);
     }
 

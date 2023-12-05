@@ -3,6 +3,7 @@ package tp1.logic;
 import tp1.logic.gameobjects.*;
 import tp1.util.MyStringUtils;
 import tp1.view.Messages;
+import java.util.Random;
 
 
 public class Game implements GameStatus, GameModel, GameWorld {
@@ -12,6 +13,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	private GameObjectContainer container;
 	private UCMShip player;
 	private AlienManager alienManager;
+	private Random random;
 	private int currentCycle, score;
 
 	public Level getLevel() {
@@ -23,6 +25,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 		this.level = level;
 		this.alienManager = new AlienManager(this);
 		initGame();
+		this.random = new Random(seed);
 	}
 		
 	private void initGame () {
@@ -31,7 +34,8 @@ public class Game implements GameStatus, GameModel, GameWorld {
 		this.container.add(player);
 		this.score = 0;
 	}
-
+	public boolean tryFiringChance(){ return random.nextDouble() < level.ufoFrequency;}
+	public boolean tryUfoSpawnChange() { return random.nextDouble() < level.ufoFrequency; }
 	// ################## GameStatus functions
 
 	/**
@@ -57,8 +61,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	}
 	@Override
 	public boolean playerWin() {
-		// TODO fill with your code
-		return false;
+		return this.alienManager.playerWin();
 	}
 	@Override
 	public boolean aliensWin() {
@@ -70,7 +73,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	}
 	@Override
 	public int getRemainingAliens() {
-		return 0;
+		return this.alienManager.getRemainingAliens();
 	}
 
 	// ################## GameModel functions
@@ -104,10 +107,10 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	}
 	public void update() {
 		this.currentCycle++;
-		this.alienManager.computerActions(this.container);
 		this.container.computerActions();
 		this.container.automaticMoves();
 		this.container.postActions();
+		this.alienManager.initializeUFO(this.container);
 	}
 	
 	// ################## GameWorld functions
@@ -173,4 +176,9 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	public void increaseScore(int byNumber) {
 		this.score += byNumber;
 	}
+
+	/**
+	 * For decreasing alienCounter in alienManager
+	 */
+	public void decreaseAlienCount() { this.alienManager.decreaseAlienCount(); }
 }

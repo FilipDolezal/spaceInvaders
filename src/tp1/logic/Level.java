@@ -6,7 +6,9 @@ package tp1.logic;
  */
 public enum Level {
 
-	EASY(4, 1, 2, 0.1, 2, 0.5), HARD(8, 2, 2, 0.3, 2, 0.2), INSANE(8, 2, 4, 0.5, 1, 0.1);
+	EASY(4, 1, 2, 0.1, 3, 0.5),
+	HARD(8, 2, 2, 0.3, 2, 0.2),
+	INSANE(8, 2, 4, 0.5, 1, 0.1);
 
 	public final int numRegularAliens;
 	public final int numRowsRegularAliens;

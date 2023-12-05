@@ -17,7 +17,7 @@ public class GameObjectContainer {
 	}
 
 	/**
-	 * Add object to a list of deleted items.
+	 * Will effectively remove object from objects list by adding object to a list of deleted items.
 	 * After each cycle: <br>
 	 * 		- object added to this list will be removed form objects <br>
 	 * 		- deleted list will be cleared for another cycle <br>
