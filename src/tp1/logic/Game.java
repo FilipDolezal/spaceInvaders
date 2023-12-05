@@ -25,8 +25,8 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	public Game (Level level, long seed){
 		this.level = level;
 		this.alienManager = new AlienManager(this);
-		initGame();
 		this.random = new Random(seed);
+		initGame();
 	}
 		
 	private void initGame () {

@@ -7,6 +7,7 @@ public class AlienManager  {
 
 	private Game game;
 	private Level level;
+	private Ufo actualUFO;
 	private int
 			remainingAliens,		// keeps track of remaining alien count
 			lastCycle;				// for determination if this cycle is new or old
@@ -139,7 +140,7 @@ public class AlienManager  {
 				container.add(new RegularAlien(
 						this.game,
 						new Position(col + reqCenter , row + 1),
-						2
+						this
 				));
 
 				remainingAliens++;
