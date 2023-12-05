@@ -5,39 +5,36 @@ import tp1.logic.gameobjects.DestroyerAlien;
 import tp1.logic.gameobjects.RegularAlien;
 import tp1.logic.gameobjects.Ufo;
 
-import java.util.List;
-import java.util.Optional;
-
 public class AlienManager  {
 
 	private Game game;
 	private Level level;
-
 	private int
-			remainingAliens,
-			cyclesToMove;
+			remainingAliens,		// keeps track of remaining alien count
+			lastCycle;				// for determination if this cycle is new or old
 	private boolean
-			descend = false,
-			aliensWin = false,
-			playerWin = false;
-
+			onBorder 	= false,	// determine if there is a ship on border in current cycle
+			descend 	= false,	// keeps track if aliens descended last cycle
+			aliensWin 	= false,	// determinate if aliens reached player row
+			playerWin 	= false;	// determinate if player won by destroying aliens
 	private Move
-			alienShipMove = Move.LEFT,
-			alienShipDirection = Move.LEFT;
-
+			alienShipMove 		= Move.LEFT,	// current alien move
+			alienShipDirection 	= Move.LEFT;	// current alien direction
 
 	public int getRemainingAliens() {
 		return remainingAliens;
 	}
-
-	public boolean aliensWin() {
-		return aliensWin;
+	public void decreaseAlienCount() {
+		if(--this.remainingAliens == 0)
+			playerWin = true;
 	}
+	public boolean aliensWin() { return aliensWin; }
+	public boolean playerWin() { return playerWin; }
+	public void setAliensWin() { this.aliensWin = true; }
 
 	public AlienManager(Game game) {
 		this.level = game.getLevel();
 		this.game = game;
-		this.cyclesToMove = level.numCyclesToMoveOneCell;
 	}
 
 	public GameObjectContainer initialize() {
@@ -52,24 +49,48 @@ public class AlienManager  {
 	}
 
 	/**
-	 * Computers if AlienShips have to descend and switch directions.
-	 * @param container GameObjectContainer instance
+	 * Method to determine the next alien move
+	 * will check if position is on border and execute all calculations
+	 * @param pos position of the ship
 	 */
-	public void computerActions(GameObjectContainer container) {
-		// check if aliens move this cycle
-		if((--cyclesToMove) > 0) {
+	public void isOnBorder(Position pos) {
+		// if this is the first border check in this cycle
+		if(this.lastCycle != this.game.getCycle()) {
+			this.lastCycle 	= this.game.getCycle();
+			// clear onBorder to start fresh
+			this.onBorder = false;
+		} else
+			// if there is already ship on border -> we don't need to check other ships
+			if(this.onBorder) return;
+
+		// if ship is on border
+		if(pos.inCol(0) || pos.inCol(Game.DIM_Y)) {
+			// set onBorder to true
+			this.onBorder = true;
+			// determine what move should be next
+			this.calculateDescend();
+		} else {
+			// ship not on border -> if aliens move keep the current direction
+			alienShipMove = doAliensMove() ? alienShipDirection : Move.NONE;
+		}
+	}
+
+	/**
+	 * Determine if AlienShips move this cycle
+	 * @return true if aliens should move
+	 */
+	private boolean doAliensMove() {
+		return this.lastCycle % level.numCyclesToMoveOneCell == 0;
+	}
+
+	/**
+	 * Will calculate the right Movement while any of the AlienShips is on the border
+	 */
+	private void calculateDescend() {
+		if(!doAliensMove()) {
 			alienShipMove = Move.NONE;
 			return;
-		}
-
-		cyclesToMove = this.level.numCyclesToMoveOneCell;
-		alienShipMove = alienShipDirection;
-
-		boolean onBorder = container.getObjects().stream()
-				.anyMatch(s -> s instanceof AlienShip && (s.getPos().inCol(0) || s.getPos().inCol(Game.DIM_Y)));
-
-		// if no ships on border -> return
-		if(!onBorder) return;
+		};
 
 		if(descend) {
 			// if AlienShips descended last round -> switch directions and set move = direction
@@ -84,24 +105,15 @@ public class AlienManager  {
 			// if AlienShips did not descend last round -> set move to DOWN
 			alienShipMove = Move.DOWN;
 			descend = true;
-
-			// check if aliens reached last row
-			aliensWin = this.reachedPlayerRow(container);
 		}
+
 	}
 
-	private boolean reachedPlayerRow(GameObjectContainer container) {
-		Integer lowest = container.getObjects()
-				.stream()
-				.filter(s -> s instanceof AlienShip)
-				.map(s -> s.getPos().move(alienShipMove).row)
-				.min(Math::min)
-				.get();
-
-		return lowest >= Game.DIM_Y - 1;
-	}
-
-	public Move getAlienShipMove() { return alienShipMove; }
+	/**
+	 * Get calculated ship movement
+	 * @return Movement of all the alienShips
+	 */
+	public Move getAlienShipMove() {return this.alienShipMove;}
 
 	private void initializeUFO(GameObjectContainer container) {
 		container.add(new Ufo(this.game, new Position (Game.DIM_X - 1, 4), 1 ));

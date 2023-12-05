@@ -57,8 +57,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	}
 	@Override
 	public boolean playerWin() {
-		// TODO fill with your code
-		return false;
+		return this.alienManager.playerWin();
 	}
 	@Override
 	public boolean aliensWin() {
@@ -70,7 +69,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	}
 	@Override
 	public int getRemainingAliens() {
-		return 0;
+		return this.alienManager.getRemainingAliens();
 	}
 
 	// ################## GameModel functions
@@ -104,7 +103,6 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	}
 	public void update() {
 		this.currentCycle++;
-		this.alienManager.computerActions(this.container);
 		this.container.computerActions();
 		this.container.automaticMoves();
 		this.container.postActions();
@@ -173,4 +171,9 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	public void increaseScore(int byNumber) {
 		this.score += byNumber;
 	}
+
+	/**
+	 * For decreasing alienCounter in alienManager
+	 */
+	public void decreaseAlienCount() { this.alienManager.decreaseAlienCount(); }
 }
