@@ -4,10 +4,14 @@ import tp1.logic.*;
 
 public abstract class AlienShip extends EnemyShip {
     protected AlienManager alienManager;
-    public AlienShip(GameWorld game, AlienManager alienManager, Position pos, int life) {
-        super(game, pos, life);
+    public AlienShip(GameWorld game, Position pos, AlienManager alienManager) {
+        super(game, pos, 0);
         this.alienManager = alienManager;
         this.dir = alienManager.getAlienShipMove();
+    }
+
+    public AlienShip() {
+
     }
 
     @Override
@@ -34,4 +38,6 @@ public abstract class AlienShip extends EnemyShip {
     public String toString() {
         return this.getSymbol() + "[" + this.getLife() + "]";
     }
+
+    protected abstract AlienShip copy(GameWorld game, Position pos, AlienManager am);
 }

@@ -1,9 +1,7 @@
 package tp1.logic;
 
-import tp1.logic.gameobjects.AlienShip;
-import tp1.logic.gameobjects.DestroyerAlien;
-import tp1.logic.gameobjects.RegularAlien;
-import tp1.logic.gameobjects.Ufo;
+import tp1.control.InitialConfiguration;
+import tp1.logic.gameobjects.*;
 
 public class AlienManager  {
 
@@ -18,7 +16,7 @@ public class AlienManager  {
 			aliensWin 	= false,	// determinate if aliens reached player row
 			playerWin 	= false;	// determinate if player won by destroying aliens
 	private Move
-			alienShipMove 		= Move.LEFT,	// current alien move
+			alienShipMove 		= Move.NONE,	// current alien move
 			alienShipDirection 	= Move.LEFT;	// current alien direction
 
 	public int getRemainingAliens() {
@@ -37,13 +35,18 @@ public class AlienManager  {
 		this.game = game;
 	}
 
-	public GameObjectContainer initialize() {
+	public GameObjectContainer initialize(InitialConfiguration config) {
 		this.remainingAliens = 0;
 		GameObjectContainer container = new GameObjectContainer();
 		
 		initializeUFO(container);
-		initializeRegularAliens(container);
-		initializeDestroyerAliens(container);
+
+		if(config == null) {
+			initializeRegularAliens(container);
+			initializeDestroyerAliens(container);
+		} else {
+			initializeFromConfig(container, config);
+		}
 
 		return container;
 	}
@@ -118,7 +121,7 @@ public class AlienManager  {
 	private void initializeUFO(GameObjectContainer container) {
 		container.add(new Ufo(this.game, new Position (Game.DIM_X - 1, 4), 1 ));
 	}
-	
+
 	private void initializeRegularAliens(GameObjectContainer container) {
 		for (int row = 0, index = 0; row < level.numRowsRegularAliens; row++) {
 			for (int col = 0; col < level.getNumAliensPerRow(); col++, index++) {
@@ -126,9 +129,8 @@ public class AlienManager  {
 
 				container.add(new RegularAlien(
 						this.game,
-						this,
 						new Position(col + reqCenter , row + 1),
-						2
+						this
 				));
 
 				remainingAliens++;
@@ -144,12 +146,22 @@ public class AlienManager  {
 
 			container.add(new DestroyerAlien(
 					this.game,
-					this,
 					new Position(i + offset, level.numRowsRegularAliens + 1),
-					1
+					this
 			));
 
 			remainingAliens++;
+		}
+	}
+
+	private void initializeFromConfig(GameObjectContainer container, InitialConfiguration config) {
+		for(String line: config.getShipDescription()) {
+			String[] w = line.split("\\s+");
+			Position pos = new Position(
+				Integer.valueOf(w[1]),
+				Integer.valueOf(w[2])
+			);
+			container.add(ShipFactory.spawnAlienShip(w[0],this.game,pos,this));
 		}
 	}
 }

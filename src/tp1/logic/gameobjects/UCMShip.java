@@ -12,6 +12,7 @@ import tp1.view.Messages;
 public class UCMShip extends Ship{
 
     private UCMLaser laser;
+    private SuperLaser superLaser;
     private Shockwave shockwave;
 
     /**
@@ -21,7 +22,6 @@ public class UCMShip extends Ship{
         super(game, position, 3);
         this.dir = Move.NONE;
         this.armor = 0;
-        // this.shockwave = new Shockwave(this.game, this);
     }
 
     public boolean move(Move move) {
@@ -40,10 +40,20 @@ public class UCMShip extends Ship{
         this.game.addObject(laser);
         return true;
     }
-    public void setHealth(int health){
-        this.life = health;
-    }
     public void disableLaser() {
+        this.laser = null;
+    }
+
+    public boolean shootSuperLaser() {
+        if(superLaser != null) return false;
+        if(!game.canShootSuperLaser()) return false;
+
+        SuperLaser laser = new SuperLaser(this.game, this);
+        this.superLaser = laser;
+        this.game.addObject(laser);
+        return true;
+    }
+    public void disableSuperLaser() {
         this.laser = null;
     }
 

@@ -14,9 +14,14 @@ public class DestroyerAlien extends AlienShip
 {
     private Bomb bomb;
 
-    public DestroyerAlien(GameWorld game, AlienManager alienManager, Position pos, int life) {
-        super(game, alienManager, pos, life);
+    public DestroyerAlien(GameWorld game, Position pos, AlienManager alienManager) {
+        super(game, pos, alienManager);
         super.score = 10;
+        super.life = 1;
+    }
+
+    public DestroyerAlien() {
+
     }
 
     @Override
@@ -48,7 +53,12 @@ public class DestroyerAlien extends AlienShip
             this.bomb = bomb;
             this.game.addObject(bomb);
         }
-    };
+    }
+
+    @Override
+    protected AlienShip copy(GameWorld game, Position pos, AlienManager am) {
+        return new DestroyerAlien(game, pos, am);
+    }
 
     public void deleteBomb() {
         this.bomb = null;

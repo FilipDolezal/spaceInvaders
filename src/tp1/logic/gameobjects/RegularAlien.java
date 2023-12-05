@@ -11,9 +11,14 @@ import tp1.view.Messages;
  */
 public class RegularAlien extends AlienShip {
 
-	public RegularAlien(GameWorld game, AlienManager alienManager, Position pos, int life) {
-		super(game, alienManager, pos, life);
+	public RegularAlien(GameWorld game, Position pos, AlienManager alienManager) {
+		super(game, pos, alienManager);
 		super.score = 5;
+		super.life = 2;
+	}
+
+	public RegularAlien() {
+
 	}
 
 	@Override
@@ -34,5 +39,10 @@ public class RegularAlien extends AlienShip {
 	@Override
 	public void onDelete() {
 		super.onDelete();
+	}
+
+	@Override
+	protected AlienShip copy(GameWorld game, Position pos, AlienManager am) {
+		return new RegularAlien(game, pos, am);
 	}
 }

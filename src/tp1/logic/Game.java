@@ -1,5 +1,6 @@
 package tp1.logic;
 
+import tp1.control.InitialConfiguration;
 import tp1.logic.gameobjects.*;
 import tp1.util.MyStringUtils;
 import tp1.view.Messages;
@@ -26,7 +27,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	}
 		
 	private void initGame () {
-		this.container = alienManager.initialize();
+		this.container = alienManager.initialize(null);
 		this.player = new UCMShip(this, new Position(DIM_X / 2, DIM_Y - 1));
 		this.container.add(player);
 		this.score = 0;
@@ -82,14 +83,16 @@ public class Game implements GameStatus, GameModel, GameWorld {
 		return this.player.shootLaser();
 	}
 	@Override
-	public void reset() {
-		this.container = alienManager.initialize();
+	public boolean shootSuperLaser() {
+		return this.player.shootSuperLaser();
+	}
+	@Override
+	public void reset(InitialConfiguration config) {
+		this.container = alienManager.initialize(config);
 		this.player = new UCMShip(this, new Position(DIM_X / 2, DIM_Y - 1));
 		this.container.add(player);
 		this.score = 0;
 		this.currentCycle = 0;
-
-
 	}
 
 	public boolean executeShockwave(){
@@ -176,4 +179,12 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	 * For decreasing alienCounter in alienManager
 	 */
 	public void decreaseAlienCount() { this.alienManager.decreaseAlienCount(); }
+
+	public boolean canShootSuperLaser() {
+		if(this.score > SuperLaser.COST) {
+			this.score -= SuperLaser.COST;
+			return true;
+		}
+		return false;
+	}
 }

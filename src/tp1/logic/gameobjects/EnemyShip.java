@@ -9,6 +9,10 @@ public abstract class EnemyShip extends Ship{
         super(game, pos, life);
     }
 
+    public EnemyShip() {
+
+    }
+
     @Override
     public boolean receiveAttack(UCMWeapon weapon) {
         this.dealDamage(weapon);

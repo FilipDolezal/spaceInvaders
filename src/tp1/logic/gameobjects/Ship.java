@@ -12,6 +12,10 @@ public abstract class Ship extends GameObject {
 
     }
 
+    public Ship() {
+
+    }
+
     protected void dealDamage(Weapon weapon) {
         this.life -= weapon.getDamage();
 
