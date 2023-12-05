@@ -207,4 +207,8 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	public boolean tryFiringChance(){
 		return random.nextDouble() < level.shootFrequency;
 	}
+
+	public void explodeAt(Position pos) {
+
+	}
 }
