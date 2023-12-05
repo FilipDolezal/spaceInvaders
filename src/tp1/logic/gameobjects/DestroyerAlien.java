@@ -42,7 +42,7 @@ public class DestroyerAlien extends AlienShip
     @Override
     public void computerAction() {
         super.computerAction();
-        if(this.bomb == null) {
+        if(this.bomb == null && this.game.tryFiringChance()) {
             Bomb bomb = new Bomb(
                     this.game,
                     this,

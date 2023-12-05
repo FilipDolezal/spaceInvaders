@@ -118,8 +118,17 @@ public class AlienManager  {
 	 */
 	public Move getAlienShipMove() {return this.alienShipMove;}
 
-	private void initializeUFO(GameObjectContainer container) {
-		container.add(new Ufo(this.game, new Position (Game.DIM_X - 1, 4), 1 ));
+	public void initializeUFO(GameObjectContainer container) {
+		if (actualUFO == null && this.game.tryUfoSpawnChange()) {
+            Ufo newUfo = new Ufo(game, new Position(Game.DIM_X - 1, 0), 1);
+			container.add(newUfo);
+			actualUFO = newUfo;
+        }
+		else if (actualUFO != null && !actualUFO.isAlive()){
+			container.remove(actualUFO);
+			actualUFO = null;
+		}
+
 	}
 
 	private void initializeRegularAliens(GameObjectContainer container) {
@@ -130,7 +139,7 @@ public class AlienManager  {
 				container.add(new RegularAlien(
 						this.game,
 						new Position(col + reqCenter , row + 1),
-						this
+						2
 				));
 
 				remainingAliens++;

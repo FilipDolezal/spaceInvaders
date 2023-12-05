@@ -41,7 +41,11 @@ public class Ufo extends EnemyShip {
 	@Override
 	public void automaticMove() {
 		super.automaticMove();
-		if(!this.game.inBoundsX(this.pos))
+		if(!this.game.inBoundsX(this.pos)){
 			super.onDelete();
+
+			this.life = 0;
+		}
+
 	}
 }

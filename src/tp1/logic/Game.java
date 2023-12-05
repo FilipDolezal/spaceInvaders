@@ -4,6 +4,7 @@ import tp1.control.InitialConfiguration;
 import tp1.logic.gameobjects.*;
 import tp1.util.MyStringUtils;
 import tp1.view.Messages;
+import java.util.Random;
 
 
 public class Game implements GameStatus, GameModel, GameWorld {
@@ -13,6 +14,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	private GameObjectContainer container;
 	private UCMShip player;
 	private AlienManager alienManager;
+	private Random random;
 	private int currentCycle, score;
 
 	public Level getLevel() {
@@ -24,6 +26,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 		this.level = level;
 		this.alienManager = new AlienManager(this);
 		initGame();
+		this.random = new Random(seed);
 	}
 		
 	private void initGame () {
@@ -32,7 +35,8 @@ public class Game implements GameStatus, GameModel, GameWorld {
 		this.container.add(player);
 		this.score = 0;
 	}
-
+	public boolean tryFiringChance(){ return random.nextDouble() < level.ufoFrequency;}
+	public boolean tryUfoSpawnChange() { return random.nextDouble() < level.ufoFrequency; }
 	// ################## GameStatus functions
 
 	/**
@@ -109,6 +113,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 		this.container.computerActions();
 		this.container.automaticMoves();
 		this.container.postActions();
+		this.alienManager.initializeUFO(this.container);
 	}
 	
 	// ################## GameWorld functions

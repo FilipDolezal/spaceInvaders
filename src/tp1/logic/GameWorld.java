@@ -15,4 +15,5 @@ public interface GameWorld {
     void increaseScore(int byScore);
     boolean canShootSuperLaser();
     void decreaseAlienCount();
+    boolean tryFiringChance();
 }
