@@ -1,4 +1,4 @@
-Space Invaders 1.0
+Space Invaders 2.0
 
 Level: INSANE
 Random generator initialized with seed: 25

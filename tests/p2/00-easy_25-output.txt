@@ -1,0 +1,420 @@
+Space Invaders 2.0
+
+Level: EASY
+Random generator initialized with seed: 25
+Number of cycles: 0
+Life: 3
+ShockWave: NO
+Score: 0
+Remaining aliens: 6
+ ───────────────────────────────────────────────────────────────
+|      |      |      |      |      |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      | R[2] | R[2] | R[2] | R[2] |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      |      | D[1] | D[1] |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      |      |      |      |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      |      |      |      |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      |      |      |      |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      |      |      |      |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      |      |      | ^__^ |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+
+Command > 
+[DEBUG] Executing: h
+
+Available commands:
+	help:	shows this help
+			[h]elp
+	exit:	exits the game
+			[e]xit
+	shoot:	player shoots a laser
+			[s]hoot
+	none:	user does not perform any action
+			[n]one
+	move:	moves the UCMShip in the indicated direction
+			[m]ove <left|lleft|right|rright>
+	reset:	resets the game
+			[r]eset [<NONE|CONF_1|CONF_2|CONF_3>]
+	shockwave:	player shoots a shockwave
+			sock[w]ave
+	superLaser:	shoots a super laser when player has enough points
+			[s]uper[L]aser
+
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: s
+
+Number of cycles: 1
+Life: 3
+ShockWave: NO
+Score: 0
+Remaining aliens: 6
+ ───────────────────────────────────────────────────────────────
+|      |      |      |      |      |      |      |      | U[1] |
+ ───────────────────────────────────────────────────────────────
+|      |      | R[2] | R[2] | R[2] | R[2] |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      |      | D[1] | D[1] |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      |      |  *   |      |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      |      |      |      |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      |      |      |      |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      |      |      |  oo  |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      |      |      | ^__^ |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: Move lleft
+
+Number of cycles: 2
+Life: 3
+ShockWave: NO
+Score: 0
+Remaining aliens: 6
+ ───────────────────────────────────────────────────────────────
+|      |      |      |      |      |      |      | U[1] |      |
+ ───────────────────────────────────────────────────────────────
+|      |      | R[2] | R[2] | R[2] | R[2] |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      |      | D[1] | D[1] |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      |      |      |  *   |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      |      |  *   |      |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      |      |      |  oo  |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      |      |      |      |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      | ^__^ |      |      |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+
+Command > 
+[DEBUG] Executing: s
+
+Laser cannot be shot
+Command > 
+[DEBUG] Executing: s
+
+Laser cannot be shot
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: move left
+
+Number of cycles: 5
+Life: 3
+ShockWave: NO
+Score: 0
+Remaining aliens: 6
+ ───────────────────────────────────────────────────────────────
+|      |      |      |      | U[1] |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      | R[2] | R[2] | R[2] | R[2] |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      | D[1] | D[1] |      |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      |      |      |      |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      |      |      |      |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      |      |      |      |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      |      |      |      |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      | ^__^ |      |  *   |      |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+
+Command > 
+[DEBUG] Executing: mov left
+
+Unknown command
+Command > 
+[DEBUG] Executing: move lleft
+
+Movement cannot be performed
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: s
+
+Number of cycles: 7
+Life: 3
+ShockWave: NO
+Score: 0
+Remaining aliens: 6
+ ───────────────────────────────────────────────────────────────
+|      |      | U[1] |      |      |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+| R[2] | R[2] | R[2] | R[2] |      |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      | D[1] | D[1] |      |      |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      |      |      |      |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      |      |      |      |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      |      |      |      |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |  oo  |      |      |      |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      | ^__^ |      |      |      |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: r
+
+Number of cycles: 0
+Life: 3
+ShockWave: NO
+Score: 0
+Remaining aliens: 6
+ ───────────────────────────────────────────────────────────────
+|      |      |      |      |      |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      | R[2] | R[2] | R[2] | R[2] |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      |      | D[1] | D[1] |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      |      |      |      |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      |      |      |      |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      |      |      |      |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      |      |      |      |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+|      |      |      |      | ^__^ |      |      |      |      |
+ ───────────────────────────────────────────────────────────────
+
+Command > 
+[DEBUG] Executing: l
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > 
+[DEBUG] Executing: 
+
+Unknown command
+Command > [ERROR] Error: No line found
+
