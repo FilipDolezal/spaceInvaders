@@ -8,14 +8,19 @@ import tp1.view.Messages;
 public class ResetCommand extends Command {
 
     InitialConfiguration config;
-
+/*
+    If the reset command is called with a configuration, applies that configuration to the game.
+ */
     private ResetCommand(InitialConfiguration config) {
         this.config = config;
     }
+    /*
+    If the reset command is called without any configuration, just resets the game.
+     */
     public ResetCommand() {
         this.config = null;
     }
-
+    //Get all the attributes of the command.
     protected String getName() {
         return Messages.COMMAND_RESET_NAME;
     }
@@ -37,7 +42,7 @@ public class ResetCommand extends Command {
 
     @Override
     public ExecutionResult execute(GameModel game) {
-        game.reset(this.config);
+        game.reset(this.config);    //Resets the game with the desired configuration.
         return new ExecutionResult(true);
     }
 

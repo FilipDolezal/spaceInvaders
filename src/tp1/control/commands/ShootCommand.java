@@ -8,6 +8,7 @@ public class ShootCommand extends NoParamsCommand{
 
     public ShootCommand() {}
 
+    //Get all the attributes of the command.
     @Override
     protected String getName() {
         return Messages.COMMAND_SHOOT_NAME;
@@ -32,6 +33,7 @@ public class ShootCommand extends NoParamsCommand{
     public ExecutionResult execute(GameModel game) {
         boolean success = game.shootLaser();
         if(success) game.update();
+         //update the game if the shoot was successful.
 
         return new ExecutionResult(success, true, Messages.LASER_ERROR);
     }

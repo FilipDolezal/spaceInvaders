@@ -5,7 +5,7 @@ import tp1.logic.GameModel;
 import tp1.view.Messages;
 
 public class ListCommand extends NoParamsCommand {
-
+    //Get all the attributes of the command.
     @Override
     protected String getName() {
         return Messages.COMMAND_LIST_NAME;
@@ -27,6 +27,9 @@ public class ListCommand extends NoParamsCommand {
     }
 
     @Override
+    /*
+      Prints the List of Ships with their respective attributes.
+     */
     public ExecutionResult execute(GameModel game) {
         System.out.println("[U]CM Ship: damage='1', endurance='3'\n" +
                 "[R]egular Alien: points='5', damage='0', endurance='2'\n" +

@@ -9,10 +9,10 @@ public class ExitCommand extends NoParamsCommand{
 		  		
 		@Override
 		public ExecutionResult execute(GameModel game) {
-			game.exit();
-			return new ExecutionResult(false);
+			game.exit();		//Calls exit() in order to end the game.
+			return new ExecutionResult(false);	//Not necessary to print the board because the game has finished.
 		}
-
+		//Get all the attributes of the command.
 		@Override
 		protected String getName() {
 			return Messages.COMMAND_EXIT_NAME;

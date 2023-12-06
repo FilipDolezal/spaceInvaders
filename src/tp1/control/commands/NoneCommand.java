@@ -5,6 +5,7 @@ import tp1.logic.GameModel;
 import tp1.view.Messages;
 
 public class NoneCommand extends NoParamsCommand{
+    //Get all the attributes of the command.
     @Override
     protected String getName() {
         return Messages.COMMAND_NONE_NAME;
@@ -27,7 +28,7 @@ public class NoneCommand extends NoParamsCommand{
 
     @Override
     public ExecutionResult execute(GameModel game) {
-        game.update();
+        game.update();  //Updates the game after skipping the cycle.
         return new ExecutionResult(true);
     }
 }

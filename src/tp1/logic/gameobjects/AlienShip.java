@@ -5,6 +5,9 @@ import tp1.util.MyStringUtils;
 
 public abstract class AlienShip extends EnemyShip {
     protected AlienManager alienManager;
+    /**
+        Constructor of the AlienShip to initialize its attributes
+     */
     public AlienShip(GameWorld game, Position pos, AlienManager alienManager) {
         super(game, pos, 0);
         this.alienManager = alienManager;
@@ -14,12 +17,16 @@ public abstract class AlienShip extends EnemyShip {
     public AlienShip() {
 
     }
-
+    /**
+    ComputerAction checks if the alienShips are on border.
+     */
     @Override
     public void computerAction() {
         alienManager.isOnBorder(this.pos);
     }
-
+    /**
+    Moves all the alien ships
+     */
     @Override
     public void automaticMove() {
         // perform movement with calculated move
@@ -30,14 +37,14 @@ public abstract class AlienShip extends EnemyShip {
 
     @Override
     public void onDelete() {
-        super.onDelete();
+        super.onDelete();       //Deletes the alien ship
         this.game.decreaseAlienCount();
         this.game.increaseScore(this.score);
     }
 
     @Override
     public String toString() {
-        return MyStringUtils.center(
+        return MyStringUtils.center(        //returns the Symbol+life of the alienship
                 String.format("%s[%02d]", this.getSymbol(), this.getLife()),
                 7
         );

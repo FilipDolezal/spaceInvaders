@@ -8,6 +8,7 @@ public class ShootSuperLaserCommand extends NoParamsCommand{
 
     public ShootSuperLaserCommand() {}
 
+    //Get all the attributes of the command.
     @Override
     protected String getName() {
         return Messages.COMMAND_SHOOT_SUPER_LASER_NAME;
@@ -32,6 +33,7 @@ public class ShootSuperLaserCommand extends NoParamsCommand{
     public ExecutionResult execute(GameModel game) {
         boolean success = game.shootSuperLaser();
         if(success) game.update();
+            //if the super laser was successful, the game is updated and printed.
 
         return new ExecutionResult(success, true, Messages.SUPER_LASER_ERROR);
     }

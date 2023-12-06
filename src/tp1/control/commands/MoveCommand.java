@@ -12,10 +12,12 @@ public class MoveCommand extends Command {
 
 	public MoveCommand() {}
 
+	//Changes the actual move to the updated move.
 	protected MoveCommand(Move move) {
 		this.move = move;
 	}
 
+	//Get all the attributes of the command.
 	@Override
 	protected String getName() {
 		return Messages.COMMAND_MOVE_NAME;
@@ -38,25 +40,25 @@ public class MoveCommand extends Command {
 
 	@Override
 	public ExecutionResult execute(GameModel game) {
-		switch(move) {
+		switch(move) {	//Avoid the ship going up and down
 			case UP:
 			case DOWN:
 				return new ExecutionResult(Messages.MOVEMENT_ERROR);
 		}
 
 
-		boolean success = game.move(move);
-		game.update();
+		boolean success = game.move(move); 	//If the ship has successfully moved, return true, false otherwise
+		game.update();	//Updates the game
 
-		return new ExecutionResult(success, true, Messages.MOVEMENT_ERROR);
+		return new ExecutionResult(success, true, Messages.MOVEMENT_ERROR); 	//Draws the board if true, returns an error otherwise
 	}
 
 	@Override
 	public Command parse(String[] commandWords) {
-		if(commandWords.length != 2) return null;
-		if(!matchCommandName(commandWords[0])) return null;
+		if(commandWords.length != 2) return null;	//If the command is a string with more than two words, return null
+		if(!matchCommandName(commandWords[0])) return null;		//If the input is wrong, returns null.
 
-		Move move = Move.valueOf(commandWords[1].toUpperCase());
+		Move move = Move.valueOf(commandWords[1].toUpperCase());	//Moves to the desired direction.
 	    return new MoveCommand(move);
 	}
 
