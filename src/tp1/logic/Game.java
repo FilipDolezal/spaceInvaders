@@ -58,8 +58,8 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	public String stateToString() {
 		return
 				"Life: " 		+ this.player.getLife() + System.lineSeparator() +
-				"ShockWave: "	+ ((this.player.getShockwave() == null) ? "NO" : "YES") + System.lineSeparator() +
-				"Score: "		+ this.score + System.lineSeparator();
+				"Points: "		+ this.score + System.lineSeparator() +
+				"ShockWave: "	+ ((this.player.getShockwave() == null) ? "OFF" : "ON") + System.lineSeparator();
 				//...
 	}
 	@Override

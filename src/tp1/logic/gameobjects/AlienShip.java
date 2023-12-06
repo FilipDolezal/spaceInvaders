@@ -1,6 +1,7 @@
 package tp1.logic.gameobjects;
 
 import tp1.logic.*;
+import tp1.util.MyStringUtils;
 
 public abstract class AlienShip extends EnemyShip {
     protected AlienManager alienManager;
@@ -36,7 +37,10 @@ public abstract class AlienShip extends EnemyShip {
 
     @Override
     public String toString() {
-        return " " + this.getSymbol() + "[0" + this.getLife() + "]";
+        return MyStringUtils.center(
+                String.format("%s[%02d]", this.getSymbol(), this.getLife()),
+                7
+        );
     }
 
     protected abstract AlienShip copy(GameWorld game, Position pos, AlienManager am);

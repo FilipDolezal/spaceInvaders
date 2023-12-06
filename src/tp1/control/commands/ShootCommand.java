@@ -31,7 +31,7 @@ public class ShootCommand extends NoParamsCommand{
     @Override
     public ExecutionResult execute(GameModel game) {
         boolean success = game.shootLaser();
-        game.update();
+        if(success) game.update();
 
         return new ExecutionResult(success, true, Messages.LASER_ERROR);
     }

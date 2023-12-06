@@ -20,7 +20,7 @@ public abstract class Ship extends GameObject {
         this.life -= weapon.getDamage();
 
         // delete ship if health is 0
-        if(this.life == 0) this.onDelete();
+        if(this.life <= 0) this.onDelete();
 
         // delete weapon on collision
         weapon.collision();

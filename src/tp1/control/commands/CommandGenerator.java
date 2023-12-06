@@ -9,13 +9,13 @@ public class CommandGenerator {
 
 	private static final List<Command> availableCommands = Arrays.asList(
 		new HelpCommand(),
-		new ExitCommand(),
-		new ShootCommand(),
-		new NoneCommand(),
 		new MoveCommand(),
-		new ResetCommand(),
-		new ListCommand(),
+		new NoneCommand(),
+		new ShootCommand(),
 		new ShockwaveCommand(),
+		new ListCommand(),
+		new ExitCommand(),
+		new ResetCommand(),
 		new ShootSuperLaserCommand()
 	);
 
@@ -32,10 +32,10 @@ public class CommandGenerator {
 	public static String commandHelp() {
 		StringBuilder commands = new StringBuilder();	
 		for (Command c: availableCommands) {
-			commands
-					.append("\t").append(c.getName()).append(":\t")
-					.append(c.getHelp()).append(System.lineSeparator())
-					.append("\t\t\t").append(c.getDetails()).append(System.lineSeparator());
+			commands.append(c.getDetails())
+					.append(" : ")
+					.append(c.getHelp())
+					.append(System.lineSeparator());
 		}
 		return commands.toString();
 	}

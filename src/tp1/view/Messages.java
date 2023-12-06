@@ -38,7 +38,7 @@ public class Messages {
 
 	public static final String LINE_SEPARATOR = System.lineSeparator();
 
-	public static final String HELP_AVAILABLE_COMMANDS = "Available commands:";
+	public static final String HELP_AVAILABLE_COMMANDS = "Available commands: ";
 
 	public static final String HELP_DETAILS_COMMAND_HELP_SEPARATOR = ": ";
 
@@ -150,7 +150,7 @@ public class Messages {
 
 	public static final String COMMAND_SHOCKWAVE_NAME = "shockwave";
 	public static final String COMMAND_SHOCKWAVE_SHORTCUT = "w";
-	public static final String COMMAND_SHOCKWAVE_DETAILS = "sock[w]ave";
+	public static final String COMMAND_SHOCKWAVE_DETAILS = "shock[w]ave";
 	public static final String COMMAND_SHOCKWAVE_HELP = "player shoots a shockwave";
 
 	public static final String COMMAND_SHOOT_NAME = "shoot";
@@ -160,7 +160,7 @@ public class Messages {
 
 	public static final String COMMAND_NONE_NAME = "none";
 	public static final String COMMAND_NONE_SHORTCUT = "n";
-	public static final String COMMAND_NONE_DETAILS = "[n]one";
+	public static final String COMMAND_NONE_DETAILS = "[n]one | \"\"";
 	public static final String COMMAND_NONE_HELP = "user does not perform any action";
 
 	public static final String

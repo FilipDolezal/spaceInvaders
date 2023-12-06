@@ -32,8 +32,12 @@ public class UCMShip extends Ship{
         return true;
     }
 
+    private boolean isAttacking() {
+        return laser != null || superLaser != null;
+    }
+
     public boolean shootLaser() {
-        if(laser != null) return false;
+        if(isAttacking()) return false;
 
         UCMLaser laser = new UCMLaser(this.game, this);
         this.laser = laser;
@@ -45,7 +49,7 @@ public class UCMShip extends Ship{
     }
 
     public boolean shootSuperLaser() {
-        if(superLaser != null) return false;
+        if(isAttacking()) return false;
         if(!game.canShootSuperLaser()) return false;
 
         SuperLaser laser = new SuperLaser(this.game, this);
