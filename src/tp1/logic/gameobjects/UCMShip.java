@@ -54,7 +54,7 @@ public class UCMShip extends Ship{
         return true;
     }
     public void disableSuperLaser() {
-        this.laser = null;
+        this.superLaser = null;
     }
 
     public void deleteShockwave() {

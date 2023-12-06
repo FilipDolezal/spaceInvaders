@@ -36,7 +36,7 @@ public abstract class AlienShip extends EnemyShip {
 
     @Override
     public String toString() {
-        return this.getSymbol() + "[" + this.getLife() + "]";
+        return " " + this.getSymbol() + "[0" + this.getLife() + "]";
     }
 
     protected abstract AlienShip copy(GameWorld game, Position pos, AlienManager am);

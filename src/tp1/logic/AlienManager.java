@@ -172,6 +172,7 @@ public class AlienManager  {
 				Integer.valueOf(w[2])
 			);
 			container.add(ShipFactory.spawnAlienShip(w[0],this.game,pos,this));
+			remainingAliens++;
 		}
 	}
 }

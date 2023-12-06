@@ -10,11 +10,11 @@ import java.util.Random;
 public class Game implements GameStatus, GameModel, GameWorld {
 	public static final int DIM_X = 9;
 	public static final int DIM_Y = 8;
-	
+
 	private GameObjectContainer container;
 	private UCMShip player;
 	private AlienManager alienManager;
-	private Random random;
+	private final Random random;
 	private int currentCycle, score;
 
 	public Level getLevel() {
@@ -28,7 +28,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 		this.random = new Random(seed);
 		initGame();
 	}
-		
+
 	private void initGame () {
 		this.container = alienManager.initialize(null);
 		this.player = new UCMShip(this, new Position(DIM_X / 2, DIM_Y - 1));
@@ -117,7 +117,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 		this.container.postActions();
 		this.alienManager.initializeUFO(this.container);
 	}
-	
+
 	// ################## GameWorld functions
 	/**
 	 * for checking if the position is out of the X-axis bound
@@ -208,7 +208,4 @@ public class Game implements GameStatus, GameModel, GameWorld {
 		return random.nextDouble() < level.shootFrequency;
 	}
 
-	public void explodeAt(Position pos) {
-
-	}
 }

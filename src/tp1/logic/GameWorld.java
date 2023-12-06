@@ -16,5 +16,5 @@ public interface GameWorld {
     boolean canShootSuperLaser();
     void decreaseAlienCount();
     boolean tryFiringChance();
-    void explodeAt(Position pos);
+
 }

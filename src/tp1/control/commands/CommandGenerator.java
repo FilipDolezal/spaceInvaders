@@ -2,6 +2,7 @@ package tp1.control.commands;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class CommandGenerator {
@@ -13,6 +14,7 @@ public class CommandGenerator {
 		new NoneCommand(),
 		new MoveCommand(),
 		new ResetCommand(),
+		new ListCommand(),
 		new ShockwaveCommand(),
 		new ShootSuperLaserCommand()
 	);
@@ -21,6 +23,8 @@ public class CommandGenerator {
 		Optional match = availableCommands.stream()
 				.filter(c -> c.matchCommandName(commandWords[0]))
 				.findFirst();
+		if (Objects.equals(commandWords[0], ""))
+			return new NoneCommand();
 
 		return match.isEmpty() ? null : ((Command) match.get()).parse(commandWords);
 	}
