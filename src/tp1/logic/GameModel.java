@@ -2,6 +2,9 @@ package tp1.logic;
 
 import tp1.control.InitialConfiguration;
 
+/**
+ * Methods for the Controller.
+ */
 public interface GameModel {
     public boolean move(Move move);
     public boolean shootLaser();

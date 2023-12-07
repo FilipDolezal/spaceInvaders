@@ -4,6 +4,9 @@ import tp1.logic.GameWorld;
 import tp1.logic.Move;
 import tp1.logic.Position;
 
+/**
+ * Abstract Class that every other object in game inherits.
+ */
 public abstract class GameObject implements GameItem {
 
 	public Position getPos() {
@@ -11,11 +14,16 @@ public abstract class GameObject implements GameItem {
 	}
 
 	protected Position pos;
-
 	protected int life;
 	protected GameWorld game;
 	protected Move dir;
-	
+
+	/**
+	 * Constructor of the Game Object.
+	 * @param game Interface containing all the methods related to the functionality of the objects.
+	 * @param pos Position.
+	 * @param life Life of the object.
+	 */
 	public GameObject(GameWorld game, Position pos, int life) {
 		this.pos = pos;
 		this.game = game;
@@ -25,7 +33,10 @@ public abstract class GameObject implements GameItem {
 	public GameObject(){
 
 	}
-	
+
+	/**
+	 * @return true if the object is alive, false otherwise.
+	 */
 	@Override
 	public boolean isAlive() {
 		return this.life > 0;
@@ -33,6 +44,11 @@ public abstract class GameObject implements GameItem {
 	public int getLife() {
 		return this.life;
 	}
+
+	/**
+	 * Moves the object in the desired direction.
+	 * @param dir in which the movement is performed.
+	 */
 	protected void performMovement(Move dir)
 	{
 		this.pos = this.pos.move(dir);
@@ -43,9 +59,16 @@ public abstract class GameObject implements GameItem {
 	protected abstract int getDamage();
 	protected abstract int getArmour();
 
+	/**
+	 * Removes the object.
+	 */
 	public void onDelete() {
 		this.game.removeObject(this);
 	}
+
+	/**
+	 * Performs the automatic move of the object.
+	 */
 	public void automaticMove() {
 		this.performMovement(this.dir);
 	}
@@ -82,6 +105,10 @@ public abstract class GameObject implements GameItem {
 		return this.getSymbol();
 	}
 
+	/**
+	 * @param Position of another object.
+	 * @return true if the object is in the same position as the parameter position.
+	 */
 	@Override
 	public boolean isOnPosition(Position pos) {
 		return this.pos.equals(pos);

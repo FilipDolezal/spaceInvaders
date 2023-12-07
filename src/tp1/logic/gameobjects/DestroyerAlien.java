@@ -46,7 +46,7 @@ public class DestroyerAlien extends AlienShip
     }
 
     /**
-     * ComputerAction checks if the bomb is
+     * ComputerAction checks if the bomb can be created
      */
     @Override
     public void computerAction() {

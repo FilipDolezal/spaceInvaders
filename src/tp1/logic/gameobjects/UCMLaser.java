@@ -10,6 +10,11 @@ import tp1.view.Messages;
  *
  */
 public class UCMLaser extends UCMWeapon {
+	/**
+	 * Constructor of the UCMLaser.
+	 * @param game Interface with all the functionality of the objects.
+	 * @param ship The UCMLaser is related to the UCMShip.
+	 */
 	public UCMLaser(GameWorld game, UCMShip ship) {
 		super(game, ship.getPos(), 1);
 		this.ship = ship;
@@ -30,6 +35,10 @@ public class UCMLaser extends UCMWeapon {
 	protected int getArmour() {
 		return 0;
 	}
+
+	/**
+	 * Deletes the UCMLaser when called.
+	 */
 
 	@Override
 	public void onDelete() {

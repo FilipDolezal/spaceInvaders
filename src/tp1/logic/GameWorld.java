@@ -4,6 +4,9 @@ import tp1.logic.gameobjects.EnemyWeapon;
 import tp1.logic.gameobjects.GameObject;
 import tp1.logic.gameobjects.UCMWeapon;
 
+/**
+ * Methods used for the behavior of the GameObjects.
+ */
 public interface GameWorld {
     boolean inBoundsX(Position pos);
     boolean inBoundsY(Position pos);

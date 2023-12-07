@@ -10,6 +10,12 @@ import tp1.view.Messages;
  * Contains the attributes and the movement of the UFO.
  */
 public class Ufo extends EnemyShip {
+	/**
+	 * Contructor of the UFO.
+	 * @param game Interface with all the functionality of the objects.
+	 * @param pos Position of the UFO.
+	 * @param life Life of the UFO.
+	 */
 	public Ufo(GameWorld game, Position pos, int life) {
 		super(game, pos, life);
 		this.dir = Move.LEFT;
@@ -33,17 +39,17 @@ public class Ufo extends EnemyShip {
 
 	@Override
 	public void onDelete() {
-		super.onDelete();
-		this.game.obtainShockwave();
-		this.game.increaseScore(this.score);
+		super.onDelete();	//UFO is deleted when called.
+		this.game.obtainShockwave(); //Gives the shockwave to the player if he has hit the UFO.
+		this.game.increaseScore(this.score); //Increases the score.
 	}
 
 	@Override
 	public void automaticMove() {
-		super.automaticMove();
-		if(!this.game.inBoundsX(this.pos)){
+		super.automaticMove();	//Moves the ship automatically.
+		if(!this.game.inBoundsX(this.pos)){	//If the ship is out of the bounds of the board, just deletes the UFO
+			//without giving the Shockwave to the Player.
 			super.onDelete();
-
 			this.life = 0;
 		}
 

@@ -21,8 +21,13 @@ public class AlienManager  {
 			alienShipDirection 	= Move.LEFT;	// current alien direction
 
 	public int getRemainingAliens() {
-		return remainingAliens;
+		return remainingAliens;		//Return the number of aliens that are alive in the actual game.
 	}
+
+	/**
+	 * Subtracts 1 to the number of remaining aliens when the player has killed one. <br>
+	 * Also checks if the number of aliens is 0 in order to finish the game.
+	 */
 	public void decreaseAlienCount() {
 		if(--this.remainingAliens == 0)
 			playerWin = true;
@@ -31,25 +36,35 @@ public class AlienManager  {
 	public boolean playerWin() { return playerWin; }
 	public void setAliensWin() { this.aliensWin = true; }
 
+	/**
+	 * Constructor of the Alien Manager
+	 * @param Game
+	 */
 	public AlienManager(Game game) {
 		this.level = game.getLevel();
 		this.game = game;
 	}
 
+	/**
+	 * Initializes the Container with the desired aliens given by a determined configuration
+	 * given by the player as an input.
+	 * @param config input from the player.
+	 * @return the container with the distribution of aliens.
+	 */
 	public GameObjectContainer initialize(InitialConfiguration config) {
 		this.remainingAliens = 0;
-		GameObjectContainer container = new GameObjectContainer();
+		GameObjectContainer container = new GameObjectContainer();	//Creates a new container of Objects.
 		
-		initializeUFO(container);
-
+		initializeUFO(container);	//Checks if the Ufo must be generated.
+		//If the InitialConfiguration is null, then initialize as a normal game.
 		if(config == null) {
 			initializeRegularAliens(container);
 			initializeDestroyerAliens(container);
-		} else {
+		} else {	//If the configuration is a valid one, initialize the container with that configuration of aliens.
 			initializeFromConfig(container, config);
 		}
 
-		return container;
+		return container;	//Return the container with the aliens.
 	}
 
 	/**
@@ -81,7 +96,7 @@ public class AlienManager  {
 
 	/**
 	 * Determine if AlienShips move this cycle
-	 * @return true if aliens should move
+	 * @return true if aliens should move, false otherwise
 	 */
 	private boolean doAliensMove() {
 		return this.lastCycle % level.numCyclesToMoveOneCell == 0;
@@ -91,7 +106,7 @@ public class AlienManager  {
 	 * Will calculate the right Movement while any of the AlienShips is on the border
 	 */
 	private void calculateDescend() {
-		if(!doAliensMove()) {
+		if(!doAliensMove()) {		//If aliens shouldn't move, set move to none.
 			alienShipMove = Move.NONE;
 			return;
 		};
@@ -119,12 +134,18 @@ public class AlienManager  {
 	 */
 	public Move getAlienShipMove() {return this.alienShipMove;}
 
+	/**
+	 * Randomly creates the Ufo and adds it to the container of objects.
+	 * @param container
+	 */
 	public void initializeUFO(GameObjectContainer container) {
-		if (actualUFO == null && this.game.tryUfoSpawnChange()) {
+		if (actualUFO == null && this.game.tryUfoSpawnChange()) {	//If the actualUfo is null and the random condition is true
             Ufo newUfo = new Ufo(game, new Position(Game.DIM_X - 1, 0), 1);
 			container.add(newUfo);
 			actualUFO = newUfo;
+			//Creates a new Ufo, and it is added to the container.
         }
+		//If the actualUfo is not null, but it is not in the board, or it is dead, then make it null and remove it.
 		else if (actualUFO != null && !actualUFO.isAlive()){
 			container.remove(actualUFO);
 			actualUFO = null;
@@ -132,6 +153,10 @@ public class AlienManager  {
 
 	}
 
+	/**
+	 * Initializes the Regular Aliens in the board.
+	 * @param container
+	 */
 	private void initializeRegularAliens(GameObjectContainer container) {
 		for (int row = 0, index = 0; row < level.numRowsRegularAliens; row++) {
 			for (int col = 0; col < level.getNumAliensPerRow(); col++, index++) {
@@ -147,7 +172,11 @@ public class AlienManager  {
 			}
 		}
 	}
-	
+
+	/**
+	 * Initializes the Destroyer Aliens in the board.
+	 * @param container
+	 */
 	private void initializeDestroyerAliens(GameObjectContainer container) {
 		for(int i = 0; i < level.numDestroyerAliens; i++) {
 
@@ -164,14 +193,20 @@ public class AlienManager  {
 		}
 	}
 
+	/**
+	 * Initializes the game with the desired configuration.
+	 * @param container
+	 * @param config
+	 */
 	private void initializeFromConfig(GameObjectContainer container, InitialConfiguration config) {
-		for(String line: config.getShipDescription()) {
+		for(String line: config.getShipDescription()) {	//Gets the type of ship
 			String[] w = line.split("\\s+");
-			Position pos = new Position(
+			Position pos = new Position(		//Gets the position of the ship
 				Integer.valueOf(w[1]),
 				Integer.valueOf(w[2])
 			);
-			container.add(ShipFactory.spawnAlienShip(w[0],this.game,pos,this));
+			container.add(ShipFactory.spawnAlienShip(w[0],this.game,pos,this));	//Adds the desired ship in the
+			//desired position
 			remainingAliens++;
 		}
 	}

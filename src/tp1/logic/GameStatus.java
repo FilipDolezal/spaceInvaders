@@ -1,5 +1,8 @@
 package tp1.logic;
 
+/**
+ * Methods used for the GamePrinter.
+ */
 public interface GameStatus {
 
 	public String positionToString(int x, int y);

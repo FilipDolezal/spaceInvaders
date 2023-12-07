@@ -16,15 +16,15 @@ public class Explosion extends UCMWeapon {
         super.dir = Move.NONE;
 
         positions = new Position[]{
-                pos.move(Move.UP),
+                pos.move(Move.UP),                      //Checks up, up-left, up-right
                 pos.move(Move.UP).move(Move.LEFT),
                 pos.move(Move.UP).move(Move.RIGHT),
 
-                pos,
+                pos,                                    //Checks left, right
                 pos.move(Move.LEFT),
                 pos.move(Move.RIGHT),
 
-                pos.move(Move.DOWN),
+                pos.move(Move.DOWN),                    //Checks down, down-left, down-right
                 pos.move(Move.DOWN).move(Move.LEFT),
                 pos.move(Move.DOWN).move(Move.RIGHT)
         };
@@ -32,8 +32,8 @@ public class Explosion extends UCMWeapon {
 
     @Override
     public boolean performAttack(GameItem other) {
-        for (Position position: positions) {
-            if(other.isOnPosition(position))
+        for (Position position: positions) {          //Performs attacks in all adjacent positions
+            if(other.isOnPosition(position))          //if there is an object in that position
                 other.receiveAttack(this);
         }
 
