@@ -48,7 +48,7 @@ public class MoveCommand extends Command {
 
 
 		boolean success = game.move(move); 	//If the ship has successfully moved, return true, false otherwise
-		game.update();	//Updates the game
+		if(success) game.update();	//Updates the game
 
 		return new ExecutionResult(success, true, Messages.MOVEMENT_ERROR); 	//Draws the board if true, returns an error otherwise
 	}

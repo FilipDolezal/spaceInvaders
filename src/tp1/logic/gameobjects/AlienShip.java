@@ -42,13 +42,5 @@ public abstract class AlienShip extends EnemyShip {
         this.game.increaseScore(this.score);
     }
 
-    @Override
-    public String toString() {
-        return MyStringUtils.center(        //returns the Symbol+life of the alienship
-                String.format("%s[%02d]", this.getSymbol(), this.getLife()),
-                7
-        );
-    }
-
     protected abstract AlienShip copy(GameWorld game, Position pos, AlienManager am);
 }

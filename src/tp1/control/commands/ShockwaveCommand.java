@@ -28,7 +28,7 @@ public class ShockwaveCommand extends NoParamsCommand {
     @Override
     public ExecutionResult execute(GameModel game) {
         boolean result = game.executeShockwave();   //Checks if the shockwave was successfully performed.
-        game.update();  //Update the game.
+        if(result) game.update();  //Update the game.
         return new ExecutionResult(result, result, Messages.SHOCKWAVE_ERROR);   //If true print the board again, else display an error.
     }
 

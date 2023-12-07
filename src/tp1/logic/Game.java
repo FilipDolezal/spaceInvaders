@@ -14,17 +14,19 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	private GameObjectContainer container;
 	private UCMShip player;
 	private AlienManager alienManager;
-	private final Random random;
+	private Random random;
 	private int currentCycle, score;
 
 	public Level getLevel() {
 		return level;
 	}
 	private final Level level;
+	private final long seed;
 
 	public Game (Level level, long seed){
 		this.level = level;
 		this.alienManager = new AlienManager(this);
+		this.seed = seed;
 		this.random = new Random(seed);
 		initGame();
 	}
@@ -94,6 +96,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	}
 	@Override
 	public void reset(InitialConfiguration config) {
+		this.random = new Random(seed);
 		this.container = alienManager.initialize(config);
 		this.player = new UCMShip(this, new Position(DIM_X / 2, DIM_Y - 1));
 		this.container.add(player);
