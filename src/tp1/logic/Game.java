@@ -13,16 +13,17 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	//Dimensions of the board.
 	public static final int DIM_Y = 8;
 
-	private GameObjectContainer container;	//Object container
-	private UCMShip player;	//UCMShip of the player.
-	private AlienManager alienManager;	//Alien Manager containing all the aliens.
-	private final Random random;	//Random behavior for bombs and for generating the UFO.
-	private int currentCycle, score;	//Cycle and score.
+	private GameObjectContainer container;
+	private UCMShip player;
+	private AlienManager alienManager;
+	private Random random;
+	private int currentCycle, score;
 
 	public Level getLevel() {
 		return level;
 	}
-	private final Level level;	//Level chosen by the player.
+	private final Level level;
+	private final long seed;
 
 	/**
 	 * Constructor of the game.
@@ -30,6 +31,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	public Game (Level level, long seed){
 		this.level = level;
 		this.alienManager = new AlienManager(this);
+		this.seed = seed;
 		this.random = new Random(seed);
 		initGame();
 	}
@@ -141,11 +143,12 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	 */
 	@Override
 	public void reset(InitialConfiguration config) {
-		this.container = alienManager.initialize(config);	//Applies the configuration.
-		this.player = new UCMShip(this, new Position(DIM_X / 2, DIM_Y - 1)); //spawns the UCMShip
-		this.container.add(player);	//Adds the ship to the container
-		this.score = 0;	//Resets the score
-		this.currentCycle = 0;	//Resets the cycles.
+		this.random = new Random(seed);
+		this.container = alienManager.initialize(config);
+		this.player = new UCMShip(this, new Position(DIM_X / 2, DIM_Y - 1));
+		this.container.add(player);
+		this.score = 0;
+		this.currentCycle = 0;
 	}
 
 	/**

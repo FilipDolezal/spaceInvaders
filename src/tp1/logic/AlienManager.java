@@ -53,6 +53,7 @@ public class AlienManager  {
 	 */
 	public GameObjectContainer initialize(InitialConfiguration config) {
 		this.remainingAliens = 0;
+		this.actualUFO = null;
 		GameObjectContainer container = new GameObjectContainer();	//Creates a new container of Objects.
 		
 		initializeUFO(container);	//Checks if the Ufo must be generated.
@@ -140,7 +141,7 @@ public class AlienManager  {
 	 */
 	public void initializeUFO(GameObjectContainer container) {
 		if (actualUFO == null && this.game.tryUfoSpawnChange()) {	//If the actualUfo is null and the random condition is true
-            Ufo newUfo = new Ufo(game, new Position(Game.DIM_X - 1, 0), 1);
+            Ufo newUfo = new Ufo(game, new Position(8, 0), 1);
 			container.add(newUfo);
 			actualUFO = newUfo;
 			//Creates a new Ufo, and it is added to the container.
