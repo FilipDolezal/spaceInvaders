@@ -2,26 +2,31 @@ package tp1.logic;
 
 import tp1.control.InitialConfiguration;
 import tp1.logic.gameobjects.*;
-import tp1.util.MyStringUtils;
-import tp1.view.Messages;
 import java.util.Random;
 
-
+/**
+ * Game Class is the glue of the program. Contains the container and performs all the
+ * methods over the objects.
+ */
 public class Game implements GameStatus, GameModel, GameWorld {
 	public static final int DIM_X = 9;
+	//Dimensions of the board.
 	public static final int DIM_Y = 8;
 
-	private GameObjectContainer container;
-	private UCMShip player;
-	private AlienManager alienManager;
-	private final Random random;
-	private int currentCycle, score;
+	private GameObjectContainer container;	//Object container
+	private UCMShip player;	//UCMShip of the player.
+	private AlienManager alienManager;	//Alien Manager containing all the aliens.
+	private final Random random;	//Random behavior for bombs and for generating the UFO.
+	private int currentCycle, score;	//Cycle and score.
 
 	public Level getLevel() {
 		return level;
 	}
-	private final Level level;
+	private final Level level;	//Level chosen by the player.
 
+	/**
+	 * Constructor of the game.
+	 */
 	public Game (Level level, long seed){
 		this.level = level;
 		this.alienManager = new AlienManager(this);
@@ -29,6 +34,10 @@ public class Game implements GameStatus, GameModel, GameWorld {
 		initGame();
 	}
 
+	/**
+	 * Initializes the game creating a new container, a new player (UCMShip)
+	 * adds the player to the container, and the score is initialized to 0.
+	 */
 	private void initGame () {
 		this.container = alienManager.initialize(null);
 		this.player = new UCMShip(this, new Position(DIM_X / 2, DIM_Y - 1));
@@ -36,6 +45,10 @@ public class Game implements GameStatus, GameModel, GameWorld {
 		this.score = 0;
 	}
 
+	/**
+	 * Checks if the random should generate an Ufo or not.
+	 * @return true if it should randomly create the Ufo, false otherwise.
+	 */
 	public boolean tryUfoSpawnChange() {
 		return random.nextDouble() < level.ufoFrequency;
 	}
@@ -54,6 +67,11 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	public String infoToString() {
 		return null;
 	}
+
+	/**
+	 * Displays the status of the game.
+	 * @return the life, the points and if the shockwave is available or not.
+	 */
 	@Override
 	public String stateToString() {
 		return
@@ -62,10 +80,18 @@ public class Game implements GameStatus, GameModel, GameWorld {
 				"ShockWave: "	+ ((this.player.getShockwave() == null) ? "OFF" : "ON") + System.lineSeparator();
 				//...
 	}
+
+	/**
+	 * @return true if the remaining aliens is 0, false otherwise.
+	 */
 	@Override
 	public boolean playerWin() {
 		return this.alienManager.playerWin();
 	}
+
+	/**
+	 * @return true if the aliens have reached the last row or the player is not alive.
+	 */
 	@Override
 	public boolean aliensWin() {
 		return this.alienManager.aliensWin() || !this.player.isAlive();
@@ -80,42 +106,82 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	}
 
 	// ################## GameModel functions
+
+	/**
+	 * Performs the movement of the ship with the input given by the user.
+	 * @param move a valid direction.
+	 * @return true if it can be perfomed, false otherwise.
+	 */
 	@Override
 	public boolean move(Move move) {
 		return this.player.move(move);
 	}
+
+	/**
+	 * Shoots the laser if it can be shot.
+	 * @return true if it can be shot, false otherwise.
+	 */
 	@Override
 	public boolean shootLaser() {
 		return this.player.shootLaser();
 	}
+	/**
+	 * Shoots the SuperLaser if it can be shot.
+	 * @return true if it can be shot, false otherwise.
+	 */
 	@Override
 	public boolean shootSuperLaser() {
 		return this.player.shootSuperLaser();
 	}
+
+	/**
+	 * Resets the game applying the desired configuration. If it is null, then the game is
+	 * just reset as always. If there's a configuration it is applied when resetting.
+	 * @param config configuration given by the player.
+	 */
 	@Override
 	public void reset(InitialConfiguration config) {
-		this.container = alienManager.initialize(config);
-		this.player = new UCMShip(this, new Position(DIM_X / 2, DIM_Y - 1));
-		this.container.add(player);
-		this.score = 0;
-		this.currentCycle = 0;
+		this.container = alienManager.initialize(config);	//Applies the configuration.
+		this.player = new UCMShip(this, new Position(DIM_X / 2, DIM_Y - 1)); //spawns the UCMShip
+		this.container.add(player);	//Adds the ship to the container
+		this.score = 0;	//Resets the score
+		this.currentCycle = 0;	//Resets the cycles.
 	}
 
+	/**
+	 * Performs the shockwave.
+	 * @return true if it was successfully performed, false otherwise.
+	 */
 	public boolean executeShockwave(){
 		return this.container.performShockwave(this.player.getShockwave());
 	}
+
+	/**
+	 * Checks if the game is finished.
+	 * @return true if aliens or player have won, false otherwise.
+	 */
 	public boolean isFinished() {
 		return this.aliensWin() || this.playerWin();
 	}
+
+	/**
+	 * Exits the game when called by the ExitCommand.
+	 */
 	public void exit() {
 		System.exit(0);
 	}
+
+	/**
+	 * Updates the cycle, calls computerActions from the container
+	 * calls the automaticMove to move all the objects, clears the container of
+	 * deleted objects and checks if the Ufo must be generated in this cycle or not.
+	 */
 	public void update() {
-		this.currentCycle++;
-		this.container.computerActions();
-		this.container.automaticMoves();
-		this.container.postActions();
-		this.alienManager.initializeUFO(this.container);
+		this.currentCycle++; //Increase cycle.
+		this.container.computerActions();	//Check every object actions.
+		this.container.automaticMoves();	//Move all the object that should move.
+		this.container.postActions();		//Clear the deleted list container.
+		this.alienManager.initializeUFO(this.container);	//Check if the Ufo must be generated.
 	}
 
 	// ################## GameWorld functions
@@ -193,11 +259,11 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	 * @return true if SuperLaser can be shot
 	 */
 	public boolean canShootSuperLaser() {
-		if(this.score > SuperLaser.COST) {
+		if(this.score > SuperLaser.COST) {	//If player has more score that the cost of the SuperLaser.
 			this.score -= SuperLaser.COST;
-			return true;
+			return true;	//Returns true.
 		}
-		return false;
+		return false; //False otherwise.
 	}
 
 	/**
