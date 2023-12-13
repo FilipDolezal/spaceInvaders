@@ -1,5 +1,8 @@
 package tp1.control.commands;
 
+import tp1.control.exceptions.CommandParseException;
+import tp1.view.Messages;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -20,14 +23,14 @@ public class CommandGenerator {
 
 	);
 
-	public static Command parse(String[] commandWords) {
+	public static Command parse(String[] commandWords) throws CommandParseException {
 		Optional match = availableCommands.stream()
 				.filter(c -> c.matchCommandName(commandWords[0]))  //Checks if the first word is a valid command
 				.findFirst();
 		if (Objects.equals(commandWords[0], ""))	//Checks if the user has inserted an empty string as command
 			return new NoneCommand();	//Returning a NoneCommand()
-
-		return match.isEmpty() ? null : ((Command) match.get()).parse(commandWords);
+        if(match.isEmpty()) throw new CommandParseException(Messages.UNKNOWN_COMMAND);  //Catches Exception if the Command is not valid
+		return ((Command) match.get()).parse(commandWords);
 		//If the command is inside the availableCommands list, returns that command, null otherwise.
 	}
 		

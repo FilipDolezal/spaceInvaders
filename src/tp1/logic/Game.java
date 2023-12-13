@@ -112,7 +112,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	/**
 	 * Performs the movement of the ship with the input given by the user.
 	 * @param move a valid direction.
-	 * @return true if it can be perfomed, false otherwise.
+	 * @return true if it can be performed, false otherwise.
 	 */
 	@Override
 	public boolean move(Move move) {

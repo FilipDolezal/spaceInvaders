@@ -1,6 +1,9 @@
 package tp1.control.commands;
 
 import tp1.control.ExecutionResult;
+import tp1.control.exceptions.CommandExecuteException;
+import tp1.control.exceptions.CommandParseException;
+import tp1.control.exceptions.NotAllowedMoveException;
 import tp1.logic.Game;
 import tp1.logic.GameModel;
 
@@ -22,16 +25,13 @@ public abstract class Command {
 		 * 
 		 * @return {@code ExecutionResult} representing if command was successful and if board must be printed
 		 */
-	  public abstract ExecutionResult execute(GameModel game);
+	  public abstract ExecutionResult execute(GameModel game) throws CommandExecuteException;
 	  
-	  public abstract Command parse(String[] commandWords);
+	  public abstract Command parse(String[] commandWords) throws CommandParseException, NotAllowedMoveException;
 	  
 	  protected boolean matchCommandName(String name) {
 		    return getShortcut().equalsIgnoreCase(name) || 
 		        getName().equalsIgnoreCase(name);
 	  }
-	  
-	  public String helpText(){
-	    return getDetails() + " : " + getHelp() + "\n";
-	  }
+
 }

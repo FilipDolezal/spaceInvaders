@@ -25,7 +25,7 @@ public class SuperLaser extends UCMWeapon {
 
     @Override
     protected String getSymbol() {
-        return Messages.SUPER_LASER_SYMBOL;
+        return Messages.SUPERLASER_SYMBOL;
     }
 
     @Override

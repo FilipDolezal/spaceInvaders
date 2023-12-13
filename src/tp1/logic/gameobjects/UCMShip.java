@@ -23,6 +23,11 @@ public class UCMShip extends Ship{
         this.armor = 0;
     }
 
+    public static String allowedMoves(String s) {
+
+      return "";
+    }
+
     /**
      * Performs the movement of the ship with the direction provided by the user.
      * @param move given by the input of the user.

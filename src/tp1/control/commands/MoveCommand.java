@@ -1,6 +1,8 @@
 package tp1.control.commands;
 
 import tp1.control.ExecutionResult;
+import tp1.control.exceptions.CommandParseException;
+import tp1.control.exceptions.NotAllowedMoveException;
 import tp1.logic.Game;
 import tp1.logic.GameModel;
 import tp1.logic.Move;
@@ -54,12 +56,17 @@ public class MoveCommand extends Command {
 	}
 
 	@Override
-	public Command parse(String[] commandWords) {
+	public Command parse(String[] commandWords) throws NotAllowedMoveException {
 		if(commandWords.length != 2) return null;	//If the command is a string with more than two words, return null
-		if(!matchCommandName(commandWords[0])) return null;		//If the input is wrong, returns null.
 
-		Move move = Move.valueOf(commandWords[1].toUpperCase());	//Moves to the desired direction.
-	    return new MoveCommand(move);
+		try{
+			Move move = Move.valueOf(commandWords[1].toUpperCase());	//Moves to the desired direction.
+			return new MoveCommand(move);
+		}
+		catch(IllegalArgumentException e){
+			throw new NotAllowedMoveException(Messages.MOVEMENT_ERROR);
+		}
+
 	}
 
 }
