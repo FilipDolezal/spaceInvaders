@@ -20,7 +20,9 @@ public class Explosion extends UCMWeapon {
                 pos.move(Move.UP).move(Move.LEFT),
                 pos.move(Move.UP).move(Move.RIGHT),
 
-                pos,                                    //Checks left, right
+                // pos,                                 // this line of code was the reason for the stackoverflow >:(
+
+                // Checks left, right
                 pos.move(Move.LEFT),
                 pos.move(Move.RIGHT),
 
