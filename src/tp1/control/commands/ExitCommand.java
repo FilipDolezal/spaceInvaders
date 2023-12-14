@@ -1,6 +1,7 @@
 package tp1.control.commands;
 
 import tp1.control.ExecutionResult;
+import tp1.control.exceptions.CommandExecuteException;
 import tp1.logic.Game;
 import tp1.logic.GameModel;
 import tp1.view.Messages;
@@ -8,9 +9,9 @@ import tp1.view.Messages;
 public class ExitCommand extends NoParamsCommand{
 		  		
 		@Override
-		public ExecutionResult execute(GameModel game) {
+		public boolean execute(GameModel game) throws CommandExecuteException {
 			game.exit();		//Calls exit() in order to end the game.
-			return new ExecutionResult(false);	//Not necessary to print the board because the game has finished.
+			return false;	//Not necessary to print the board because the game has finished.
 		}
 		//Get all the attributes of the command.
 		@Override

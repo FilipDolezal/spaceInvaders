@@ -1,12 +1,14 @@
 package tp1.control.commands;
 
+import org.junit.platform.commons.util.StringUtils;
 import tp1.control.ExecutionResult;
-import tp1.control.exceptions.CommandParseException;
-import tp1.control.exceptions.NotAllowedMoveException;
-import tp1.logic.Game;
+import tp1.control.exceptions.*;
 import tp1.logic.GameModel;
 import tp1.logic.Move;
+import tp1.logic.gameobjects.UCMShip;
 import tp1.view.Messages;
+
+import java.util.Arrays;
 
 public class MoveCommand extends Command {
 
@@ -41,32 +43,33 @@ public class MoveCommand extends Command {
 	}
 
 	@Override
-	public ExecutionResult execute(GameModel game) {
-		switch(move) {	//Avoid the ship going up and down
-			case UP:
-			case DOWN:
-				return new ExecutionResult(Messages.MOVEMENT_ERROR);
+	public boolean execute(GameModel game) throws CommandExecuteException {
+		try {
+			game.move(move);
+			game.update();
+			return true;
+		} catch (GameModelException e) {
+			throw new CommandExecuteException(Messages.MOVEMENT_ERROR, e);
 		}
-
-
-		boolean success = game.move(move); 	//If the ship has successfully moved, return true, false otherwise
-		if(success) game.update();	//Updates the game
-
-		return new ExecutionResult(success, true, Messages.MOVEMENT_ERROR); 	//Draws the board if true, returns an error otherwise
 	}
 
 	@Override
-	public Command parse(String[] commandWords) throws NotAllowedMoveException {
-		if(commandWords.length != 2) return null;	//If the command is a string with more than two words, return null
+	public Command parse(String[] commandWords) throws CommandParseException {
+		Move move = null;
+		String param = commandWords[1];
+
+		if(StringUtils.isBlank(param))
+			// throw error if a parameter is missing
+			throw new CommandParseException(Messages.COMMAND_PARAMETERS_MISSING);
 
 		try{
-			Move move = Move.valueOf(commandWords[1].toUpperCase());	//Moves to the desired direction.
-			return new MoveCommand(move);
-		}
-		catch(IllegalArgumentException e){
-			throw new NotAllowedMoveException(Messages.MOVEMENT_ERROR);
+			move = Move.valueOf(param.toUpperCase());
+		} catch(IllegalArgumentException e){
+			// throw error if parameter of move is not valid
+			throw new CommandParseException(Messages.DIRECTION_ERROR + param);
 		}
 
+		return new MoveCommand(move);
 	}
 
 }

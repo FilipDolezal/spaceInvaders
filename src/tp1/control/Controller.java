@@ -53,18 +53,7 @@ public class Controller {
 
 			try {
 				Command command = CommandGenerator.parse(parameters);
-
-				if (command != null) {
-					ExecutionResult result = command.execute(game);
-					if (result.success()) {
-						if (result.draw())
-							printGame();
-					} else
-						System.out.println(result.errorMessage());
-				} else {
-					System.out.println(Messages.UNKNOWN_COMMAND);
-				}
-
+				if(command.execute(game)) printGame();
 			} catch (CommandParseException | CommandExecuteException e) {
 				System.out.println(e.getMessage());
 				Throwable cause = e.getCause();
@@ -72,7 +61,7 @@ public class Controller {
 					System.out.println(cause.getMessage());
 			}
 
-			printEndMessage();
+			if(game.isFinished()) printEndMessage();
 		}
 	}
 	/**

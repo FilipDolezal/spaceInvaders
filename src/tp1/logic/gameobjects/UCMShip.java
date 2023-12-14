@@ -1,9 +1,17 @@
 package tp1.logic.gameobjects;
 
+import tp1.control.exceptions.LaserInFlightException;
+import tp1.control.exceptions.NotAllowedMoveException;
+import tp1.control.exceptions.NotEnoughPointsException;
+import tp1.control.exceptions.OffWorldException;
 import tp1.logic.GameWorld;
 import tp1.logic.Move;
 import tp1.logic.Position;
 import tp1.view.Messages;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Class of the UCMShip that contains all the attributes and methods.
@@ -13,6 +21,7 @@ public class UCMShip extends Ship{
     private UCMLaser laser;
     private SuperLaser superLaser;
     private Shockwave shockwave;
+    private static final Move[] possibleMoves = {Move.LLEFT, Move.LEFT, Move.NONE, Move.RIGHT, Move.RRIGHT};
 
     /**
      * Constructor for the UCMShip.
@@ -24,21 +33,22 @@ public class UCMShip extends Ship{
     }
 
     public static String allowedMoves(String s) {
-
-      return "";
+        List<String> possibleMovesStrings = Arrays.stream(possibleMoves).map(m -> m.toString()).toList();
+        return String.join(s, possibleMovesStrings);
     }
 
     /**
      * Performs the movement of the ship with the direction provided by the user.
      * @param move given by the input of the user.
-     * @return true if the UCMShip could perform the movement, false otherwise.
      */
-    public boolean move(Move move) {
+    public void move(Move move) throws OffWorldException, NotAllowedMoveException {
+        if(!Arrays.asList(UCMShip.possibleMoves).contains(move))
+            throw new NotAllowedMoveException();
+
         if(!this.game.inBoundsX(this.pos.move(move)))
-            return false;
+            throw new OffWorldException(move, this.pos);
 
         this.dir = move;
-        return true;
     }
 
     /**
@@ -53,13 +63,14 @@ public class UCMShip extends Ship{
      * Performs the shoot of the UCMLaser.
      * @return true if it was successfully shot, false otherwise.
      */
-    public boolean shootLaser() {
-        if(isAttacking()) return false; //If the SuperLaser is active, then the UCMLaser can't be shot.
+    public void shootLaser() throws LaserInFlightException {
+        if(isAttacking())
+            throw new LaserInFlightException(); //If the SuperLaser is active, then the UCMLaser can't be shot.
+
         //UCMLaser is created and added to the object container.
         UCMLaser laser = new UCMLaser(this.game, this);
         this.laser = laser;
         this.game.addObject(laser);
-        return true;
     }
 
     /**
@@ -73,14 +84,14 @@ public class UCMShip extends Ship{
      * Performs the shooting of the SuperLaser.
      * @return true if the SuperLaser was successfully shot, false otherwise.
      */
-    public boolean shootSuperLaser() {
-        if(isAttacking()) return false; //If the UCMLaser is active, then the SuperLaser can't be shot.
-        if(!game.canShootSuperLaser()) return false; //If the player has not enough points, the SuperLaser can't be shot.
+    public void shootSuperLaser() throws LaserInFlightException {
+        if(isAttacking())
+            throw new LaserInFlightException(); //If the UCMLaser is active, then the SuperLaser can't be shot.
+
         //Creates the SuperLaser and adds it to the Object Container.
         SuperLaser laser = new SuperLaser(this.game, this);
         this.superLaser = laser;
         this.game.addObject(laser);
-        return true;
     }
 
     /**

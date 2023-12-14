@@ -1,4 +1,9 @@
 package tp1.control.exceptions;
 
-public class LaserInFlightException extends Exception {
+import tp1.view.Messages;
+
+public class LaserInFlightException extends GameModelException {
+    public LaserInFlightException() {
+        super(Messages.LASER_ALREADY_SHOT);
+    }
 }

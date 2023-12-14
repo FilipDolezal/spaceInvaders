@@ -65,7 +65,7 @@ public class Position {
 	 */
 	@Override
 	public String toString() {
-		return "col: "+ col + "| row: " + row;
+		return "("+ col + ", " + row + ")";
 	}
 
 }

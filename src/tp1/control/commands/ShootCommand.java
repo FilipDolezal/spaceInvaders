@@ -1,6 +1,9 @@
 package tp1.control.commands;
 
 import tp1.control.ExecutionResult;
+import tp1.control.exceptions.CommandExecuteException;
+import tp1.control.exceptions.GameModelException;
+import tp1.control.exceptions.LaserInFlightException;
 import tp1.logic.GameModel;
 import tp1.view.Messages;
 
@@ -30,11 +33,13 @@ public class ShootCommand extends NoParamsCommand{
     }
 
     @Override
-    public ExecutionResult execute(GameModel game) {
-        boolean success = game.shootLaser();
-        if(success) game.update();
-         //update the game if the shoot was successful.
-
-        return new ExecutionResult(success, true, Messages.LASER_ERROR);
+    public boolean execute(GameModel game) throws CommandExecuteException {
+        try {
+            game.shootLaser();
+            game.update();
+            return true;
+        } catch (GameModelException e) {
+            throw new CommandExecuteException(Messages.LASER_ERROR, e);
+        }
     }
 }

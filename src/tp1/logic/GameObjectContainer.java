@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import tp1.control.exceptions.NoShockWaveException;
 import tp1.logic.gameobjects.*;
 
 /**
@@ -64,13 +65,14 @@ public class GameObjectContainer {
 	 * @param shockwave
 	 * @return true if the shockwave has been successfully executed, false otherwise.
 	 */
-	public boolean performShockwave(Shockwave shockwave) {
-		if(shockwave == null) return false;
+	public void performShockwave(Shockwave shockwave) throws NoShockWaveException {
+		if(shockwave == null)
+			throw new NoShockWaveException();
+
 		for(int i = 0; i < objects.size(); i++ ) {
 			GameItem item = objects.get(i);
 			shockwave.performAttack(item);	//Subtracts 1 life to all aliens except the UFO.
 		}
-		return true;
 	}
 
 	/**

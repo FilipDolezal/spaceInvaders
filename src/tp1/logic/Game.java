@@ -1,6 +1,7 @@
 package tp1.logic;
 
 import tp1.control.InitialConfiguration;
+import tp1.control.exceptions.*;
 import tp1.logic.gameobjects.*;
 import java.util.Random;
 
@@ -112,11 +113,10 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	/**
 	 * Performs the movement of the ship with the input given by the user.
 	 * @param move a valid direction.
-	 * @return true if it can be performed, false otherwise.
 	 */
 	@Override
-	public boolean move(Move move) {
-		return this.player.move(move);
+	public void move(Move move) throws NotAllowedMoveException, OffWorldException {
+		this.player.move(move);
 	}
 
 	/**
@@ -124,16 +124,20 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	 * @return true if it can be shot, false otherwise.
 	 */
 	@Override
-	public boolean shootLaser() {
-		return this.player.shootLaser();
+	public void shootLaser() throws LaserInFlightException {
+		this.player.shootLaser();
 	}
 	/**
 	 * Shoots the SuperLaser if it can be shot.
 	 * @return true if it can be shot, false otherwise.
 	 */
 	@Override
-	public boolean shootSuperLaser() {
-		return this.player.shootSuperLaser();
+	public void shootSuperLaser() throws LaserInFlightException, NotEnoughPointsException {
+		if(this.score < SuperLaser.COST) throw new NotEnoughPointsException(this.score, SuperLaser.COST);
+
+		//If player has more score that the cost of the SuperLaser.
+		this.score -= SuperLaser.COST;
+		this.player.shootSuperLaser();
 	}
 
 	/**
@@ -155,8 +159,8 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	 * Performs the shockwave.
 	 * @return true if it was successfully performed, false otherwise.
 	 */
-	public boolean executeShockwave(){
-		return this.container.performShockwave(this.player.getShockwave());
+	public void executeShockwave() throws NoShockWaveException {
+		this.container.performShockwave(this.player.getShockwave());
 	}
 
 	/**
@@ -255,19 +259,6 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	 * For decreasing alienCounter in alienManager
 	 */
 	public void decreaseAlienCount() { this.alienManager.decreaseAlienCount(); }
-
-	/**
-	 * Determine if SuperLaser may be shot
-	 * If yes -> decrease the score by SuperLaser cost
-	 * @return true if SuperLaser can be shot
-	 */
-	public boolean canShootSuperLaser() {
-		if(this.score > SuperLaser.COST) {	//If player has more score that the cost of the SuperLaser.
-			this.score -= SuperLaser.COST;
-			return true;	//Returns true.
-		}
-		return false; //False otherwise.
-	}
 
 	/**
 	 * Randomly determinate if DestroyerAlien should drop bomb

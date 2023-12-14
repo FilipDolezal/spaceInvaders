@@ -1,6 +1,10 @@
 package tp1.control.commands;
 
 import tp1.control.ExecutionResult;
+import tp1.control.exceptions.CommandExecuteException;
+import tp1.control.exceptions.GameModelException;
+import tp1.control.exceptions.LaserInFlightException;
+import tp1.control.exceptions.NotEnoughPointsException;
 import tp1.logic.GameModel;
 import tp1.view.Messages;
 
@@ -30,11 +34,13 @@ public class ShootSuperLaserCommand extends NoParamsCommand{
     }
 
     @Override
-    public ExecutionResult execute(GameModel game) {
-        boolean success = game.shootSuperLaser();
-        if(success) game.update();
-            //if the super laser was successful, the game is updated and printed.
-
-        return new ExecutionResult(success, true, Messages.SUPERLASER_ERROR);
+    public boolean execute(GameModel game) throws CommandExecuteException {
+        try {
+            game.shootSuperLaser();
+            game.update();
+            return true;
+        } catch (GameModelException e)  {
+            throw new CommandExecuteException(e.getMessage());
+        }
     }
 }

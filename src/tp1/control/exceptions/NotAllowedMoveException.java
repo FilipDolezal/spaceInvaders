@@ -1,4 +1,9 @@
 package tp1.control.exceptions;
 
-public class NotAllowedMoveException extends Exception{
+import tp1.view.Messages;
+
+public class NotAllowedMoveException extends GameModelException{
+    public NotAllowedMoveException() {
+        super(Messages.ALLOWED_MOVES_MESSAGE);
+    }
 }

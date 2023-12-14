@@ -2,6 +2,8 @@ package tp1.control.commands;
 
 import tp1.control.ExecutionResult;
 import tp1.control.InitialConfiguration;
+import tp1.control.exceptions.CommandExecuteException;
+import tp1.control.exceptions.CommandParseException;
 import tp1.logic.GameModel;
 import tp1.view.Messages;
 
@@ -41,15 +43,16 @@ public class ResetCommand extends Command {
     }
 
     @Override
-    public ExecutionResult execute(GameModel game) {
+    public boolean execute(GameModel game) throws CommandExecuteException {
         game.reset(this.config);    //Resets the game with the desired configuration.
-        return new ExecutionResult(true);
+        return true;
     }
 
     @Override
-    public Command parse(String[] commandWords) {
+    public Command parse(String[] commandWords) throws CommandParseException {
         // no param option
-        if(commandWords.length == 1) return this;
+        if(commandWords.length == 1)
+            return new ResetCommand(InitialConfiguration.NONE);
 
         return new ResetCommand(InitialConfiguration.valueOfIgnoreCase(commandWords[1]));
     }

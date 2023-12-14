@@ -1,6 +1,9 @@
 package tp1.control.commands;
 
 import tp1.control.ExecutionResult;
+import tp1.control.exceptions.CommandExecuteException;
+import tp1.control.exceptions.GameModelException;
+import tp1.control.exceptions.NoShockWaveException;
 import tp1.logic.GameModel;
 import tp1.view.Messages;
 
@@ -26,10 +29,14 @@ public class ShockwaveCommand extends NoParamsCommand {
     }
 
     @Override
-    public ExecutionResult execute(GameModel game) {
-        boolean result = game.executeShockwave();   //Checks if the shockwave was successfully performed.
-        if(result) game.update();  //Update the game.
-        return new ExecutionResult(result, result, Messages.SHOCKWAVE_ERROR);   //If true print the board again, else display an error.
+    public boolean execute(GameModel game) throws CommandExecuteException {
+        try {
+            game.executeShockwave();
+            game.update();
+            return true;
+        } catch (GameModelException e) {
+            throw new CommandExecuteException(e.getMessage());
+        }
     }
 
 

@@ -16,7 +16,6 @@ public interface GameWorld {
     void addObject(GameObject object);
     void obtainShockwave();
     void increaseScore(int byScore);
-    boolean canShootSuperLaser();
     void decreaseAlienCount();
     boolean tryFiringChance();
 
