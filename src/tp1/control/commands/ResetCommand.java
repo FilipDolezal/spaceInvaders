@@ -4,8 +4,11 @@ import tp1.control.ExecutionResult;
 import tp1.control.InitialConfiguration;
 import tp1.control.exceptions.CommandExecuteException;
 import tp1.control.exceptions.CommandParseException;
+import tp1.control.exceptions.InitializationException;
 import tp1.logic.GameModel;
 import tp1.view.Messages;
+
+import java.io.FileNotFoundException;
 
 public class ResetCommand extends Command {
 
@@ -44,8 +47,12 @@ public class ResetCommand extends Command {
 
     @Override
     public boolean execute(GameModel game) throws CommandExecuteException {
-        game.reset(this.config);    //Resets the game with the desired configuration.
-        return true;
+        try {
+            game.reset(this.config);    //Resets the game with the desired configuration.
+            return true;
+        } catch (InitializationException e) {
+            throw new CommandExecuteException(Messages.INITIAL_CONFIGURATION_ERROR, e);
+        }
     }
 
     @Override
@@ -54,6 +61,10 @@ public class ResetCommand extends Command {
         if(commandWords.length == 1)
             return new ResetCommand(InitialConfiguration.NONE);
 
-        return new ResetCommand(InitialConfiguration.valueOfIgnoreCase(commandWords[1]));
+        try {
+            return new ResetCommand(InitialConfiguration.readFromFile(commandWords[1]));
+        } catch (FileNotFoundException e) {
+            throw new CommandParseException(Messages.FILE_NOT_FOUND.formatted(commandWords[1]));
+        }
     }
 }

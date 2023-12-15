@@ -47,7 +47,7 @@ public class Ufo extends EnemyShip {
 	@Override
 	public void automaticMove() {
 		super.automaticMove();	//Moves the ship automatically.
-		if(!this.game.inBoundsX(this.pos)){	//If the ship is out of the bounds of the board, just deletes the UFO
+		if(this.pos.outBoundsX()){	//If the ship is out of the bounds of the board, just deletes the UFO
 			//without giving the Shockwave to the Player.
 			super.onDelete();
 			this.life = 0;

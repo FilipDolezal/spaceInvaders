@@ -45,9 +45,7 @@ public class UCMShip extends Ship{
         if(!Arrays.asList(UCMShip.possibleMoves).contains(move))
             throw new NotAllowedMoveException();
 
-        if(!this.game.inBoundsX(this.pos.move(move)))
-            throw new OffWorldException(move, this.pos);
-
+        this.pos.validMove(move);
         this.dir = move;
     }
 
@@ -64,8 +62,7 @@ public class UCMShip extends Ship{
      * @return true if it was successfully shot, false otherwise.
      */
     public void shootLaser() throws LaserInFlightException {
-        if(isAttacking())
-            throw new LaserInFlightException(); //If the SuperLaser is active, then the UCMLaser can't be shot.
+        if(isAttacking()) throw new LaserInFlightException();
 
         //UCMLaser is created and added to the object container.
         UCMLaser laser = new UCMLaser(this.game, this);
@@ -85,8 +82,7 @@ public class UCMShip extends Ship{
      * @return true if the SuperLaser was successfully shot, false otherwise.
      */
     public void shootSuperLaser() throws LaserInFlightException {
-        if(isAttacking())
-            throw new LaserInFlightException(); //If the UCMLaser is active, then the SuperLaser can't be shot.
+        if(isAttacking()) throw new LaserInFlightException();
 
         //Creates the SuperLaser and adds it to the Object Container.
         SuperLaser laser = new SuperLaser(this.game, this);

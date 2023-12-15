@@ -1,7 +1,12 @@
 package tp1.logic;
 
 import tp1.control.InitialConfiguration;
+import tp1.control.exceptions.InitializationException;
+import tp1.control.exceptions.OffWorldException;
 import tp1.logic.gameobjects.*;
+import tp1.view.Messages;
+
+import java.util.NoSuchElementException;
 
 public class AlienManager  {
 
@@ -36,10 +41,6 @@ public class AlienManager  {
 	public boolean playerWin() { return playerWin; }
 	public void setAliensWin() { this.aliensWin = true; }
 
-	/**
-	 * Constructor of the Alien Manager
-	 * @param Game
-	 */
 	public AlienManager(Game game) {
 		this.level = game.getLevel();
 		this.game = game;
@@ -51,14 +52,14 @@ public class AlienManager  {
 	 * @param config input from the player.
 	 * @return the container with the distribution of aliens.
 	 */
-	public GameObjectContainer initialize(InitialConfiguration config) {
+	public GameObjectContainer initialize(InitialConfiguration config) throws InitializationException {
 		this.remainingAliens = 0;
 		this.actualUFO = null;
 		GameObjectContainer container = new GameObjectContainer();	//Creates a new container of Objects.
 		
 		initializeUFO(container);	//Checks if the Ufo must be generated.
 		//If the InitialConfiguration is null, then initialize as a normal game.
-		if(config == null) {
+		if(config == InitialConfiguration.NONE) {
 			initializeRegularAliens(container);
 			initializeDestroyerAliens(container);
 		} else {	//If the configuration is a valid one, initialize the container with that configuration of aliens.
@@ -199,16 +200,27 @@ public class AlienManager  {
 	 * @param container
 	 * @param config
 	 */
-	private void initializeFromConfig(GameObjectContainer container, InitialConfiguration config) {
-		for(String line: config.getShipDescription()) {	//Gets the type of ship
-			String[] w = line.split("\\s+");
-			Position pos = new Position(		//Gets the position of the ship
-				Integer.valueOf(w[1]),
-				Integer.valueOf(w[2])
-			);
-			container.add(ShipFactory.spawnAlienShip(w[0],this.game,pos,this));	//Adds the desired ship in the
-			//desired position
-			remainingAliens++;
-		}
+	private void initializeFromConfig(GameObjectContainer container, InitialConfiguration config) throws InitializationException {
+			for(String line: config.getShipDescription()) {	//Gets the type of ship
+				String[] w = line.split("\\s+");
+				try {
+					container.add(ShipFactory.spawnAlienShip(
+							w[0],
+							this.game,
+							Position.create(Integer.valueOf(w[1]),Integer.valueOf(w[2])),
+							this
+					));
+					remainingAliens++;
+
+				} catch (NoSuchElementException e) {
+					throw new InitializationException(Messages.UNKNOWN_SHIP.formatted(w[0]));
+				} catch (ArrayIndexOutOfBoundsException e) {
+					throw new InitializationException(Messages.INCORRECT_ENTRY.formatted(line));
+				} catch (OffWorldException e) {
+					throw new InitializationException(e.getMessage());
+				} catch (NumberFormatException e) {
+					throw new InitializationException(Messages.INVALID_POSITION.formatted(w[1], w[2]));
+				}
+			}
 	}
 }

@@ -8,8 +8,6 @@ import tp1.logic.gameobjects.UCMWeapon;
  * Methods used for the behavior of the GameObjects.
  */
 public interface GameWorld {
-    boolean inBoundsX(Position pos);
-    boolean inBoundsY(Position pos);
     boolean performAttack(UCMWeapon weapon);
     boolean performAttack(EnemyWeapon weapon);
     void removeObject(GameObject object);
@@ -18,5 +16,4 @@ public interface GameWorld {
     void increaseScore(int byScore);
     void decreaseAlienCount();
     boolean tryFiringChance();
-
 }

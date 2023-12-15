@@ -8,4 +8,8 @@ public class OffWorldException extends GameModelException{
     public OffWorldException(Move move, Position currentPos){
         super(Messages.OFF_WORLD_MESSAGE.formatted(move, currentPos));
     }
+
+    public OffWorldException(Position invalidPosition) {
+        super(Messages.OFF_WORLD_POSITION.formatted(invalidPosition));
+    }
 }

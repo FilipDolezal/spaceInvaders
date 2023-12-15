@@ -27,8 +27,7 @@ public class Bomb extends EnemyWeapon {
     @Override
     public void automaticMove() {
         super.automaticMove();
-        boolean inBounds = this.game.inBoundsY(this.pos);
-        if(!inBounds) this.onDelete();
+        if(this.pos.outBoundsY()) this.onDelete();
     }
 
     @Override

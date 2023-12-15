@@ -11,7 +11,7 @@ public interface GameModel {
     public void shootLaser() throws GameModelException;
     public void shootSuperLaser() throws GameModelException;
     public void executeShockwave() throws GameModelException;
-    public void reset(InitialConfiguration config);
+    public void reset(InitialConfiguration config) throws InitializationException;
     public boolean isFinished();
     public void exit();
     public void update();

@@ -29,7 +29,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	/**
 	 * Constructor of the game.
 	 */
-	public Game (Level level, long seed){
+	public Game (Level level, long seed) throws InitializationException {
 		this.level = level;
 		this.alienManager = new AlienManager(this);
 		this.seed = seed;
@@ -41,8 +41,8 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	 * Initializes the game creating a new container, a new player (UCMShip)
 	 * adds the player to the container, and the score is initialized to 0.
 	 */
-	private void initGame () {
-		this.container = alienManager.initialize(null);
+	private void initGame() throws InitializationException {
+		this.container = alienManager.initialize(InitialConfiguration.NONE);
 		this.player = new UCMShip(this, new Position(DIM_X / 2, DIM_Y - 1));
 		this.container.add(player);
 		this.score = 0;
@@ -146,7 +146,7 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	 * @param config configuration given by the player.
 	 */
 	@Override
-	public void reset(InitialConfiguration config) {
+	public void reset(InitialConfiguration config) throws InitializationException {
 		this.random = new Random(seed);
 		this.container = alienManager.initialize(config);
 		this.player = new UCMShip(this, new Position(DIM_X / 2, DIM_Y - 1));
@@ -192,21 +192,6 @@ public class Game implements GameStatus, GameModel, GameWorld {
 	}
 
 	// ################## GameWorld functions
-	/**
-	 * for checking if the position is out of the X-axis bound
-	 * @param pos the position to check
-	 * @return true if in bounds
-	 */
-	public boolean inBoundsX(Position pos) {
-		return pos.col >= 0 && pos.col < DIM_X;
-	}
-
-	/**
-	 * for checking if the position is out of the Y-axis bound
-	 * @param pos the position to check
-	 * @return true if in bounds
-	 */
-	public boolean inBoundsY(Position pos) { return pos.row >= 0 && pos.row < DIM_Y; }
 
 	/**
 	 * For checking and attacking every possible Enemy target on the board with UCMWeapon

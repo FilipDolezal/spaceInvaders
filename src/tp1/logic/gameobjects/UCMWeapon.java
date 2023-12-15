@@ -22,7 +22,7 @@ public abstract class UCMWeapon extends Weapon{
     @Override
     public void computerAction() {
         // next position is out of bounds? -> delete weapon
-        if(!this.game.inBoundsY(this.pos.move(this.dir))) this.onDelete();
+        if(this.pos.outBoundsY(this.dir)) this.onDelete();
 
         boolean collision = this.game.performAttack(this);
         // weapon collided with anything? -> delete weapon
