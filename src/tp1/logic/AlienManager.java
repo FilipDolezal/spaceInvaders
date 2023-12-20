@@ -17,13 +17,13 @@ public class AlienManager  {
 			remainingAliens,		// keeps track of remaining alien count
 			lastCycle;				// for determination if this cycle is new or old
 	private boolean
-			onBorder 	= false,	// determine if there is a ship on border in current cycle
-			descend 	= false,	// keeps track if aliens descended last cycle
-			aliensWin 	= false,	// determinate if aliens reached player row
-			playerWin 	= false;	// determinate if player won by destroying aliens
+			onBorder,
+			descend,
+			aliensWin,
+			playerWin;
 	private Move
-			alienShipMove 		= Move.NONE,	// current alien move
-			alienShipDirection 	= Move.LEFT;	// current alien direction
+			alienShipMove,
+			alienShipDirection;
 
 	public int getRemainingAliens() {
 		return remainingAliens;		//Return the number of aliens that are alive in the actual game.
@@ -53,10 +53,19 @@ public class AlienManager  {
 	 * @return the container with the distribution of aliens.
 	 */
 	public GameObjectContainer initialize(InitialConfiguration config) throws InitializationException {
+
+		/* reset instance variables on initialize */
 		this.remainingAliens = 0;
 		this.actualUFO = null;
+		this.alienShipMove = Move.NONE; 		// current alien move
+		this.alienShipDirection = Move.LEFT; 	// current alien direction
+		this.onBorder 	= false;	// determine if there is a ship on border in current cycle
+		this.descend 	= false;	// keeps track if aliens descended last cycle
+		this.aliensWin 	= false;	// determinate if aliens reached player row
+		this.playerWin 	= false;	// determinate if player won by destroying aliens
+
 		GameObjectContainer container = new GameObjectContainer();	//Creates a new container of Objects.
-		
+
 		initializeUFO(container);	//Checks if the Ufo must be generated.
 		//If the InitialConfiguration is null, then initialize as a normal game.
 		if(config == InitialConfiguration.NONE) {
