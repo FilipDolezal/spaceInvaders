@@ -1,6 +1,7 @@
 package tp1.logic.gameobjects;
 
 import tp1.logic.GameWorld;
+import tp1.logic.Move;
 import tp1.logic.Position;
 
 public abstract class UCMWeapon extends Weapon{
@@ -42,9 +43,8 @@ public abstract class UCMWeapon extends Weapon{
      */
     @Override
     public boolean performAttack(GameItem other) {
-        if(!(other.isOnPosition(this.pos) )) return false;
+        if(!other.isOnPosition(this.pos) && !other.isOnPosition(this.pos.move(Move.DOWN))) return false;
 
-        if(other instanceof EnemyWeapon && other.isOnPosition(this.pos.move(this.dir))) return false;
         //If the position of the object is the same as the position of the weapon
         // or the next position is predicted, then it returns true, false otherwise.
         return other.receiveAttack(this);
