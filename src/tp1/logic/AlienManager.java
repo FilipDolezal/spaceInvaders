@@ -67,11 +67,12 @@ public class AlienManager  {
 		GameObjectContainer container = new GameObjectContainer();	//Creates a new container of Objects.
 
 		initializeUFO(container);	//Checks if the Ufo must be generated.
-		//If the InitialConfiguration is null, then initialize as a normal game.
 		if(config == InitialConfiguration.NONE) {
+			//If the InitialConfiguration is null, then initialize as a normal game.
 			initializeRegularAliens(container);
 			initializeDestroyerAliens(container);
-		} else {	//If the configuration is a valid one, initialize the container with that configuration of aliens.
+		} else {
+			//If the configuration is a valid one, initialize the container with that configuration of aliens.
 			initializeFromConfig(container, config);
 		}
 

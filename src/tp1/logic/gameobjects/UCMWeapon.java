@@ -24,7 +24,13 @@ public abstract class UCMWeapon extends Weapon{
         // next position is out of bounds? -> delete weapon
         if(this.pos.outBoundsY(this.dir)) this.onDelete();
 
+    }
+
+    @Override
+    public void automaticMove() {
+        super.automaticMove();
         boolean collision = this.game.performAttack(this);
+
         // weapon collided with anything? -> delete weapon
         if(collision) this.onDelete();
     }
@@ -36,7 +42,9 @@ public abstract class UCMWeapon extends Weapon{
      */
     @Override
     public boolean performAttack(GameItem other) {
-        if(!(other.isOnPosition(this.pos) || other.isOnPosition(this.pos.move(this.dir)))) return false;
+        if(!(other.isOnPosition(this.pos) )) return false;
+
+        if(other instanceof EnemyWeapon && other.isOnPosition(this.pos.move(this.dir))) return false;
         //If the position of the object is the same as the position of the weapon
         // or the next position is predicted, then it returns true, false otherwise.
         return other.receiveAttack(this);
