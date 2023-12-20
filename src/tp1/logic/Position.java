@@ -129,7 +129,7 @@ public record Position(int col, int row) {
 	 * @return true if in bounds
 	 */
 	public boolean outBoundsY() {
-		return col < 0 || col >= Game.DIM_X;
+		return row < 0 || row >= Game.DIM_Y;
 	}
 
 	/**
