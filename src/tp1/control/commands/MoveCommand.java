@@ -1,14 +1,10 @@
 package tp1.control.commands;
 
 import org.junit.platform.commons.util.StringUtils;
-import tp1.control.ExecutionResult;
 import tp1.control.exceptions.*;
 import tp1.logic.GameModel;
 import tp1.logic.Move;
-import tp1.logic.gameobjects.UCMShip;
 import tp1.view.Messages;
-
-import java.util.Arrays;
 
 public class MoveCommand extends Command {
 
