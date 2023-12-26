@@ -52,11 +52,15 @@ public class MoveCommand extends Command {
 	@Override
 	public Command parse(String[] commandWords) throws CommandParseException {
 		Move move = null;
-		String param = commandWords[1];
-
-		if(StringUtils.isBlank(param))
-			// throw error if a parameter is missing
+		String param;
+		if (commandWords.length == 2) {
+            param = commandWords[1];
+        }
+		else{
 			throw new CommandParseException(Messages.COMMAND_PARAMETERS_MISSING);
+
+		}
+
 
 		try{
 			move = Move.valueOf(param.toUpperCase());
